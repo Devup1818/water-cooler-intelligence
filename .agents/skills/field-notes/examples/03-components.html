@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Components</title>
+<link rel="stylesheet" href="../tokens/tokens.css">
+<link rel="stylesheet" href="../kit/kit.css">
+<style>
+  body { width: 1600px; padding: 56px 64px 64px; font-size: 14px; }
+  header { display: flex; justify-content: space-between; align-items: end; margin-bottom: 32px; }
+  h1 { font: 400 64px/.95 var(--font-serif); letter-spacing: -.03em; margin: 12px 0 0; }
+  h1 em { font-style: italic; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .col { border: 1px solid var(--hairline); background: var(--surface); padding: 28px; display: grid; gap: 28px; align-content: start; }
+  .col[data-medium="web"] { border-radius: var(--r-lg); }
+  .colhead { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 14px; border-bottom: 1px solid var(--hairline); }
+  .colhead b { font-size: 17px; font-weight: 600; }
+  .row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .lbl { width: 92px; flex: none; }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .sw-row { display: flex; align-items: center; justify-content: space-between; height: 42px; border-bottom: 1px solid var(--hairline-soft); font-size: 13px; }
+  .web .sw-row { height: 52px; font-size: 15px; }
+  [data-medium="web"] .switch { width: 2.7rem; height: 1.45rem; }
+  [data-medium="web"] .switch::after { width: 1rem; height: 1rem; top: 3px; left: 3px; }
+  [data-medium="web"] .switch[aria-pressed="true"]::after { transform: translateX(1.25rem); }
+  .states { margin-top: 24px; padding: 30px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; background: var(--surface); border: 1px solid var(--hairline); }
+  .state { display: grid; gap: 12px; align-content: start; }
+  .state .box { background: var(--panel); border: 1px solid var(--hairline); padding: 18px; min-height: 170px; display: grid; gap: 14px; align-content: start; }
+  .empty { place-items: center; text-align: center; align-content: center !important; }
+  .empty p { margin: 0; font-size: 13px; color: var(--grey); }
+  .tip { position: relative; display: inline-block; background: var(--ink); color: var(--surface); font: 500 10px/1 var(--font-mono); letter-spacing: .08em; padding: 7px 9px; }
+  .tip::after { content: ""; position: absolute; left: 14px; bottom: -4px; width: 8px; height: 8px; background: inherit; transform: rotate(45deg); }
+  .toast2 { display: flex; gap: 12px; align-items: center; height: 36px; padding: 0 6px 0 12px; background: var(--ink); color: var(--surface); font-size: 12.5px; }
+  .toast2 .btn { height: 24px; color: inherit; border-color: color-mix(in srgb, var(--surface) 30%, transparent); font-size: 11.5px; padding: 0 8px; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="eyebrow">Field Notes V4 // 03_Components</div>
+    <h1>Square in tools. <em>Soft on the web.</em></h1>
+  </div>
+  <div class="micro" style="text-align:right;line-height:1.7">Same tokens, same markup<br>data-medium changes geometry</div>
+</header>
+
+<div class="cols">
+  <!-- TOOL -->
+  <section class="col" data-medium="tool">
+    <div class="colhead"><b>Tool / app</b><span class="micro">data-medium="tool" · 13px · r 0</span></div>
+    <div class="row"><span class="micro lbl">Buttons</span>
+      <button class="btn primary">Start queue</button><button class="btn">Add job <span class="kbd">N</span></button><button class="btn ghost">Cancel</button><button class="btn attention">Delete 3 files</button><button class="btn" disabled>Export</button>
+    </div>
+    <div class="row"><span class="micro lbl">Chips</span>
+      <span class="chip solid">Studio</span><span class="chip accent">Master</span><span class="chip tint">Both</span><span class="chip">Client</span><span class="chip tint live">Rendering</span><span class="chip attention">Missing font</span>
+    </div>
+    <div class="split">
+      <div class="field"><label>Project name</label><input class="input" value="Spring campaign"></div>
+      <div class="field error"><label>Frame rate</label><input class="input mono" value="29.97"><span class="msg">Preset needs 30 fps. Change it?</span></div>
+    </div>
+    <div class="row"><span class="micro lbl">Segmented</span><div class="seg"><button aria-pressed="true">Day</button><button>Week</button><button>Month</button></div>
+      <span class="micro" style="margin-left:18px">Keys</span><span class="kbd">⌘</span><span class="kbd">K</span><span class="kbd">⇧</span><span class="kbd">⏎</span>
+    </div>
+    <div>
+      <div class="sw-row"><span>Burn in captions</span><button class="switch" aria-pressed="true"></button></div>
+      <div class="sw-row"><span>Upload when done</span><button class="switch" aria-pressed="false"></button></div>
+      <div class="sw-row"><span style="display:flex;gap:10px;align-items:center"><span class="check on"></span>Keep source audio</span><span class="micro">Default</span></div>
+    </div>
+    <div class="split">
+      <div class="kpi rung2"><span class="kpi-v">12</span><span class="micro">Days to delivery</span></div>
+      <div class="kpi"><span class="kpi-v">$48,200</span><span class="micro">Total estimate</span></div>
+    </div>
+    <div class="group">
+      <div class="tab"><span>GRP_01 // Cutdowns</span><span>3 files</span></div>
+      <table class="table">
+        <thead><tr><th>Code</th><th>Ratio</th><th>Owner</th><th class="r">Length</th></tr></thead>
+        <tbody>
+          <tr><td class="pri">CUT-30</td><td class="sec">9:16</td><td><span class="chip solid">Studio</span></td><td class="r pri">00:30</td></tr>
+          <tr class="sel"><td class="pri">CUT-15</td><td class="sec">9:16</td><td><span class="chip tint">Both</span></td><td class="r pri">00:15</td></tr>
+          <tr><td class="pri">CUT-06</td><td class="sec">1:1</td><td><span class="chip">Client</span></td><td class="r pri">00:06</td></tr>
+        </tbody>
+      </table>
+      <div class="total-band"><span>Total</span><span>00:51</span></div>
+    </div>
+  </section>
+
+  <!-- WEB -->
+  <section class="col web" data-medium="web">
+    <div class="colhead"><b>Web</b><span class="micro">data-medium="web" · 17px · radius scale</span></div>
+    <div class="row">
+      <button class="btn primary two-line"><span class="glyph">↓</span><span class="stack"><span>Get the app</span><span class="sub">macOS · 14 MB · free</span></span></button>
+      <button class="btn">Read the docs</button>
+      <button class="btn ghost" style="text-decoration:underline;text-underline-offset:4px">Watch 40s</button>
+    </div>
+    <div class="row"><div class="seg"><button aria-pressed="true">Portrait</button><button>Wide</button><button>Square</button></div>
+      <span class="chip tint">r-pill</span><span class="micro">segmented, switches, cite chips</span>
+    </div>
+    <div>
+      <div class="sw-row"><span>Analytics</span><button class="switch" aria-pressed="false"></button></div>
+      <div class="sw-row"><span>Cloud sync</span><button class="switch" aria-pressed="true"></button></div>
+    </div>
+    <div class="window">
+      <div class="titlebar"><span>Shot list · Day 2</span><span class="dots"><i></i><i></i><i></i></span></div>
+      <div style="padding:20px 22px;display:grid;gap:14px">
+        <div style="display:flex;justify-content:space-between"><span class="micro">Scene</span><span class="micro">Setup</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:15px"><span>Kitchen, morning light</span><span class="mono grey">A · 35mm</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:15px"><span>Counter, product close-up</span><span class="mono grey">B · 85mm</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--hairline-soft);padding-top:12px;margin-top:4px"><button class="btn" style="height:34px">Add shot</button><span class="micro" style="color:var(--ink)">2 of 9 shot</span></div>
+      </div>
+    </div>
+    <div class="figures" style="grid-template-columns:repeat(3,1fr)">
+      <div><span class="eyebrow">Turnaround</span><span class="figure">48 h</span><p>First cut, from footage received. Longer past 20 min of source.</p></div>
+      <div><span class="eyebrow">Formats</span><span class="figure">5</span><p>Portrait, wide, square, 4:5, 2.39 master.</p></div>
+      <div><span class="eyebrow">Revisions</span><span class="figure">2</span><p>Rounds included. A third is billed.</p></div>
+    </div>
+  </section>
+</div>
+
+<section class="states" data-theme="dark" data-medium="tool">
+  <div class="state"><span class="eyebrow">Empty</span>
+    <div class="box empty"><span class="pc" style="color:var(--sage)"><i></i><i class="o"></i><i></i><i class="o"></i><i></i><i class="o"></i><i></i><i class="o"></i><i></i></span><p>No jobs yet.</p><button class="btn primary">Add a job</button></div>
+  </div>
+  <div class="state"><span class="eyebrow">Loading · final size</span>
+    <div class="box"><div class="skeleton" style="height:14px;width:60%"></div><div class="skeleton" style="height:10px;width:90%"></div><div class="skeleton" style="height:10px;width:80%"></div><div class="skeleton" style="height:28px;width:40%;margin-top:8px"></div></div>
+  </div>
+  <div class="state"><span class="eyebrow">Progress · feedback</span>
+    <div class="box"><div style="display:flex;justify-content:space-between" class="mono"><span style="font-size:12px">12 / 40 files</span><span class="faint" style="font-size:12px">01:12 left</span></div><div class="progress"><i style="width:30%"></i></div><span class="tip" style="justify-self:start">Pause · P</span><div class="toast2" style="justify-self:start">Exported 3 files <button class="btn">Undo</button></div></div>
+  </div>
+  <div class="state"><span class="eyebrow">Command block</span>
+    <div class="box" style="padding:0;border:0;background:transparent"><pre class="term" style="border:1px solid var(--hairline)"><span class="p">$</span> ./render.sh 07-document
+<span class="p">→</span> 07-document.pdf · 3 pages
+<span class="p">→</span> 3 page PNGs<span class="caret"></span></pre><button class="btn" style="justify-self:start">Copy</button></div>
+  </div>
+</section>
+</body>
+</html>

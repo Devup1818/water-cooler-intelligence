@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" width="1080" height="1080">
+<!-- Field Notes V4 — an SVG movie. 7 s loop, 1080 × 1080.
+     Ships finished: the markup below IS the last frame. The script rewinds and plays it.
+     Every frame is a pure function of t, so ?t=2.5 renders that exact frame (for MP4 export).
+     Rules shown: frame 0 already moving · words arrive in place every 0.29 s · nothing travels ·
+     bars grow from their own baseline · counter steps ≥ 8 frames · silence before the payoff. -->
+<style>
+  @font-face { font-family: "Instrument Serif"; src: url("../assets/fonts/InstrumentSerif-Regular.ttf"); }
+  @font-face { font-family: "Instrument Serif"; font-style: italic; src: url("../assets/fonts/InstrumentSerif-Italic.ttf"); }
+  @font-face { font-family: "JetBrains Mono"; font-weight: 500; src: url("../assets/fonts/JBM-500.ttf"); }
+  @font-face { font-family: "JetBrains Mono"; font-weight: 700; src: url("../assets/fonts/JBM-700.ttf"); }
+  .serif { font-family: "Instrument Serif", serif; font-size: 112px; letter-spacing: -3px; fill: #1b2015; }
+  .mono { font-family: "JetBrains Mono", monospace; font-weight: 500; letter-spacing: 3px; }
+</style>
+<defs>
+  <pattern id="dots" width="36" height="36" patternUnits="userSpaceOnUse"><circle cx="18" cy="18" r="1.4" fill="#1b2015" fill-opacity=".1"/></pattern>
+  <filter id="b0"><feGaussianBlur stdDeviation="0"/></filter><filter id="b1"><feGaussianBlur stdDeviation="0"/></filter>
+  <filter id="b2"><feGaussianBlur stdDeviation="0"/></filter><filter id="b3"><feGaussianBlur stdDeviation="0"/></filter>
+  <filter id="b4"><feGaussianBlur stdDeviation="0"/></filter>
+  <clipPath id="tbclip"><rect id="tbwipe" x="96" y="560" width="888" height="56"/></clipPath>
+</defs>
+
+<rect width="1080" height="1080" fill="#faf9f4"/>
+<rect width="1080" height="1080" fill="url(#dots)"/>
+
+<g id="all">
+  <text class="mono" x="96" y="148" font-size="22" fill="#1b2015" fill-opacity=".72" id="eyebrow">SPRING CAMPAIGN // RESULTS</text>
+  <!-- words: laid out at final width before the first one shows -->
+  <text class="serif" y="290"><tspan id="w0" x="96" filter="url(#b0)">Three</tspan><tspan id="w1" dx="26" filter="url(#b1)">films.</tspan></text>
+  <text class="serif" y="400" font-style="italic"><tspan id="w2" x="96" filter="url(#b2)">One</tspan><tspan id="w3" dx="26" filter="url(#b3)">shoot</tspan><tspan id="w4" dx="26" filter="url(#b4)">day.</tspan></text>
+
+  <!-- the card: square chrome, hairline, title bar wipes in -->
+  <g id="card">
+    <rect x="96" y="560" width="888" height="424" fill="#ffffff" stroke="#1b2015" stroke-opacity=".12"/>
+    <g clip-path="url(#tbclip)"><rect x="96" y="560" width="888" height="56" fill="#1e2618"/>
+      <text class="mono" x="124" y="595" font-size="18" fill="#b8d4a4">WATCH TIME · SECONDS</text>
+      <g fill="none" stroke="#b8d4a4" stroke-opacity=".7"><rect x="902" y="582" width="11" height="11"/><rect x="920" y="582" width="11" height="11"/><rect x="938" y="582" width="11" height="11"/></g></g>
+    <line x1="136" x2="944" y1="924" y2="924" stroke="#1b2015" stroke-opacity=".12"/>
+    <g id="bars"></g>
+    <path id="line" d="" fill="none" stroke="#1e2618" stroke-width="3" pathLength="1"/>
+    <rect id="marker" width="16" height="16" fill="#1e2618"/>
+    <text id="count" class="mono" x="136" y="684" font-size="44" font-weight="700" fill="#1b2015" letter-spacing="-1">23.9 s</text>
+    <text class="mono" x="136" y="716" font-size="16" fill="#1b2015" fill-opacity=".62">AFTER THE INTRO CUT</text>
+  </g>
+</g>
+
+<script><![CDATA[
+  // data → geometry (static layout; the script only animates it)
+  const V = [11, 12, 10.5, 12.5, 19, 22, 23.5, 25.5], N = V.length;
+  const bx = i => 156 + i * 74, by = v => 924 - v / 30 * 250, BW = 44;
+  const bars = document.getElementById('bars');
+  V.forEach((v, i) => {
+    const r = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    r.setAttribute('x', bx(i)); r.setAttribute('width', BW);
+    r.setAttribute('fill', i < 4 ? '#e3ecd9' : '#1e2618');
+    if (i < 4) { r.setAttribute('stroke', '#1e2618'); r.setAttribute('stroke-width', '1.5'); }
+    bars.appendChild(r);
+  });
+  const pts = V.map((v, i) => [bx(i) + BW / 2, by(v) - 26]);
+  document.getElementById('line').setAttribute('d', pts.map((p, i) => (i ? 'L' : 'M') + p.join(',')).join(''));
+  const last = pts[N - 1];
+
+  // curves are algebra (GSAP names → functions)
+  const c = x => Math.min(1, Math.max(0, x));
+  const E = {
+    expoOut: x => x >= 1 ? 1 : 1 - Math.pow(2, -10 * x),
+    power4Out: x => 1 - Math.pow(1 - x, 5),
+    power1Out: x => 1 - (1 - x) * (1 - x),
+    power2InOut: x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2,
+    power2In: x => x * x * x,
+    backOut: x => { const s = 1.7; return 1 + (s + 1) * Math.pow(x - 1, 3) + s * Math.pow(x - 1, 2); },
+  };
+  const tw = (t, start, dur, ease) => E[ease](c((t - start) / dur));
+  const $ = id => document.getElementById(id);
+
+  function frame(t) {
+    // leave: everything goes together at the end of the loop (power2.in, 0.5 s)
+    const out = 1 - tw(t, 6.5, 0.5, 'power2In');
+    $('all').setAttribute('opacity', out);
+
+    // eyebrow: already there at frame 0
+    $('eyebrow').setAttribute('fill-opacity', 0.72 * tw(t, -0.2, 0.4, 'power1Out'));
+
+    // words: one every 0.29 s, starting just before frame 0 so frame 0 is moving
+    for (let k = 0; k < 5; k++) {
+      const p = tw(t, -0.12 + k * 0.29 + (k > 1 ? 0.22 : 0), 0.3, 'power1Out');
+      const w = $('w' + k);
+      w.setAttribute('fill-opacity', p);
+      w.setAttribute('dy', 0);
+      w.parentNode.setAttribute('transform', '');
+      w.style.transform = `translateY(${(1 - p) * 10}px)`;
+      $('b' + k).firstElementChild.setAttribute('stdDeviation', (1 - p) * 5);
+    }
+
+    // card: appears in place (no travel), title bar wipes left→right
+    const cp = tw(t, 1.75, 0.35, 'power1Out');
+    $('card').setAttribute('opacity', cp);
+    $('tbwipe').setAttribute('width', 888 * tw(t, 1.8, 0.45, 'power4Out'));
+
+    // bars grow from their own baseline, 70 ms stagger, 720 ms expo.out
+    [...bars.children].forEach((r, i) => {
+      const p = tw(t, 2.15 + i * 0.07, 0.72, 'expoOut'), h = (924 - by(V[i])) * p;
+      r.setAttribute('y', 924 - h); r.setAttribute('height', h);
+    });
+
+    // the line draws over them; the marker arrives under its own weight
+    const lp = tw(t, 3.2, 0.9, 'power2InOut');
+    $('line').setAttribute('stroke-dasharray', `${lp} 1`);
+    const m = tw(t, 4.05, 0.42, 'backOut'), s = 16 * m;
+    $('marker').setAttribute('x', last[0] - s / 2); $('marker').setAttribute('y', last[1] - s / 2);
+    $('marker').setAttribute('width', Math.max(0, s)); $('marker').setAttribute('height', Math.max(0, s));
+
+    // counter: steps at least 8 frames apart, so it reads as changing, not flickering
+    const steps = [0, 4.2, 9.8, 15.1, 19.6, 22.4, 23.9];
+    const k = Math.floor(c((t - 3.2) / (8 / 30 * steps.length)) * (steps.length - 1) + 1e-6);
+    $('count').textContent = (t < 3.2 ? 0 : steps[Math.min(k, steps.length - 1)]).toFixed(1) + ' s';
+    // 4.5 → 6.5 s: nothing moves. The payoff gets silence.
+  }
+
+  const q = /[?&]t=([\d.]+)/.exec(location.search);
+  const reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (q) frame(parseFloat(q[1]));
+  else if (!reduce) { const t0 = performance.now(); const loop = n => { frame(((n - t0) / 1000) % 7); requestAnimationFrame(loop); }; requestAnimationFrame(loop); }
+  else frame(6.4);
+]]></script>
+</svg>

@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Palette</title>
+<link rel="stylesheet" href="../tokens/tokens.css">
+<link rel="stylesheet" href="../kit/kit.css">
+<style>
+  body { width: 1600px; padding: 56px 64px; font-size: 14px; }
+  header { display: flex; justify-content: space-between; align-items: end; margin-bottom: 36px; }
+  h1 { font: 400 64px/.95 var(--font-serif); letter-spacing: -.03em; margin: 12px 0 0; }
+  h1 em { font-style: italic; }
+  .swatches { display: grid; grid-template-columns: repeat(10, 1fr); gap: 0; border: 1px solid var(--hairline); }
+  .sw { display: grid; grid-template-rows: 150px auto; border-right: 1px solid var(--hairline); }
+  .sw:last-child { border-right: 0; }
+  .sw .c { display: flex; align-items: end; padding: 10px; font: 500 10px var(--font-mono); letter-spacing: .1em; }
+  .sw .meta { padding: 12px 10px 14px; display: grid; gap: 5px; background: var(--panel); border-top: 1px solid var(--hairline); }
+  .sw b { font-weight: 600; font-size: 13px; }
+  .sw .hex { font: 500 11px var(--font-mono); color: var(--grey); }
+  .sw .role { font-size: 11.5px; color: var(--faint); line-height: 1.35; }
+  .themes { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 28px; }
+  .theme { padding: 26px; border: 1px solid var(--hairline); background: var(--surface); color: var(--ink); display: grid; gap: 18px; }
+  .theme .top { display: flex; justify-content: space-between; }
+  .ladder { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .rung { height: 92px; padding: 12px; display: grid; align-content: space-between; border: 1px solid var(--hairline); background: var(--panel); }
+  .rung .micro { color: inherit; opacity: .75; }
+  .rung b { font: 600 20px var(--font-mono); }
+  .rung.r1 { background: var(--solid); color: var(--on-solid); border-color: var(--solid); }
+  .rung.r2 { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+  .rung.r4 { background: transparent; border-color: transparent; padding-left: 0; }
+  .text-ramp { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .text-ramp div { padding: 12px; background: var(--panel); border: 1px solid var(--hairline); display: grid; gap: 6px; }
+  .text-ramp .s { font-size: 17px; font-weight: 500; }
+  .text-ramp .m { font: 500 10px var(--font-mono); letter-spacing: .1em; color: var(--faint); }
+  .bottom { display: grid; grid-template-columns: 1.25fr 1fr; gap: 24px; margin-top: 28px; }
+  .contrast td:last-child, .contrast th:last-child { text-align: right; }
+  .pass { font: 600 12px var(--font-mono); }
+  .ramp { display: grid; grid-template-columns: repeat(4, 1fr) 40px; height: 64px; border: 1px solid var(--hairline); }
+  .ramp div { border-right: 1px solid var(--hairline); }
+  .rules { margin: 16px 0 0; padding: 0; list-style: none; display: grid; gap: 9px; }
+  .rules li { display: flex; gap: 10px; align-items: baseline; font-size: 13.5px; }
+  .rules li::before { content: ""; width: 5px; height: 5px; background: var(--forest); flex: none; transform: translateY(-2px); }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="eyebrow">Field Notes V4 // 01_Colour</div>
+    <h1>One green. <em>Two grounds.</em></h1>
+  </div>
+  <div class="micro" style="text-align:right;line-height:1.7">V2's palette, hex for hex<br>Contrast measured, WCAG 2.2</div>
+</header>
+
+<div class="swatches">
+  <div class="sw"><div class="c" style="background:#14180f;color:#b8d4a4">DARK GROUND</div><div class="meta"><b>forest-950</b><span class="hex">#14180F</span><span class="role">Dark ground, terminal, deepest ink</span></div></div>
+  <div class="sw"><div class="c" style="background:#1e2618;color:#b8d4a4">RUNG 1</div><div class="meta"><b>forest</b><span class="hex">#1E2618</span><span class="role">Solid fill, title bars, bands</span></div></div>
+  <div class="sw"><div class="c" style="background:#8fb07c;color:#1e2618"></div><div class="meta"><b>sage-dim</b><span class="hex">#8FB07C</span><span class="role">Secondary on forest, swarm field</span></div></div>
+  <div class="sw"><div class="c" style="background:#b8d4a4;color:#1e2618">RUNG 2</div><div class="meta"><b>sage</b><span class="hex">#B8D4A4</span><span class="role">The accent fill; text on forest</span></div></div>
+  <div class="sw"><div class="c" style="background:#d2e6c2;color:#1e2618"></div><div class="meta"><b>sage-bright</b><span class="hex">#D2E6C2</span><span class="role">Large text on forest, dark ink</span></div></div>
+  <div class="sw"><div class="c" style="background:#faf9f4;color:#71716a"></div><div class="meta"><b>paper</b><span class="hex">#FAF9F4</span><span class="role">Light ground</span></div></div>
+  <div class="sw"><div class="c" style="background:#ffffff;color:#71716a"></div><div class="meta"><b>card</b><span class="hex">#FFFFFF</span><span class="role">Panels, lifted by a hairline</span></div></div>
+  <div class="sw"><div class="c" style="background:#1b2015;color:#faf9f4"></div><div class="meta"><b>ink</b><span class="hex">#1B2015</span><span class="role">Text on paper</span></div></div>
+  <div class="sw"><div class="c" style="background:#71716a;color:#faf9f4"></div><div class="meta"><b>grey</b><span class="hex">#71716A</span><span class="role">Secondary text</span></div></div>
+  <div class="sw"><div class="c" style="background:#a8741d;color:#faf9f4"></div><div class="meta"><b>amber</b><span class="hex">#A8741D</span><span class="role">Attention only. Marker, never text</span></div></div>
+</div>
+
+<div class="themes">
+  <section class="theme">
+    <div class="top"><span class="eyebrow">Light // paper</span><span class="micro">Hairline ink 12%</span></div>
+    <div class="ladder">
+      <div class="rung r1"><span class="micro">Rung 1 · fill</span><b>$48,200</b></div>
+      <div class="rung r2"><span class="micro">Rung 2 · accent</span><b>12 days</b></div>
+      <div class="rung"><span class="micro">Rung 3 · outline</span><b>4 files</b></div>
+      <div class="rung r4"><span class="micro">Rung 4 · text</span><b>Notes</b></div>
+    </div>
+    <div class="text-ramp">
+      <div><span class="s">Ink</span><span class="m">15.8 : 1</span></div>
+      <div><span class="s grey">Grey</span><span class="m">4.7 : 1</span></div>
+      <div><span class="s faint">Faint 62%</span><span class="m">4.6 : 1</span></div>
+      <div><span class="s" style="color:var(--ahead)">Lede 74%</span><span class="m">6.9 : 1</span></div>
+    </div>
+  </section>
+  <section class="theme" data-theme="dark">
+    <div class="top"><span class="eyebrow">Dark // deep</span><span class="micro">Deep grounds · hairline sage 16%</span></div>
+    <div class="ladder">
+      <div class="rung r1"><span class="micro">Rung 1 · fill</span><b>$48,200</b></div>
+      <div class="rung r2"><span class="micro">Rung 2 · accent</span><b>12 days</b></div>
+      <div class="rung"><span class="micro">Rung 3 · outline</span><b>4 files</b></div>
+      <div class="rung r4"><span class="micro">Rung 4 · text</span><b>Notes</b></div>
+    </div>
+    <div class="text-ramp">
+      <div><span class="s">Ink · E8F0DE</span><span class="m">15.1 : 1</span></div>
+      <div><span class="s grey">Grey · A9B59E</span><span class="m">8.2 : 1</span></div>
+      <div><span class="s faint">Faint 56%</span><span class="m">5.5 : 1</span></div>
+      <div><span class="s" style="color:var(--ahead)">Lede 76%</span><span class="m">9.1 : 1</span></div>
+    </div>
+  </section>
+</div>
+
+<div class="bottom">
+  <div class="card" style="border-radius:0;padding:20px 22px">
+    <div class="eyebrow" style="margin-bottom:10px">Pairs that matter</div>
+    <table class="table contrast">
+      <thead><tr><th>Pair</th><th>Ratio</th><th>Allowed as</th></tr></thead>
+      <tbody>
+        <tr><td class="pri">Sage on forest</td><td class="sec">9.65 : 1</td><td class="pass">Any text</td></tr>
+        <tr><td class="pri">Forest on sage</td><td class="sec">9.65 : 1</td><td class="pass">Any text</td></tr>
+        <tr><td class="pri">Amber on paper</td><td class="sec">3.85 : 1</td><td class="sec">Marker, large text</td></tr>
+        <tr><td class="pri">Sage-dim on paper</td><td class="sec">2.30 : 1</td><td class="ter">Fill with a label</td></tr>
+        <tr><td class="pri">Sage on paper</td><td class="sec">1.53 : 1</td><td class="ter">Fill only, never text</td></tr>
+        <tr><td class="pri">Faint 45% (V2) on paper</td><td class="sec">2.79 : 1</td><td class="ter">Retired → 62%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card" style="border-radius:0;padding:20px 22px">
+    <div class="eyebrow" style="margin-bottom:12px">Data ramp + the one signal</div>
+    <div class="ramp">
+      <div style="background:var(--data-1)"></div><div style="background:var(--data-2)"></div><div style="background:var(--data-3)"></div><div style="background:var(--data-4)"></div><div style="background:var(--amber);border:0"></div>
+    </div>
+    <ul class="rules">
+      <li>No other hues. Severity lives in words and the ladder.</li>
+      <li>Colour never carries meaning alone: label it.</li>
+      <li>One tinted band and one light per page.</li>
+    </ul>
+    <svg viewBox="0 0 640 150" style="width:100%;margin-top:18px;display:block" font-family="JetBrains Mono" font-size="11">
+      <line x1="0" x2="640" y1="128" y2="128" stroke="var(--hairline)"/>
+      <g fill="var(--data-1)"><rect x="0" y="40" width="70" height="88"/></g>
+      <rect x="90" y="56" width="70" height="72" fill="var(--data-2)" stroke="var(--forest)" stroke-width="1"/>
+      <rect x="180" y="70" width="70" height="58" fill="var(--data-3)" stroke="var(--forest)" stroke-width="1"/>
+      <rect x="270" y="88" width="70" height="40" fill="var(--data-4)" stroke="var(--forest)" stroke-width="1"/>
+      <rect x="360" y="104" width="70" height="24" fill="var(--amber)"/>
+      <g fill="var(--ink)" font-weight="600"><text x="0" y="32">88</text><text x="90" y="48">72</text><text x="180" y="62">58</text><text x="270" y="80">40</text><text x="360" y="96">24</text></g>
+      <g fill="var(--faint)" letter-spacing="1.2"><text x="0" y="146">MAR</text><text x="90" y="146">APR</text><text x="180" y="146">MAY</text><text x="270" y="146">JUN</text><text x="360" y="146">JUL ↓</text></g>
+      <text x="460" y="112" fill="var(--ink)" font-family="Space Grotesk" font-size="13">July halved.</text>
+      <text x="460" y="128" fill="var(--faint)" font-size="10" letter-spacing="1.2">LABELLED, NOT LEGENDED</text>
+    </svg>
+  </div>
+</div>
+</body>
+</html>

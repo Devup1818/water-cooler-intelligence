@@ -1,0 +1,149 @@
+/* Field Notes V4 — tokens.
+   V2's palette, hex for hex. V3's system. No brand inside.
+   Light on :root. Dark on [data-theme="dark"] (the person chooses; persist it).
+   Geometry and density by medium on [data-medium="web|tool|print|film|slides"]. */
+
+:root {
+  /* ── Palette (V2) ─────────────────────────────── */
+  --forest-950: #14180f;
+  --forest: #1e2618;
+  --sage: #b8d4a4;
+  --sage-bright: #d2e6c2;
+  --sage-dim: #8fb07c;
+  --paper: #faf9f4;
+  --card: #ffffff;
+  --ink-paper: #1b2015;
+  --grey-paper: #71716a;
+  --amber: #a8741d; /* attention only: a marker or fill, never small text */
+
+  /* dark grounds: forest-950 pulled toward neutral, so big areas read deep, not olive */
+  --deep-0: #0f120e;
+  --deep-1: #161a14;
+  --deep-2: #1d2219;
+  --ink-dark: #e8f0de;   /* sage-bright pulled toward paper */
+  --grey-dark: #a9b59e;
+
+  /* ── Roles: light ─────────────────────────────── */
+  --surface: var(--paper);
+  --panel: var(--card);
+  --inset: color-mix(in srgb, var(--ink-paper) 4%, var(--paper));
+  --raised: var(--card);
+  --ink: var(--ink-paper);                                   /* 15.8:1 */
+  --grey: var(--grey-paper);                                 /*  4.7:1 */
+  --faint: color-mix(in srgb, var(--ink-paper) 62%, transparent);  /* 4.6:1 */
+  --ahead: color-mix(in srgb, var(--ink-paper) 74%, transparent);  /* ledes */
+  --label-far: color-mix(in srgb, var(--ink-paper) 72%, transparent); /* small mono at distance */
+  --hairline: color-mix(in srgb, var(--ink-paper) 12%, transparent);
+  --hairline-soft: color-mix(in srgb, var(--ink-paper) 6%, transparent);
+
+  /* the emphasis ladder */
+  --solid: var(--forest);        --on-solid: var(--sage);        /* rung 1 */
+  --accent: var(--sage);         --on-accent: var(--forest);     /* rung 2 */
+  --tint: color-mix(in srgb, var(--sage) 18%, var(--card));
+  --on-tint: var(--ink-paper);
+  --tint-line: color-mix(in srgb, var(--sage) 45%, transparent);
+  /* rung 3 = 1px var(--hairline) outline; rung 4 = text */
+
+  --focus: var(--forest);
+  --attention: var(--amber);
+  --selection: color-mix(in srgb, var(--sage) 55%, transparent);
+
+  --band: var(--forest-950);      /* a dark band on a light page: put data-theme="dark" on it */
+  --band-deep: var(--deep-0);
+  --band-tint: color-mix(in srgb, var(--sage) 14%, var(--paper));
+  --light: color-mix(in srgb, var(--sage) 26%, transparent);
+
+  /* data ramp, strongest first; amber marks the one value that needs attention */
+  --data-1: var(--forest);
+  --data-2: var(--sage-dim);
+  --data-3: var(--sage);
+  --data-4: color-mix(in srgb, var(--sage) 40%, var(--paper));
+
+  /* ── Type ─────────────────────────────────────── */
+  --font-sans: "Space Grotesk", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-serif: "Instrument Serif", "Times New Roman", serif;
+
+  /* ── Space ────────────────────────────────────── */
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 20px;
+  --s-6: 24px; --s-7: 32px; --s-8: 48px; --s-9: 64px; --s-10: 96px; --s-11: 128px;
+  /* the spacing ladder: inside < between items < between groups < between sections, each ≥ 1.5× */
+  --gap-inside: var(--s-2);
+  --gap-items: var(--s-3);
+  --gap-groups: var(--s-7);
+  --gap-sections: var(--s-10);
+
+  /* ── Geometry (web defaults) ─────────────────── */
+  --r-0: 0;
+  --r-sm: 0.55rem;
+  --r: 1.1rem;
+  --r-lg: 2.25rem;
+  --r-pill: 999px;
+
+  /* ── Density (web defaults) ──────────────────── */
+  --body: 17px;
+  --control-h: 44px;
+  --row-h: 44px;
+
+  /* ── Motion ───────────────────────────────────── */
+  --ease-expo-out: cubic-bezier(0.16, 1, 0.3, 1);      /* reveals, falling away */
+  --ease-decisive: cubic-bezier(0.22, 1, 0.36, 1);     /* power4.out: type, wipes */
+  --ease-arrive: cubic-bezier(0.34, 1.56, 0.64, 1);    /* back.out(1.7): arrives under its weight */
+  --ease-depth: cubic-bezier(0.76, 0, 0.24, 1);        /* power3.inOut */
+  --ease-reflow: cubic-bezier(0.65, 0, 0.35, 1);       /* power2.inOut */
+  --ease-leave: cubic-bezier(0.32, 0, 0.67, 0);        /* power2.in */
+  --ease-word: cubic-bezier(0.5, 1, 0.89, 1);          /* power1.out */
+  --ease-drift: cubic-bezier(0.37, 0, 0.63, 1);        /* sine.inOut */
+  --t-micro: 140ms;
+  --t-swap-out: 200ms;
+  --t-swap-in: 300ms;
+  --t-word: 0.29s;
+  --t-reveal: 720ms;
+}
+
+/* ── Dark: the same colours, nothing new ─────────── */
+:root[data-theme="dark"], [data-theme="dark"] {
+  --surface: var(--deep-0);
+  --panel: var(--deep-1);                 /* 1.07:1 vs surface: hairlines separate, not fills */
+  --inset: color-mix(in srgb, var(--deep-0) 50%, var(--deep-1));
+  --raised: var(--deep-2);
+  --ink: var(--ink-dark);                 /* 15.1:1 on panel */
+  --grey: var(--grey-dark);               /*  8.2:1 */
+  --faint: color-mix(in srgb, var(--ink-dark) 56%, transparent);  /* 5.5:1 */
+  --ahead: color-mix(in srgb, var(--ink-dark) 76%, transparent);
+  --label-far: color-mix(in srgb, var(--ink-dark) 72%, transparent);
+  --hairline: color-mix(in srgb, var(--sage) 16%, transparent);
+  --hairline-soft: color-mix(in srgb, var(--sage) 8%, transparent);
+
+  --solid: var(--sage-bright);   --on-solid: var(--forest-950);
+  --accent: var(--sage);         --on-accent: var(--forest);
+  --tint: color-mix(in srgb, var(--sage) 10%, var(--deep-1));
+  --on-tint: var(--ink-dark);
+  --tint-line: color-mix(in srgb, var(--sage) 32%, transparent);
+
+  --focus: var(--sage);
+  --selection: color-mix(in srgb, var(--sage) 28%, transparent);
+
+  --band: var(--deep-1);
+  --band-deep: var(--deep-0);
+  --band-tint: color-mix(in srgb, var(--sage) 6%, var(--deep-0));
+  --light: color-mix(in srgb, var(--sage) 10%, transparent);
+
+  --data-1: var(--sage-bright);
+  --data-2: var(--sage-dim);
+  --data-3: color-mix(in srgb, var(--sage) 45%, var(--deep-1));
+  --data-4: color-mix(in srgb, var(--sage) 22%, var(--deep-1));
+}
+
+/* ── Medium: geometry + density ─────────────────── */
+[data-medium="tool"] {
+  --r-sm: 0; --r: 0; --r-lg: 0; --r-pill: 0;   /* tools are square, switches included */
+  --body: 13px;
+  --control-h: 32px;
+  --row-h: 38px;          /* 52px when a row carries two lines */
+  --gap-groups: var(--s-5);
+  --gap-sections: var(--s-7);
+}
+[data-medium="print"], [data-medium="film"], [data-medium="slides"] {
+  --r-sm: 0; --r: 0; --r-lg: 0; --r-pill: 0;
+}

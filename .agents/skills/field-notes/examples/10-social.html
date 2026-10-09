@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en" data-medium="web">
+<head>
+<meta charset="utf-8">
+<title>Share card</title>
+<link rel="stylesheet" href="../tokens/tokens.css">
+<link rel="stylesheet" href="../kit/kit.css">
+<style>
+  body { width: 1200px; height: 630px; overflow: hidden; position: relative; }
+  body::after { content: ""; position: absolute; right: -120px; top: 40px; width: 760px; height: 640px; background: radial-gradient(50% 50% at 50% 50%, var(--light), transparent 70%); z-index: 0; }
+  .l { position: absolute; left: 72px; top: 72px; bottom: 64px; width: 560px; display: flex; flex-direction: column; z-index: 1; }
+  .l h1 { margin: 22px 0 0; font: 400 100px/.9 var(--font-serif); letter-spacing: -.03em; }
+  .l h1 em { font-style: italic; }
+  .l .foot { margin-top: auto; display: flex; gap: 10px; align-items: center; }
+  .wcard { position: absolute; right: 64px; top: 92px; width: 440px; z-index: 1; }
+  .wcard .shot { border: 1px solid var(--hairline); padding: 13px 14px; display: flex; justify-content: space-between; font-size: 15px; }
+  .wcard .shot span { font: 500 10px var(--font-mono); letter-spacing: .12em; color: var(--faint); }
+  .wcard .shot.done { background: var(--tint); border-color: var(--tint-line); }
+</style>
+</head>
+<body class="grain">
+  <div class="l">
+    <span class="eyebrow">Production planner</span>
+    <h1>Plan the shoot.<br><em>Ship the cut.</em></h1>
+    <div class="foot"><span class="pc"><i></i><i></i><i class="o"></i><i></i><i class="o"></i><i></i><i class="o"></i><i></i><i></i></span><b style="font-weight:600">Groundwork</b><span class="micro" style="margin-left:8px">Fictional product · 1200 × 630</span></div>
+  </div>
+  <div class="window wcard">
+    <div class="titlebar"><span>Day 2 · Shoot</span><span class="dots"><i></i><i></i><i></i></span></div>
+    <div style="padding:18px;display:grid;gap:12px">
+      <div class="shot done">Window light, steam <span>DONE</span></div>
+      <div class="shot" style="border-color:var(--forest);box-shadow:inset 3px 0 0 var(--forest)">Product close-up <span style="color:var(--forest)">ROLLING</span></div>
+      <div class="shot">Barista, over shoulder <span>14:30</span></div>
+      <div style="display:flex;justify-content:space-between;padding-top:6px" class="micro"><span>6 of 12 shots</span><span>2 days left</span></div>
+    </div>
+  </div>
+</body>
+</html>

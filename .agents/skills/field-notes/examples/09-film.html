@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Film — four registers</title>
+<link rel="stylesheet" href="../tokens/tokens.css">
+<link rel="stylesheet" href="../kit/kit.css">
+<style>
+  body { width: 2400px; padding: 56px 64px; }
+  header { display: flex; justify-content: space-between; align-items: end; margin-bottom: 36px; }
+  h1 { font: 400 64px/.95 var(--font-serif); letter-spacing: -.03em; margin: 12px 0 0; }
+  h1 em { font-style: italic; }
+  .row { display: grid; grid-template-columns: repeat(4, 540px); gap: 32px; }
+  .cell { display: grid; gap: 18px; }
+  .scaler { width: 540px; height: 960px; overflow: hidden; outline: 1px solid var(--hairline); }
+  .frame { width: 1080px; height: 1920px; transform: scale(.5); transform-origin: 0 0; position: relative; overflow: hidden; }
+  .cap { display: grid; gap: 6px; }
+  .cap b { font-size: 19px; font-weight: 600; }
+  .cap span { font-size: 14px; color: var(--grey); }
+  .safe { position: absolute; left: 0; right: 0; top: 285px; height: 1350px; outline: 2px dashed color-mix(in srgb, var(--forest) 22%, transparent); pointer-events: none; }
+  .safe::after { content: "4:5 SAFE"; position: absolute; right: 18px; top: 14px; font: 500 22px var(--font-mono); letter-spacing: .14em; color: color-mix(in srgb, var(--forest) 40%, transparent); }
+
+  /* 1 · Quiet */
+  .quiet { background: var(--paper); background-image: radial-gradient(color-mix(in srgb, var(--ink-paper) 12%, transparent) 1.6px, transparent 1.8px); background-size: 54px 54px; }
+  .quiet .lab { position: absolute; left: 90px; top: 360px; font: 500 30px var(--font-mono); letter-spacing: .18em; color: var(--label-far); }
+  .quiet .line { position: absolute; left: 90px; top: 420px; font: 600 92px/1.02 var(--font-sans); letter-spacing: -.03em; color: var(--ink); width: 900px; }
+  .quiet .ui { position: absolute; left: 90px; right: 90px; top: 760px; background: var(--card); border: 2px solid var(--hairline); }
+  .quiet .ui .tb { height: 64px; background: var(--forest); color: var(--sage); display: flex; align-items: center; justify-content: space-between; padding: 0 28px; font: 500 22px var(--font-mono); letter-spacing: .14em; }
+  .quiet .ui .r { display: flex; align-items: center; gap: 24px; height: 118px; padding: 0 28px; border-bottom: 2px solid var(--hairline-soft); font-size: 34px; }
+  .quiet .ui .r .nm { flex: 1; font-weight: 500; }
+  .quiet .ui .r .pb { width: 180px; height: 6px; background: var(--hairline-soft); position: relative; }
+  .quiet .ui .r .pb i { position: absolute; inset: 0 auto 0 0; background: var(--forest); }
+  .quiet .ui .r .ch { font: 500 22px var(--font-mono); letter-spacing: .1em; padding: 8px 12px; border: 2px solid var(--tint-line); background: var(--tint); }
+
+  /* 2 · Editorial */
+  .edit { background: var(--paper); }
+  .edit::before { content: ""; position: absolute; left: -200px; right: -200px; top: 900px; height: 1100px; background: radial-gradient(55% 50% at 50% 45%, color-mix(in srgb, var(--sage) 34%, transparent), transparent 70%); }
+  .edit .eb { position: absolute; left: 0; right: 0; top: 380px; text-align: center; font: 500 28px var(--font-mono); letter-spacing: .2em; color: var(--label-far); }
+  .edit h2 { position: absolute; left: 0; right: 0; top: 440px; text-align: center; margin: 0; font: 400 150px/.9 var(--font-serif); letter-spacing: -.03em; color: var(--ink); }
+  .edit h2 em { font-style: italic; }
+  .edit .win { position: absolute; left: 120px; right: 120px; top: 1010px; background: var(--card); border: 2px solid var(--hairline); border-radius: 34px; overflow: hidden; box-shadow: 0 50px 110px color-mix(in srgb, var(--ink-paper) 16%, transparent); }
+  .edit .win .tb { height: 70px; background: var(--forest); color: var(--sage); display: flex; align-items: center; padding: 0 32px; font: 500 22px var(--font-mono); letter-spacing: .14em; }
+  .edit .win .b { padding: 36px 34px; display: grid; gap: 22px; }
+  .edit .shot { border: 2px solid var(--hairline); padding: 22px 24px; font-size: 34px; display: flex; justify-content: space-between; align-items: center; }
+  .edit .shot.done { background: var(--tint); border-color: var(--tint-line); }
+  .edit .shot span { font: 500 22px var(--font-mono); letter-spacing: .1em; color: var(--label-far); }
+
+  /* 3 · Loud */
+  .loud { background: var(--sage); color: var(--forest); }
+  .loud .rule { position: absolute; left: 0; right: 0; height: 16px; background: var(--forest); }
+  .loud .big { position: absolute; left: 70px; top: 330px; font: 700 228px/.84 var(--font-sans); letter-spacing: -.055em; text-transform: uppercase; }
+  .loud .block { position: absolute; left: 70px; right: 70px; top: 1120px; height: 420px; background: var(--forest); color: var(--sage-bright); padding: 44px 48px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; }
+  .loud .block .ht { position: absolute; right: -40px; top: -40px; width: 520px; height: 520px; background-image: radial-gradient(var(--sage) 30%, transparent 32%); background-size: 26px 26px; opacity: .55; mask-image: radial-gradient(circle at 70% 30%, #000 0 30%, transparent 70%); }
+  .loud .block .k { font: 700 40px var(--font-mono); letter-spacing: .12em; position: relative; }
+  .loud .block .n { font: 700 190px/.9 var(--font-mono); letter-spacing: -.06em; position: relative; }
+  .loud .meta { position: absolute; left: 70px; right: 70px; bottom: 260px; display: flex; justify-content: space-between; font: 700 30px var(--font-mono); letter-spacing: .14em; }
+
+  /* 4 · Ambient */
+  .amb { background: var(--paper); }
+  .amb svg { position: absolute; inset: 0; }
+  .amb .end { position: absolute; left: 0; right: 0; top: 470px; text-align: center; font: 600 96px/1 var(--font-sans); letter-spacing: -.035em; color: var(--forest); }
+</style>
+</head>
+<body>
+<header>
+  <div><div class="eyebrow">Field Notes V4 // 09_Film</div><h1>Four registers. <em>One palette.</em></h1></div>
+  <div class="micro" style="text-align:right;line-height:1.7">1080 × 1920 · 30 fps · shown at 50%<br>Dashed box = 4:5 crop-safe zone</div>
+</header>
+<div class="row">
+  <div class="cell">
+    <div class="scaler"><div class="frame quiet">
+      <div class="lab">01_QUEUE</div>
+      <div class="line">Every export,<br>one queue.</div>
+      <div class="ui">
+        <div class="tb"><span>RENDER QUEUE</span><span>3 / 11</span></div>
+        <div class="r"><span class="nm">Hero cut, 30s</span><span class="pb"><i style="width:62%"></i></span><span class="ch">62%</span></div>
+        <div class="r"><span class="nm">Cutdown, 15s</span><span class="pb"><i style="width:38%"></i></span><span class="ch">38%</span></div>
+        <div class="r"><span class="nm">Wide master</span><span class="pb"><i style="width:11%"></i></span><span class="ch">11%</span></div>
+        <div class="r" style="border:0"><span class="nm" style="color:var(--grey)">Square, feed</span><span class="pb"></span><span class="mono" style="font-size:22px;letter-spacing:.1em;color:var(--label-far)">QUEUED</span></div>
+      </div>
+      <div class="safe"></div>
+    </div></div>
+    <div class="cap"><span class="eyebrow">01 · Quiet</span><b>Product demos, tutorials</b><span>Paper, dot grid, redrawn UI. Sans + mono. Eased, in place.</span></div>
+  </div>
+
+  <div class="cell">
+    <div class="scaler"><div class="frame edit">
+      <div class="eb">PRODUCTION PLANNER</div>
+      <h2>Plan the<br>shoot.<br><em>Ship the cut.</em></h2>
+      <div class="win">
+        <div class="tb">DAY 2 · SHOOT</div>
+        <div class="b">
+          <div class="shot done">Window light, steam <span>DONE</span></div>
+          <div class="shot" style="border-color:var(--forest);box-shadow:inset 6px 0 0 var(--forest)">Product close-up <span style="color:var(--forest)">ROLLING</span></div>
+          <div class="shot">Barista, over shoulder <span>14:30</span></div>
+        </div>
+      </div>
+      <div class="safe"></div>
+    </div></div>
+    <div class="cap"><span class="eyebrow">02 · Editorial</span><b>Launch films, titles, trailers</b><span>Paper, one light, serif with the turn in italic. Radius scale.</span></div>
+  </div>
+
+  <div class="cell">
+    <div class="scaler"><div class="frame loud">
+      <div class="rule" style="top:250px"></div>
+      <div class="big">One<br>day.<br>Three<br>films.</div>
+      <div class="block"><div class="ht"></div><span class="k">SHOOT // TUE 20 OCT</span><span class="n">07:30</span></div>
+      <div class="meta"><span>CALL TIME</span><span>STUDIO B</span></div>
+      <div class="rule" style="bottom:200px"></div>
+      <div class="safe"></div>
+    </div></div>
+    <div class="cap"><span class="eyebrow">03 · Loud</span><b>Announcements, plates, hooks</b><span>Colour is the field. Forest type, 16px rules. No fades: 2-frame snaps.</span></div>
+  </div>
+
+  <div class="cell">
+    <div class="scaler"><div class="frame amb"><svg id="field" viewBox="0 0 1080 1920"></svg>
+      <div class="end">See you<br>on set.</div>
+      <div class="safe"></div>
+    </div></div>
+    <div class="cap"><span class="eyebrow">04 · Ambient</span><b>Loops, backgrounds, mood</b><span>Ink dots, density is value. One solid thing. Things decohere, not fade.</span></div>
+  </div>
+</div>
+<script>
+  // Ambient: a landscape drawn only in dot density; one solid sage object
+  let s = 5; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  const ridge = (x, k) => 1180 + k * 120 + Math.sin(x / (210 + k * 40) + k * 1.7) * (70 - k * 12) + Math.sin(x / 90 + k) * 16;
+  let h = '';
+  for (let y = 700; y < 1920; y += 14) for (let x = 0; x < 1080; x += 14) {
+    let d = 0;
+    for (let k = 0; k < 4; k++) { const r = ridge(x, k); if (y > r) d = Math.max(d, Math.min(1, 0.12 + (y - r) / 900 + k * 0.08)); }
+    const sky = Math.exp(-((x - 760) ** 2 + (y - 860) ** 2) / 26000) * 0.5;
+    if (rnd() < Math.max(d, sky)) h += `<rect x="${x}" y="${y}" width="5" height="5" fill="var(--forest)" opacity="${(0.35 + rnd() * 0.5).toFixed(2)}"/>`;
+  }
+  // the one solid thing
+  h += `<g transform="translate(470 1130)"><rect x="0" y="0" width="150" height="120" fill="var(--sage)"/><rect x="0" y="120" width="34" height="34" fill="var(--sage)"/><rect x="116" y="120" width="34" height="34" fill="var(--sage)"/><rect x="34" y="34" width="20" height="20" fill="var(--paper)"/><rect x="96" y="34" width="20" height="20" fill="var(--paper)"/></g>`;
+  document.getElementById('field').innerHTML = h;
+</script>
+</body>
+</html>

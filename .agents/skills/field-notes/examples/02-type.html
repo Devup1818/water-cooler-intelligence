@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Type specimen</title>
+<link rel="stylesheet" href="../tokens/tokens.css">
+<link rel="stylesheet" href="../kit/kit.css">
+<style>
+  body { width: 1600px; padding: 56px 64px; font-size: 14px; }
+  header { display: flex; justify-content: space-between; align-items: end; margin-bottom: 36px; }
+  h1 { font: 400 64px/.95 var(--font-serif); letter-spacing: -.03em; margin: 12px 0 0; }
+  h1 em { font-style: italic; }
+  .fams { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--hairline); background: var(--panel); }
+  .fam { padding: 26px 28px 24px; border-right: 1px solid var(--hairline); display: grid; gap: 14px; align-content: start; }
+  .fam:last-child { border-right: 0; }
+  .fam .aa { font-size: 128px; line-height: .9; letter-spacing: -.03em; }
+  .fam .row { display: flex; justify-content: space-between; align-items: baseline; }
+  .fam b { font-size: 17px; font-weight: 600; }
+  .fam .set { font-size: 19px; line-height: 1.4; color: var(--grey); }
+  .weights { display: flex; gap: 14px; font-size: 22px; }
+  .turn { margin-top: 28px; padding: 40px 44px; background: var(--band-tint); border-radius: 0; display: grid; grid-template-columns: 1fr 300px; gap: 40px; align-items: end; }
+  .turn .big { font: 400 104px/.92 var(--font-serif); letter-spacing: -.03em; }
+  .turn .big em { font-style: italic; }
+  .turn ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: 13.5px; }
+  .turn li { display: flex; gap: 10px; }
+  .turn li::before { content: ""; width: 5px; height: 5px; background: var(--forest); flex: none; transform: translateY(6px); }
+  .lower { display: grid; grid-template-columns: 1fr 380px; gap: 24px; margin-top: 28px; }
+  .scale td { height: 52px; }
+  .scale td.sample { font-family: var(--font-sans); color: var(--ink); white-space: nowrap; overflow: hidden; max-width: 340px; }
+  .greys { display: grid; gap: 0; align-content: start; }
+  .greys .item { padding: 14px 0; border-bottom: 1px solid var(--hairline-soft); display: grid; gap: 4px; }
+  .greys .a { font-size: 15px; font-weight: 600; }
+  .greys .b { font-size: 15px; color: var(--grey); }
+  .greys .c { font: 500 10px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--faint); }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="eyebrow">Field Notes V4 // 02_Type</div>
+    <h1>Three voices. <em>One job each.</em></h1>
+  </div>
+  <div class="micro" style="text-align:right;line-height:1.7">All OFL, bundled<br>Swap by role, not by taste</div>
+</header>
+
+<div class="fams">
+  <div class="fam">
+    <div class="row"><span class="eyebrow">Sans</span><span class="micro">400 – 700</span></div>
+    <div class="aa" style="font-family:var(--font-sans)">Aa</div>
+    <div class="row"><b>Space Grotesk</b><span class="micro">Interface, prose</span></div>
+    <div class="weights"><span style="font-weight:400">Regular</span><span style="font-weight:500">Medium</span><span style="font-weight:600">Semi</span><span style="font-weight:700">Bold</span></div>
+    <div class="set">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>abcdefghijklmnopqrstuvwxyz</div>
+  </div>
+  <div class="fam">
+    <div class="row"><span class="eyebrow">Mono</span><span class="micro">400 – 700</span></div>
+    <div class="aa" style="font-family:var(--font-mono);font-size:112px;letter-spacing:-.06em">0.9</div>
+    <div class="row"><b>JetBrains Mono</b><span class="micro">Labels, data, code</span></div>
+    <div class="weights mono" style="font-size:15px;letter-spacing:.12em"><span>01_TIMELINE</span><span>//</span><span>GRP_02</span><span>::</span><span>NOTE</span></div>
+    <div class="set mono num" style="font-size:17px">0123456789<br>$48,200.00 · 02:41:08 · +12.4%</div>
+  </div>
+  <div class="fam">
+    <div class="row"><span class="eyebrow">Serif</span><span class="micro">400 + italic</span></div>
+    <div class="aa" style="font-family:var(--font-serif)">A<em>a</em></div>
+    <div class="row"><b>Instrument Serif</b><span class="micro">The first line only</span></div>
+    <div class="weights" style="font-family:var(--font-serif);font-size:28px"><span>Regular</span><em>Italic</em></div>
+    <div class="set" style="font-family:var(--font-serif);font-size:24px;line-height:1.25">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br><em>abcdefghijklmnopqrstuvwxyz</em></div>
+  </div>
+</div>
+
+<div class="turn">
+  <div>
+    <div class="eyebrow" style="margin-bottom:18px">The turn</div>
+    <div class="big">Plan the shoot.<br><em>Ship the cut.</em></div>
+  </div>
+  <ul>
+    <li>Second clause in italic: the payoff, never a random word.</li>
+    <li>Weight 400. Tracking −0.02 to −0.03em. Never under 24px.</li>
+    <li>Web heroes, covers, film titles, section slides. Never in tools or tables.</li>
+  </ul>
+</div>
+
+<div class="lower">
+  <div class="card" style="border-radius:0;padding:18px 22px 6px">
+    <div class="eyebrow" style="margin-bottom:6px">Scale by medium</div>
+    <table class="table scale">
+      <thead><tr><th>Role</th><th>Sample</th><th class="r">Tool px</th><th class="r">Web</th><th class="r">Print pt</th><th class="r">Slide px</th><th class="r">Film px</th></tr></thead>
+      <tbody>
+        <tr><td class="pri">Hero</td><td class="sample" style="font:400 34px var(--font-serif);letter-spacing:-.02em">Ship the <em>cut.</em></td><td class="r ter">—</td><td class="r sec">54–96</td><td class="r sec">44–56</td><td class="r sec">120</td><td class="r sec">132</td></tr>
+        <tr><td class="pri">Section</td><td class="sample" style="font:400 26px var(--font-serif)">Numbers</td><td class="r sec">20 sans</td><td class="r sec">35–56</td><td class="r sec">26–30</td><td class="r sec">72</td><td class="r sec">88</td></tr>
+        <tr><td class="pri">Title</td><td class="sample" style="font-weight:600;font-size:17px">Tonight's exports</td><td class="r sec">15</td><td class="r sec">21</td><td class="r sec">13–15</td><td class="r sec">40</td><td class="r ter">—</td></tr>
+        <tr><td class="pri">Body</td><td class="sample" style="font-size:15px">Three cuts, one shoot day.</td><td class="r sec">13</td><td class="r sec">17–18</td><td class="r sec">10–12</td><td class="r sec">30</td><td class="r ter">—</td></tr>
+        <tr><td class="pri">Figure</td><td class="sample mono" style="font:600 24px var(--font-mono)">02:41:08</td><td class="r sec">24</td><td class="r sec">30–42</td><td class="r sec">20–26</td><td class="r sec">96</td><td class="r sec">140</td></tr>
+        <tr><td class="pri">Eyebrow</td><td class="sample"><span class="eyebrow">01_Timeline</span></td><td class="r sec">10</td><td class="r sec">11</td><td class="r sec">8–9</td><td class="r sec">18</td><td class="r sec">30</td></tr>
+        <tr><td class="pri">Micro</td><td class="sample"><span class="micro">Owner · studio</span></td><td class="r sec">9.5</td><td class="r sec">10</td><td class="r sec">6–6.5</td><td class="r sec">16</td><td class="r sec">26</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card" style="border-radius:0;padding:18px 22px">
+    <div class="eyebrow" style="margin-bottom:6px">Rank with grey, not size</div>
+    <div class="greys">
+      <div class="item"><span class="a">Hero cut, 30s</span><span class="b">9:16 · H.264 · 1080×1920</span><span class="c">Studio · due Fri</span></div>
+      <div class="item"><span class="a">Wide master</span><span class="b">16:9 · ProRes 422 · 4K</span><span class="c">Both · due Mon</span></div>
+      <div class="item"><span class="a">Square, feed</span><span class="b">1:1 · H.264 · 1080×1080</span><span class="c">Client · due Tue</span></div>
+    </div>
+    <p class="micro" style="margin:16px 0 0;line-height:1.6">Same size. Ink → grey → faint.<br>Size jumps are for titles and figures.</p>
+  </div>
+</div>
+</body>
+</html>

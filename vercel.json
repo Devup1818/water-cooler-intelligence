@@ -1,0 +1,20 @@
+{
+  "version": 2,
+  "name": "coolhome-tender-command-center",
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/", "destination": "/intel/monitoring_preview.html" },
+    { "source": "/index.html", "destination": "/intel/monitoring_preview.html" },
+    { "source": "/preview", "destination": "/intel/monitoring_preview.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en" data-medium="slides">
+<head>
+<meta charset="utf-8">
+<title>Slide — one claim, one figure</title>
+<link rel="stylesheet" href="../tokens/tokens.css">
+<link rel="stylesheet" href="../kit/kit.css">
+<style>
+  body { width: 1920px; height: 1080px; overflow: hidden; position: relative; }
+  .top { position: absolute; left: 120px; right: 120px; top: 84px; display: flex; justify-content: space-between; }
+  .top .eyebrow { font-size: 18px; letter-spacing: .18em; }
+  h1 { position: absolute; left: 120px; top: 150px; margin: 0; font: 400 84px/1 var(--font-serif); letter-spacing: -.025em; max-width: 1300px; }
+  h1 em { font-style: italic; }
+  .chart { position: absolute; left: 120px; top: 400px; width: 1180px; height: 520px; }
+  .side { position: absolute; left: 1400px; right: 120px; top: 400px; display: grid; gap: 0; border-top: 1px solid var(--hairline); }
+  .side div { padding: 30px 0 34px; border-bottom: 1px solid var(--hairline); display: grid; gap: 12px; }
+  .side .v { font: 600 96px/1 var(--font-mono); letter-spacing: -.04em; }
+  .side .l { font: 500 16px var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--faint); }
+  .src { position: absolute; left: 120px; bottom: 64px; font: 500 15px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--label-far); }
+  .pg { position: absolute; right: 120px; bottom: 64px; font: 500 15px var(--font-mono); letter-spacing: .12em; color: var(--label-far); }
+</style>
+</head>
+<body>
+  <div class="top"><span class="eyebrow">Q3 review // 04</span><span class="eyebrow">Shorts</span></div>
+  <h1>Cutting the intro <em>doubled watch time.</em></h1>
+  <svg class="chart" id="chart" viewBox="0 0 1180 520" font-family="JetBrains Mono"></svg>
+  <div class="side">
+    <div><span class="v">×2.1</span><span class="l">Average watch time</span></div>
+    <div><span class="v">−40%</span><span class="l">Drop-off in first 3 s</span></div>
+  </div>
+  <div class="src">Source: 214 shorts, Jul – Sep. Long-form not measured.</div>
+  <div class="pg">04 / 12</div>
+<script>
+  // one claim, one figure: before/after in the ramp, the change marked, labelled directly
+  // ILLUSTRATIVE weekly values. In real work, chart only the numbers you were given.
+  const w = [11, 12, 10.5, 12.5, 11.5, 12, 19, 22, 23.5, 24, 25.5, 24.8];
+  const X = i => 110 + i * 93, Y = v => 460 - v / 30 * 420;
+  let s = '';
+  [0, 10, 20, 30].forEach(v => s += `<line x1="70" x2="1170" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--hairline${v ? '-soft' : ''})"/><text x="0" y="${Y(v) + 5}" font-size="15" fill="var(--faint)">${v}s</text>`);
+  s += `<rect x="${X(5.5)}" y="20" width="${X(11) - X(5.5) + 30}" height="440" fill="var(--band-tint)"/>`;
+  w.forEach((v, i) => {
+    const after = i > 5;
+    s += `<rect x="${X(i) - 30}" y="${Y(v)}" width="60" height="${460 - Y(v)}" fill="${after ? 'var(--data-1)' : 'var(--data-4)'}" ${after ? '' : 'stroke="var(--forest)" stroke-width="1"'}/>`;
+    s += `<text x="${X(i)}" y="492" font-size="14" text-anchor="middle" fill="var(--faint)" letter-spacing="1.5">W${i + 1}</text>`;
+  });
+  s += `<line x1="${X(5.5)}" x2="${X(5.5)}" y1="20" y2="460" stroke="var(--forest)" stroke-dasharray="4 5"/>`;
+  s += `<text x="${X(5.5) + 16}" y="52" font-size="16" fill="var(--ink)" letter-spacing="1.6">INTRO CUT · WEEK 7</text>`;
+  s += `<text x="${X(2.5)}" y="${Y(12.5) - 20}" font-size="18" text-anchor="middle" fill="var(--grey)" font-weight="500">11.6 s</text>`;
+  s += `<text x="${X(8.5)}" y="${Y(25.5) - 24}" font-size="22" text-anchor="middle" fill="var(--ink)" font-weight="700">23.9 s</text>`;
+  document.getElementById('chart').innerHTML = s;
+</script>
+</body>
+</html>

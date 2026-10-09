@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en" data-medium="tool">
+<head>
+<meta charset="utf-8">
+<title>Tool — render queue</title>
+<script>if (location.search.includes('dark')) document.documentElement.dataset.theme = 'dark';</script>
+<link rel="stylesheet" href="../tokens/tokens.css">
+<link rel="stylesheet" href="../kit/kit.css">
+<style>
+  body { width: 1600px; height: 1000px; overflow: hidden; display: grid; grid-template-rows: 48px 1fr 28px; }
+  .rail { display: flex; align-items: center; gap: 28px; padding: 0 16px; background: var(--inset); border-bottom: 1px solid var(--hairline); }
+  .brand { display: flex; align-items: center; gap: 10px; min-width: 216px; }
+  .brand b { font-weight: 600; font-size: 15px; letter-spacing: -.01em; }
+  .brand .micro { margin-left: 2px; }
+  .tabs { display: flex; height: 100%; }
+  .tabs a { display: flex; align-items: center; padding: 0 14px; color: var(--grey); text-decoration: none; font-size: 13px; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+  .tabs a.on { color: var(--ink); border-color: var(--focus); font-weight: 500; }
+  .rail .right { margin-left: auto; display: flex; gap: 10px; align-items: center; }
+  .search { display: flex; align-items: center; gap: 8px; width: 260px; height: 30px; padding: 0 8px 0 10px; border: 1px solid var(--hairline); background: var(--panel); color: var(--faint); font-size: 12.5px; }
+  .search .kbd { margin-left: auto; }
+
+  .main { display: grid; grid-template-columns: 232px 1fr 312px; min-height: 0; }
+  aside { border-right: 1px solid var(--hairline); padding: 20px 12px; display: grid; align-content: start; gap: 30px; background: var(--surface); }
+  aside h4 { margin: 0 4px 10px; }
+  .nav a { display: flex; align-items: center; justify-content: space-between; height: 34px; padding: 0 8px; color: var(--grey); text-decoration: none; font-size: 13px; }
+  .nav a.on { background: var(--tint); color: var(--ink); box-shadow: inset 2px 0 0 var(--focus); }
+  .nav a span { font: 500 10.5px var(--font-mono); color: var(--faint); }
+
+  .canvas { padding: 24px 28px; display: grid; grid-template-rows: auto auto 1fr; gap: 24px; min-width: 0; background: var(--surface); }
+  .head { display: flex; align-items: end; justify-content: space-between; }
+  .head h1 { font-size: 21px; font-weight: 600; letter-spacing: -.015em; margin: 6px 0 0; }
+  .head .actions { display: flex; gap: 8px; align-items: center; }
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .kpi { padding: 18px; gap: 8px; }
+  .kpi .micro { display: flex; align-items: center; gap: 6px; }
+  .kpi .att { width: 6px; height: 6px; background: var(--attention); display: inline-block; }
+  .tablewrap { background: var(--panel); border: 1px solid var(--hairline); min-height: 0; overflow: hidden; }
+  .tablebar { display: flex; align-items: center; justify-content: space-between; height: 46px; padding: 0 14px; border-bottom: 1px solid var(--hairline); }
+  .tablebar .left { display: flex; gap: 8px; align-items: center; }
+  .bar { width: 64px; display: inline-block; vertical-align: middle; margin-right: 8px; }
+  .tablewrap .table td, .tablewrap .table th { padding: 0 11px; }
+  .tablewrap .table td { height: 52px; }
+  td .job { display: grid; gap: 4px; }
+  td .job small { font-size: 10.5px; color: var(--faint); font-weight: 400; }
+
+  .inspector { border-left: 1px solid var(--hairline); background: var(--panel); display: grid; grid-template-rows: auto 1fr auto; min-height: 0; }
+  .ins-head { padding: 16px 16px 14px; border-bottom: 1px solid var(--hairline); display: grid; gap: 6px; }
+  .ins-head h2 { margin: 0; font-size: 15px; font-weight: 600; letter-spacing: -.01em; }
+  .ins-body { padding: 20px 18px; display: grid; gap: 24px; align-content: start; }
+  .frame { display: grid; grid-template-columns: 92px 1fr; gap: 14px; align-items: start; }
+  .ar { width: 92px; aspect-ratio: 9/16; border: 1px solid var(--hairline); background: var(--inset); position: relative; overflow: hidden; display: grid; place-items: center; }
+  .ar svg { position: absolute; inset: 0; }
+  .ar span { position: relative; font: 500 10px var(--font-mono); letter-spacing: .1em; color: var(--grey); background: var(--panel); padding: 2px 4px; }
+  .kv { display: grid; font: 400 11.5px/1 var(--font-mono); }
+  .kv div { display: flex; justify-content: space-between; height: 30px; align-items: center; border-bottom: 1px solid var(--hairline-soft); }
+  .kv div span:first-child { color: var(--faint); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
+  .prog-line { display: flex; justify-content: space-between; font: 500 11px var(--font-mono); margin-bottom: 8px; }
+  .term { font-size: 11px; line-height: 1.65; padding: 10px 12px; }
+  .ins-foot { display: flex; gap: 8px; padding: 12px 16px; border-top: 1px solid var(--hairline); }
+  .ins-foot .btn { flex: 1; justify-content: center; }
+
+  .status { display: flex; align-items: center; justify-content: space-between; padding: 0 16px; border-top: 1px solid var(--hairline); background: var(--inset); font: 500 9.5px var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--faint); }
+  .status .l, .status .r { display: flex; gap: 18px; align-items: center; }
+  .toast { position: absolute; left: 248px; bottom: 44px; display: flex; gap: 14px; align-items: center; height: 38px; padding: 0 6px 0 14px; background: var(--ink); color: var(--surface); font-size: 12.5px; box-shadow: 0 10px 30px rgba(20,24,15,.25); }
+  .toast .btn { height: 26px; color: inherit; border-color: color-mix(in srgb, var(--surface) 30%, transparent); font-size: 12px; }
+  [data-theme="dark"] .term { border: 1px solid var(--hairline); }
+  .spark { display: grid; gap: 8px; }
+  .spark svg { width: 100%; height: 72px; display: block; }
+</style>
+</head>
+<body>
+  <header class="rail">
+    <div class="brand">
+      <span class="pc"><i></i><i></i><i class="o"></i><i></i><i class="o"></i><i></i><i class="o"></i><i></i><i></i></span>
+      <b>Moss</b><span class="micro">Render queue</span>
+    </div>
+    <nav class="tabs"><a class="on">Queue</a><a>History</a><a>Presets</a><a>Workers</a></nav>
+    <div class="right">
+      <div class="search">Find a job or preset <span class="kbd">⌘K</span></div>
+      <span class="chip tint live">3 rendering</span>
+    </div>
+  </header>
+
+  <div class="main">
+    <aside>
+      <div>
+        <h4 class="micro">View</h4>
+        <div class="seg" style="width:100%"><button aria-pressed="true" style="flex:1">All</button><button style="flex:1">Mine</button><button style="flex:1">Failed</button></div>
+      </div>
+      <div class="nav">
+        <h4 class="micro">Projects</h4>
+        <a class="on">Spring campaign <span>9</span></a>
+        <a>Founder interview <span>3</span></a>
+        <a>Product tour <span>2</span></a>
+        <a>Archive <span>48</span></a>
+      </div>
+      <div class="nav">
+        <h4 class="micro">Saved views</h4>
+        <a>Portrait only <span>6</span></a>
+        <a>Over 2 min <span>4</span></a>
+        <a>Needs review <span>1</span></a>
+      </div>
+    </aside>
+
+    <section class="canvas">
+      <div class="head">
+        <div>
+          <div class="eyebrow">01_Queue // Spring campaign</div>
+          <h1>Tonight's exports</h1>
+        </div>
+        <div class="actions">
+          <button class="btn">Add job <span class="kbd">N</span></button>
+          <button class="btn primary">Start queue <span class="kbd" style="color:inherit;border-color:rgba(184,212,164,.35)">⏎</span></button>
+        </div>
+      </div>
+
+      <div class="kpis">
+        <div class="kpi"><span class="kpi-v">14</span><span class="micro">Jobs tonight</span></div>
+        <div class="kpi rung2"><span class="kpi-v">02:41:08</span><span class="micro">Until the queue is empty</span></div>
+        <div class="kpi"><span class="kpi-v">71%</span><span class="micro">GPU · 3 of 4 workers</span></div>
+        <div class="kpi"><span class="kpi-v">1</span><span class="micro"><i class="att"></i>Needs attention</span></div>
+      </div>
+
+      <div class="tablewrap">
+        <div class="tablebar">
+          <div class="left"><span class="micro">10 jobs</span><span class="chip">9:16 · 7</span><span class="chip">16:9 · 3</span><span class="chip">1:1 · 1</span></div>
+          <div class="left"><span class="micro">Sort</span><span class="chip outline">ETA ↑</span></div>
+        </div>
+        <table class="table">
+          <thead><tr><th style="width:34px"></th><th>Job</th><th>Format</th><th class="r">Length</th><th>Preset</th><th>Owner</th><th>Progress</th><th>Status</th><th class="r">ETA</th></tr></thead>
+          <tbody>
+            <tr><td><span class="check"></span></td><td><div class="job pri">SPR-014 Hero cut<small>spring_hero_v7.prproj</small></div></td><td class="sec">9:16</td><td class="r sec">01:00</td><td class="sec">H.264 · 1080×1920</td><td><span class="chip solid">Studio</span></td><td><span class="progress bar"><i style="width:100%"></i></span><span class="ter">100%</span></td><td><span class="chip">Done</span></td><td class="r ter">—</td></tr>
+            <tr class="sel"><td><span class="check on"></span></td><td><div class="job pri">SPR-015 Hero cut, 30s<small>spring_hero_v7.prproj</small></div></td><td class="sec">9:16</td><td class="r sec">00:30</td><td class="sec">H.264 · 1080×1920</td><td><span class="chip solid">Studio</span></td><td><span class="progress bar"><i style="width:62%"></i></span><span class="pri">62%</span></td><td><span class="chip tint live">Rendering</span></td><td class="r pri">04:12</td></tr>
+            <tr><td><span class="check"></span></td><td><div class="job pri">SPR-016 Cutdown, 15s<small>spring_hero_v7.prproj</small></div></td><td class="sec">9:16</td><td class="r sec">00:15</td><td class="sec">H.264 · 1080×1920</td><td><span class="chip solid">Studio</span></td><td><span class="progress bar"><i style="width:38%"></i></span><span class="pri">38%</span></td><td><span class="chip tint live">Rendering</span></td><td class="r pri">06:40</td></tr>
+            <tr><td><span class="check"></span></td><td><div class="job pri">SPR-017 Wide master<small>spring_wide_v3.prproj</small></div></td><td class="sec">16:9</td><td class="r sec">02:10</td><td class="sec">ProRes 422 · 3840×2160</td><td><span class="chip tint">Both</span></td><td><span class="progress bar"><i style="width:11%"></i></span><span class="pri">11%</span></td><td><span class="chip tint live">Rendering</span></td><td class="r pri">38:55</td></tr>
+            <tr><td><span class="check"></span></td><td><div class="job pri">SPR-018 Square, feed<small>spring_hero_v7.prproj</small></div></td><td class="sec">1:1</td><td class="r sec">00:30</td><td class="sec">H.264 · 1080×1080</td><td><span class="chip">Client</span></td><td><span class="progress bar"><i style="width:0"></i></span><span class="ter">0%</span></td><td><span class="chip attention">Missing font</span></td><td class="r ter">—</td></tr>
+            <tr><td><span class="check"></span></td><td><div class="job sec">SPR-019 Interview A<small>interview_a_v2.prproj</small></div></td><td class="ter">16:9</td><td class="r ter">04:48</td><td class="ter">H.264 · 1920×1080</td><td><span class="chip solid">Studio</span></td><td><span class="progress bar"><i style="width:0"></i></span><span class="ter">0%</span></td><td><span class="ter">Queued</span></td><td class="r ter">52:10</td></tr>
+            <tr><td><span class="check"></span></td><td><div class="job sec">SPR-020 Story, part 1<small>spring_story.prproj</small></div></td><td class="ter">9:16</td><td class="r ter">00:15</td><td class="ter">H.264 · 1080×1920</td><td><span class="chip">Client</span></td><td><span class="progress bar"><i style="width:0"></i></span><span class="ter">0%</span></td><td><span class="ter">Queued</span></td><td class="r ter">58:02</td></tr>
+            <tr><td><span class="check"></span></td><td><div class="job sec">SPR-021 Story, part 2<small>spring_story.prproj</small></div></td><td class="ter">9:16</td><td class="r ter">00:15</td><td class="ter">H.264 · 1080×1920</td><td><span class="chip">Client</span></td><td><span class="progress bar"><i style="width:0"></i></span><span class="ter">0%</span></td><td><span class="ter">Queued</span></td><td class="r ter">1:03:40</td></tr>
+            <tr><td><span class="check"></span></td><td><div class="job sec">SPR-022 Behind the scenes<small>bts_v1.prproj</small></div></td><td class="ter">16:9</td><td class="r ter">03:20</td><td class="ter">H.264 · 1920×1080</td><td><span class="chip solid">Studio</span></td><td><span class="progress bar"><i style="width:0"></i></span><span class="ter">0%</span></td><td><span class="ter">Queued</span></td><td class="r ter">1:12:30</td></tr>
+            <tr><td><span class="check"></span></td><td><div class="job sec">SPR-023 Captions burn-in<small>spring_hero_v7.prproj</small></div></td><td class="ter">9:16</td><td class="r ter">01:00</td><td class="ter">H.264 · 1080×1920</td><td><span class="chip tint">Both</span></td><td><span class="progress bar"><i style="width:0"></i></span><span class="ter">0%</span></td><td><span class="ter">Queued</span></td><td class="r ter">1:19:05</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <aside class="inspector" style="padding:0;gap:0">
+      <div class="ins-head">
+        <span class="eyebrow">Selected</span>
+        <h2>SPR-015 Hero cut, 30s</h2>
+        <div style="display:flex;gap:6px"><span class="chip tint live">Rendering</span><span class="chip">Worker 2</span></div>
+      </div>
+      <div class="ins-body">
+        <div class="frame">
+          <div class="ar"><svg id="dither" viewBox="0 0 92 164" preserveAspectRatio="none"></svg><span>9:16</span></div>
+          <div class="kv">
+            <div><span>Codec</span><span>H.264</span></div>
+            <div><span>Size</span><span>1080×1920</span></div>
+            <div><span>Rate</span><span>30 fps</span></div>
+            <div><span>Bitrate</span><span>16 Mb/s</span></div>
+            <div><span>Audio</span><span>AAC 320</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="prog-line"><span>62%</span><span class="faint">04:12 left</span></div>
+          <div class="progress"><i style="width:62%"></i></div>
+        </div>
+        <div class="field">
+          <label>Output</label>
+          <input class="input mono" style="font-size:11.5px" value="~/Exports/spring/SPR-015.mp4">
+        </div>
+        <div class="spark">
+          <div class="prog-line" style="margin:0"><span class="micro">Render speed · 10 min</span><span>41.2 fps</span></div>
+          <svg id="spark" viewBox="0 0 280 72" preserveAspectRatio="none"></svg>
+        </div>
+        <pre class="term"><span class="p">12:04:31</span> frame 558 / 900
+<span class="p">12:04:31</span> 41.2 fps · 16.1 Mb/s
+<span class="p">12:04:32</span> frame 600 / 900<span class="caret"></span></pre>
+      </div>
+      <div class="ins-foot">
+        <button class="btn">Pause <span class="kbd">P</span></button>
+        <button class="btn">Reveal file</button>
+      </div>
+    </aside>
+  </div>
+
+  <footer class="status">
+    <div class="l"><span>Moss // 4 workers</span><span>Disk 412 GB free</span></div>
+    <div class="r"><span>Synced 12:04</span><span>⌘K commands</span></div>
+  </footer>
+
+  <div class="toast">3 files exported to Spring campaign <button class="btn">Undo</button></div>
+
+<script>
+  // seeded swarm-dither inside the 9:16 schematic (texture lives in the box, never under its label)
+  let s = 7; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  const svg = document.getElementById('dither'); let h = '';
+  for (let y = 0; y < 164; y += 6) for (let x = 0; x < 92; x += 6) {
+    const d = Math.exp(-(((x - 64) ** 2) / 900 + ((y - 50) ** 2) / 1800));
+    if (rnd() < 0.05 + 0.6 * d) h += `<rect x="${x}" y="${y}" width="3" height="3" fill="var(--data-2)" opacity="${(0.25 + rnd() * 0.6).toFixed(2)}"/>`;
+  }
+  svg.innerHTML = h;
+  // sparkline: one line, area at 25%, the last point marked; gridlines hairline-soft
+  const pts = [34,36,35,38,37,40,39,41,38,40,42,41,43,41,40,42,41,41.2];
+  const X = i => i * 280 / (pts.length - 1), Y = v => 66 - (v - 30) / 15 * 60;
+  const d = pts.map((v, i) => `${i ? 'L' : 'M'}${X(i).toFixed(1)},${Y(v).toFixed(1)}`).join('');
+  document.getElementById('spark').innerHTML =
+    [0, 1, 2].map(k => `<line x1="0" x2="280" y1="${6 + k * 30}" y2="${6 + k * 30}" stroke="var(--hairline-soft)"/>`).join('') +
+    `<path d="${d}L280,72L0,72Z" fill="var(--data-3)" opacity=".25"/><path d="${d}" fill="none" stroke="var(--data-1)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>` +
+    `<rect x="275" y="${Y(41.2) - 3}" width="5" height="5" fill="var(--data-1)"/>`;
+</script>
+</body>
+</html>

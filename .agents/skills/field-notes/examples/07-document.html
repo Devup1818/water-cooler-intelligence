@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en" data-medium="print">
+<head>
+<meta charset="utf-8">
+<title>Document — proposal</title>
+<link rel="stylesheet" href="../tokens/tokens.css">
+<link rel="stylesheet" href="../kit/kit.css">
+<style>
+  /* 960 × 540 pt pages. Designed in px at 96 dpi: 1280 × 720. 1pt = 1.333px. */
+  @page { size: 960pt 540pt; margin: 0; }
+  html, body { margin: 0; background: color-mix(in srgb, var(--ink-paper) 18%, var(--paper)); } /* screen preview only; print has no gaps */
+  body { font-size: 14px; }
+  .page { width: 1280px; height: 720px; position: relative; overflow: hidden; page-break-after: always; break-after: page; background: var(--surface); color: var(--ink); }
+  .page:last-child { page-break-after: auto; break-after: auto; }
+  .page.paper { background-image: radial-gradient(color-mix(in srgb, var(--ink-paper) 12%, transparent) 1px, transparent 1.2px); background-size: 40px 40px; background-position: 20px 20px; }
+  .rail { position: absolute; left: 0; right: 0; top: 0; height: 69px; display: flex; align-items: center; padding: 0 64px; border-bottom: 1px solid var(--hairline); background: var(--surface); }
+  .rail .brand { display: flex; align-items: center; gap: 10px; }
+  .rail .brand b { font-size: 15px; font-weight: 600; letter-spacing: -.01em; }
+  .rail .tabs { display: flex; height: 100%; margin-left: 120px; }
+  .rail .tabs span { display: flex; align-items: center; padding: 0 18px; font: 500 10px var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--faint); border-bottom: 2px solid transparent; margin-bottom: -1px; }
+  .rail .tabs span.on { color: var(--ink); border-color: var(--forest); }
+  .rail .right { margin-left: auto; }
+  .foot { position: absolute; left: 64px; right: 64px; bottom: 0; height: 35px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--hairline); font: 500 8.5px var(--font-mono); letter-spacing: .16em; text-transform: uppercase; color: var(--faint); }
+  .body { position: absolute; left: 64px; right: 64px; top: 101px; bottom: 59px; }
+  .head { display: flex; justify-content: space-between; align-items: end; margin-bottom: 22px; }
+  .head h2 { margin: 6px 0 0; font: 500 28px/1 var(--font-sans); letter-spacing: -.01em; }
+
+  /* cover */
+  .cover { background: var(--forest-950); color: var(--sage); }
+  .cover .rail { background: transparent; border-color: color-mix(in srgb, var(--sage) 20%, transparent); }
+  .cover .rail .micro, .cover .foot { color: color-mix(in srgb, var(--sage) 70%, transparent); }
+  .cover .foot { border-color: color-mix(in srgb, var(--sage) 20%, transparent); }
+  #swarm { position: absolute; inset: 0; }
+  .cover .eyebrow { color: var(--sage); position: absolute; left: 64px; top: 168px; }
+  .cover h1 { position: absolute; left: 64px; top: 196px; margin: 0; font: 400 72px/.95 var(--font-serif); letter-spacing: -.025em; color: var(--sage-bright); }
+  .cover h1 em { font-style: italic; }
+  .kpis { position: absolute; left: 64px; top: 440px; display: flex; gap: 18px; }
+  .kpis > div { width: 224px; height: 138px; padding: 18px; display: grid; align-content: space-between; border: 1px solid color-mix(in srgb, var(--sage) 26%, transparent); }
+  .kpis .v { font: 700 30px/1 var(--font-mono); color: var(--sage-bright); letter-spacing: -.02em; }
+  .kpis .l { font: 500 8.5px var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: color-mix(in srgb, var(--sage) 80%, transparent); }
+  .kpis .solid { background: var(--sage); border-color: var(--sage); }
+  .kpis .solid .v, .kpis .solid .l { color: var(--forest); }
+  .kpis .pc { color: inherit; }
+  .meta { position: absolute; left: 848px; top: 160px; width: 368px; height: 452px; border: 1px solid color-mix(in srgb, var(--sage) 22%, transparent); padding: 0 24px; display: grid; grid-template-rows: 1fr auto; }
+  .meta .mark { display: grid; place-items: center; align-content: center; gap: 10px; border-bottom: 1px solid color-mix(in srgb, var(--sage) 22%, transparent); }
+  .meta .mark b { font: 400 40px/1 var(--font-serif); color: var(--sage-bright); letter-spacing: -.02em; }
+  .meta .rows div { display: flex; justify-content: space-between; height: 40px; align-items: center; border-bottom: 1px solid color-mix(in srgb, var(--sage) 11%, transparent); font: 500 11px var(--font-mono); }
+  .meta .rows div:last-child { border: 0; }
+  .meta .rows span:first-child { color: color-mix(in srgb, var(--sage) 70%, transparent); font-size: 9px; letter-spacing: .14em; text-transform: uppercase; }
+  .meta .rows span:last-child { color: var(--sage-bright); }
+
+  /* timeline */
+  .phase { display: flex; height: 44px; margin-bottom: 18px; }
+  .phase div { display: flex; flex-direction: column; justify-content: center; padding: 0 12px; font: 500 9px/1.5 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; }
+  .phase .t { background: var(--tint); color: var(--forest); border: 1px solid var(--tint-line); }
+  .phase .s { background: var(--sage); color: var(--forest); }
+  .phase .f { background: var(--forest); color: var(--sage); }
+  .phase div span:last-child { opacity: .7; }
+  .sheet { background: var(--card); border: 1px solid var(--hairline); }
+  .sheet .table td { height: 40px; font-size: 11.5px; }
+  .sheet .table th { height: 32px; font-size: 8.5px; }
+  .mk { display: inline-block; width: 4px; height: 22px; vertical-align: middle; }
+
+  /* cost */
+  .two { display: grid; grid-template-columns: 7fr 5fr; gap: 22px; height: 100%; }
+  .two .sheet { display: grid; grid-template-rows: auto auto 1fr; }
+  .sheet .table td { height: 46px; }
+  .split { display: flex; height: 40px; margin: 6px 0 10px; }
+  .split div { display: flex; align-items: center; padding: 0 10px; font: 600 10px var(--font-mono); }
+  .legend { display: grid; gap: 0; margin-bottom: 26px; }
+  .legend div { height: 30px; align-items: center; border-bottom: 1px solid var(--hairline-soft); }
+  .totalband { display: flex; justify-content: space-between; align-items: center; height: 60px; padding: 0 20px 0 64px; background: var(--forest); color: var(--sage); font: 600 13px var(--font-mono); }
+  .totalband b { font: 700 24px var(--font-mono); color: var(--sage-bright); letter-spacing: -.01em; }
+  .notes { display: grid; grid-template-columns: 1fr 1fr; margin-top: 18px; border: 1px solid var(--hairline); background: var(--card); }
+  .notes div { padding: 14px 18px; display: grid; gap: 6px; font-size: 13px; }
+  .notes div + div { border-left: 1px solid var(--hairline); }
+  .legend div { display: flex; justify-content: space-between; font: 400 11px var(--font-mono); color: var(--grey); }
+  .legend i { display: inline-block; width: 9px; height: 9px; margin-right: 8px; vertical-align: -1px; }
+  .inc { list-style: none; margin: 8px 0 18px; padding: 0; display: grid; gap: 10px; font-size: 13px; }
+  .inc li { display: flex; gap: 10px; align-items: center; }
+  .note { border-top: 1px solid var(--hairline); padding-top: 12px; font-size: 12px; color: var(--grey); line-height: 1.5; }
+  #plus { display: block; }
+</style>
+</head>
+<body>
+
+<!-- 1 · COVER -->
+<section class="page cover">
+  <svg id="swarm"></svg>
+  <div class="rail"><div class="brand"><span class="pc" style="color:var(--sage)"><i></i><i></i><i class="o"></i><i></i><i class="o"></i><i></i><i class="o"></i><i></i><i></i></span><b style="color:var(--sage-bright)">Northside Films</b></div><span class="micro right">Proposal // 09 Oct 2026</span></div>
+  <div class="eyebrow" data-x>Harbor &amp; Pine // Spring campaign // Proposal</div>
+  <h1 data-x>Three films.<br><em>One shoot day.</em></h1>
+  <div class="kpis" data-x>
+    <div class="solid"><span class="pc"><i></i><i></i><i class="o"></i><i></i><i class="o"></i><i></i><i class="o"></i><i></i><i></i></span><div><div class="v">$48,200</div><div class="l" style="margin-top:8px">Total estimate</div></div></div>
+    <div><span class="pc" style="color:var(--sage)"><i></i><i class="o"></i><i></i><i class="o"></i><i></i><i class="o"></i><i></i><i class="o"></i><i></i></span><div><div class="v">12 days</div><div class="l" style="margin-top:8px">Brief to delivery</div></div></div>
+    <div><span class="pc" style="color:var(--sage)"><i></i><i></i><i></i><i class="o"></i><i class="o"></i><i></i><i></i><i class="o"></i><i></i></span><div><div class="v">5</div><div class="l" style="margin-top:8px">Formats</div></div></div>
+  </div>
+  <div class="meta" data-x>
+    <div class="mark"><b>Harbor &amp; Pine</b><span class="micro" style="color:color-mix(in srgb,var(--sage) 70%,transparent)">Client</span></div>
+    <div class="rows">
+      <div><span>Project</span><span>Spring campaign</span></div>
+      <div><span>Shoot</span><span>Tue 20 Oct</span></div>
+      <div><span>Delivery</span><span>Fri 30 Oct</span></div>
+      <div><span>Valid until</span><span>23 Oct 2026</span></div>
+    </div>
+  </div>
+  <div class="foot"><span>Northside Films // Harbor &amp; Pine // Confidential</span><span>Page 01 / 03</span></div>
+</section>
+
+<!-- 2 · TIMELINE -->
+<section class="page paper">
+  <div class="rail"><div class="brand"><span class="pc"><i></i><i></i><i class="o"></i><i></i><i class="o"></i><i></i><i class="o"></i><i></i><i></i></span><b>Northside Films</b></div>
+    <div class="tabs"><span class="on">01 Timeline</span><span>02 Deliverables</span><span>03 Cost</span></div><span class="chip tint live right">On track</span></div>
+  <div class="body">
+    <div class="head"><div><div class="eyebrow">01_Timeline</div><h2>Production schedule</h2></div><span class="chip solid">Delivery · Fri 30 Oct</span></div>
+    <div class="phase">
+      <div class="t" style="flex:3"><span>Pre-production</span><span>12 – 19 Oct</span></div>
+      <div class="s" style="flex:2"><span>Shoot</span><span>20 Oct</span></div>
+      <div class="s" style="flex:4;background:color-mix(in srgb,var(--sage) 70%,var(--card))"><span>Edit</span><span>21 – 28 Oct</span></div>
+      <div class="f" style="flex:2"><span>Delivery</span><span>30 Oct</span></div>
+    </div>
+    <div class="sheet">
+      <table class="table">
+        <thead><tr><th style="width:24px"></th><th>No</th><th>Milestone</th><th>Detail</th><th>Owner</th><th class="r">Ends</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td><i class="mk" style="background:var(--tint);outline:1px solid var(--tint-line)"></i></td><td class="ter">01</td><td class="pri">Brief signed</td><td class="sec">Scope, budget, three films</td><td><span class="chip">Client</span></td><td class="r sec">12 Oct</td><td><span class="chip">Done</span></td></tr>
+          <tr><td><i class="mk" style="background:var(--tint);outline:1px solid var(--tint-line)"></i></td><td class="ter">02</td><td class="pri">Shot list + call sheet</td><td class="sec">22 shots, one location</td><td><span class="chip solid">Studio</span></td><td class="r sec">16 Oct</td><td><span class="chip tint live">Active</span></td></tr>
+          <tr><td><i class="mk" style="background:var(--tint);outline:1px solid var(--tint-line)"></i></td><td class="ter">03</td><td class="sec">Props and wardrobe</td><td class="ter">Client supplies product</td><td><span class="chip tint">Both</span></td><td class="r ter">19 Oct</td><td class="ter">Queued</td></tr>
+          <tr><td><i class="mk" style="background:var(--sage)"></i></td><td class="ter">04</td><td class="pri">Shoot day</td><td class="sec">Studio B, 07:30 – 17:00</td><td><span class="chip solid">Studio</span></td><td class="r sec">20 Oct</td><td class="ter">Queued</td></tr>
+          <tr><td><i class="mk" style="background:color-mix(in srgb,var(--sage) 70%,var(--card))"></i></td><td class="ter">05</td><td class="pri">First cut</td><td class="sec">Hero 30s, wide master</td><td><span class="chip solid">Studio</span></td><td class="r sec">23 Oct</td><td class="ter">Queued</td></tr>
+          <tr><td><i class="mk" style="background:color-mix(in srgb,var(--sage) 70%,var(--card))"></i></td><td class="ter">06</td><td class="sec">Client review</td><td class="ter">One round, written notes</td><td><span class="chip">Client</span></td><td class="r ter">26 Oct</td><td class="ter">Queued</td></tr>
+          <tr><td><i class="mk" style="background:var(--forest)"></i></td><td class="ter">07</td><td class="pri">Delivery</td><td class="sec">5 formats, captions burned in</td><td><span class="chip solid">Studio</span></td><td class="r pri">30 Oct</td><td><span class="chip solid">Deadline</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="notes">
+      <div><span class="eyebrow">Note :: Review</span><span>One written round, due 48 h after the first cut.</span></div>
+      <div><span class="eyebrow">Note :: Source of truth</span><span>This sheet. Changes are dated here first.</span></div>
+    </div>
+  </div>
+  <div class="foot"><span>Northside Films // Harbor &amp; Pine // Confidential</span><span>Page 02 / 03</span></div>
+</section>
+
+<!-- 3 · COST -->
+<section class="page paper">
+  <div class="rail"><div class="brand"><span class="pc"><i></i><i></i><i class="o"></i><i></i><i class="o"></i><i></i><i class="o"></i><i></i><i></i></span><b>Northside Films</b></div>
+    <div class="tabs"><span>01 Timeline</span><span>02 Deliverables</span><span class="on">03 Cost</span></div><span class="chip tint right">Total · $48,200</span></div>
+  <div class="body">
+    <div class="head"><div><div class="eyebrow">03_Cost estimate</div><h2>Investment</h2></div><span class="micro">USD · excl. tax</span></div>
+    <div class="two" style="height:calc(100% - 72px)">
+      <div class="sheet">
+        <table class="table" id="cost">
+          <thead><tr><th style="width:24px"></th><th>No</th><th>Item</th><th>Detail</th><th class="r">Cost</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <div class="totalband"><span>Total</span><b id="total"></b></div>
+        <svg id="plus" style="align-self:end;margin:0 16px 14px" width="260" height="70"></svg>
+      </div>
+      <div class="sheet" style="padding:18px 20px;display:block">
+        <div class="eyebrow">Split</div>
+        <div class="split" id="split"></div>
+        <div class="legend" id="legend"></div>
+        <div class="eyebrow">Included</div>
+        <ul class="inc">
+          <li><span class="pc"><i></i><i></i><i class="o"></i><i></i><i class="o"></i><i></i><i class="o"></i><i></i><i></i></span>Crew of 5, one shoot day</li>
+          <li><span class="pc"><i></i><i></i><i class="o"></i><i></i><i class="o"></i><i></i><i class="o"></i><i></i><i></i></span>Licensed music, 3 tracks</li>
+          <li><span class="pc"><i></i><i></i><i class="o"></i><i></i><i class="o"></i><i></i><i class="o"></i><i></i><i></i></span>One revision round</li>
+        </ul>
+        <div class="note">A second shoot day or a third revision round is quoted separately.</div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Northside Films // Harbor &amp; Pine // Confidential</span><span>Page 03 / 03</span></div>
+</section>
+
+<script>
+  // ── content model: edit these, never the drawing code ──
+  const ITEMS = [
+    ['01', 'Pre-production', 'Brief, shot list, casting', 6400, 'var(--tint)'],
+    ['02', 'Shoot day', 'Crew of 5, camera, lights', 18600, 'var(--sage)'],
+    ['03', 'Edit + grade', 'Three films, five formats', 16800, 'color-mix(in srgb,var(--sage) 70%,var(--card))'],
+    ['04', 'Music + delivery', 'Licences, captions, masters', 6400, 'var(--forest)'],
+  ];
+  // ── derived, never hand-typed: total, %, bar widths ──
+  const total = ITEMS.reduce((a, i) => a + i[3], 0), $ = n => '$' + n.toLocaleString('en-US');
+  document.querySelector('#cost tbody').innerHTML = ITEMS.map(([no, item, d, amt, c]) =>
+    `<tr><td><i class="mk" style="background:${c};outline:1px solid var(--hairline)"></i></td><td class="ter">${no}</td><td class="pri">${item}</td><td class="sec">${d}</td>
+     <td class="r"><div class="pri">${$(amt)}</div><div class="ter" style="font-size:9.5px;margin-top:3px">${Math.round(amt / total * 100)}%</div></td></tr>`).join('');
+  document.getElementById('total').textContent = $(total);
+  document.querySelectorAll('#cost td').forEach(td => td.style.height = '52px');
+  document.getElementById('split').innerHTML = ITEMS.map(i => {
+    const p = Math.round(i[3] / total * 100), dark = i[4].includes('forest');
+    return `<div style="flex:${i[3]};background:${i[4]};color:${dark ? 'var(--sage)' : 'var(--forest)'};border:1px solid ${dark ? 'var(--forest)' : 'var(--tint-line)'}">${p}%</div>`; }).join('');
+  document.getElementById('legend').innerHTML = ITEMS.map(i => `<div><span><i style="background:${i[4]};outline:1px solid var(--hairline)"></i>${i[1]}</span><span>${$(i[3])}</span></div>`).join('');
+
+  // ── seeded textures ──
+  let seed = 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  // plus-field: 4-tone ramp, small marks, inside its padding box
+  const tones = ['var(--forest)', 'var(--sage-dim)', 'var(--sage)', 'color-mix(in srgb,var(--sage) 40%,transparent)'];
+  let ph = ''; for (let y = 8; y < 70; y += 16) for (let x = 8; x < 260; x += 16)
+    ph += `<path d="M${x - 3} ${y}h6M${x} ${y - 3}v6" stroke="${tones[Math.floor(rnd() * 4)]}" stroke-width="1.2"/>`;
+  document.getElementById('plus').innerHTML = ph;
+
+  // swarm field: grid walk, base + gaussian clusters, masked from every [data-x] box (+12px)
+  const page = document.querySelector('.cover'), pr = page.getBoundingClientRect();
+  const ex = [...page.querySelectorAll('[data-x]')].map(el => { const r = el.getBoundingClientRect();
+    return [r.left - pr.left - 12, r.top - pr.top - 12, r.right - pr.left + 12, r.bottom - pr.top + 12]; });
+  ex.push([0, 0, 1280, 82], [0, 670, 1280, 720]);
+  const blobs = [[1180, 110, 1, 260], [700, 620, .55, 180], [560, 120, .35, 140]];
+  let sw = ''; const P = 9, S = 4.4;
+  for (let y = 0; y < 720; y += P) for (let x = 0; x < 1280; x += P) {
+    if (ex.some(([a, b, c, d]) => x + S > a && x < c && y + S > b && y < d)) continue;
+    const p = 0.045 + blobs.reduce((t, [bx, by, amp, r]) => t + amp * Math.exp(-((x - bx) ** 2 + (y - by) ** 2) / (2 * r * r)), 0) * 0.55;
+    if (rnd() < p) sw += `<rect x="${x}" y="${y}" width="${S}" height="${S}" fill="var(--sage-dim)" opacity="${(0.07 + rnd() * 0.19).toFixed(2)}"/>`;
+  }
+  const svg = document.getElementById('swarm'); svg.setAttribute('viewBox', '0 0 1280 720'); svg.innerHTML = sw;
+</script>
+</body>
+</html>

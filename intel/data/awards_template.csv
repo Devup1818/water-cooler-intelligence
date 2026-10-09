@@ -1,0 +1,12 @@
+# Water Cooler Govt Tender - AWARD LOG (manual entry)
+#
+# This is your primary source for "who won, at what price" (L1 / LOI / AOC).
+# Fill one row per awarded contract you discover (own contracts, RTI replies,
+# GeM awarded-bid pages, CPPP award notices, dealer intel). Run:
+#     python run.py import --csv data/awards.csv
+#
+# Columns marked * are required; leave others blank if unknown.
+#
+source,tender_id,award_date,buyer_org,buyer_state,segment,seller_name,seller_id,seller_type,capacity_class,qty,unit_price,total_value,currency,remarks,source_url
+gem,GEM/2026/B/7094486,2026-03-18,North Western Railway,Rajasthan,Railways,Cool Home (India) - Fresco Casa,,OEM,150,120,35835,4300200,INR,Real contract GEMC-511687751472352,
+gem,GEM/2026/B/7299831,2026-04-15,Northern Railway (Moradabad),Uttar Pradesh,Railways,Cool Home (India) - Fresco Casa,,OEM,150,29,35200,1020800,INR,Rejected batch GEMC-511687763924679,
