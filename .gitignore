@@ -47,3 +47,4 @@ node_modules/
 scratch/
 *.log
 .vercel
+supabase/.temp/

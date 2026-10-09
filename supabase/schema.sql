@@ -29,6 +29,10 @@ create table if not exists public.bids (
     relevant smallint default 0,
     category text,
     segment text,
+    buyer_contact text,
+    bid_type text,
+    raw text,
+    scraped_at timestamptz,
     created_at timestamptz default timezone('utc'::text, now()) not null,
     updated_at timestamptz default timezone('utc'::text, now()) not null
 );
