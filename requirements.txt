@@ -1,0 +1,3 @@
+# Production dependencies for Vercel deployment
+# Standard library used (sqlite3, json, mimetypes, wsgiref)
+# Zero external packages required for production serving
