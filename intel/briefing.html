@@ -1,0 +1,611 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cool Home (India) · Executive Briefing &amp; Portal Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #FAF9F4;
+    --paper-card: #FFFFFF;
+    --forest: #1E2618;
+    --forest-950: #0E130B;
+    --sage: #B8D4A4;
+    --sage-bright: #D6ECB8;
+    --amber: #A8741D;
+    --hairline: rgba(30, 38, 24, 0.12);
+    --hairline-soft: rgba(30, 38, 24, 0.06);
+    --grey: #5A6650;
+    --faint: #8E9C82;
+    --font-serif: 'Instrument Serif', Georgia, serif;
+    --font-sans: 'Space Grotesk', -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  [data-theme="dark"] {
+    --paper: #0E130B;
+    --paper-card: #141C10;
+    --forest: #D6ECB8;
+    --forest-950: #FAF9F4;
+    --sage: #2C3B24;
+    --sage-bright: #3D5032;
+    --amber: #E5A83B;
+    --hairline: rgba(214, 236, 184, 0.14);
+    --hairline-soft: rgba(214, 236, 184, 0.08);
+    --grey: #A2B594;
+    --faint: #6D8060;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background-color: var(--paper);
+    color: var(--forest);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    padding: 32px 20px 80px;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .container {
+    max-width: 1040px;
+    margin: 0 auto;
+  }
+
+  /* Top Navigation Rail */
+  .top-rail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--hairline);
+    margin-bottom: 40px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .brand-dot {
+    width: 10px;
+    height: 10px;
+    background: var(--amber);
+    border-radius: 50%;
+  }
+  .brand-title {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .btn {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.15s;
+    border: 1px solid var(--hairline);
+    background: var(--paper-card);
+    color: var(--forest);
+  }
+  .btn:hover {
+    border-color: var(--forest);
+  }
+  .btn-primary {
+    background: var(--forest);
+    color: var(--paper);
+    border-color: var(--forest);
+  }
+  .btn-primary:hover {
+    opacity: 0.9;
+  }
+
+  /* Header Section */
+  .hero-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 12px;
+  }
+  .hero-title {
+    font-family: var(--font-serif);
+    font-size: clamp(38px, 6vw, 68px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+    color: var(--forest);
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--grey);
+  }
+  .hero-lede {
+    font-size: 18px;
+    color: var(--grey);
+    max-width: 780px;
+    margin-bottom: 40px;
+    line-height: 1.5;
+  }
+
+  /* KPIs Bar */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .kpi-card {
+    background: var(--paper-card);
+    border: 1px solid var(--hairline);
+    padding: 20px;
+    border-radius: 6px;
+  }
+  .kpi-val {
+    font-family: var(--font-mono);
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .kpi-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--grey);
+  }
+
+  /* Sections */
+  .section {
+    margin-bottom: 56px;
+  }
+  .section-tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--grey);
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: var(--font-sans);
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 20px;
+  }
+
+  /* View Cards Grid */
+  .view-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 768px) {
+    .view-grid { grid-template-columns: 1fr; }
+  }
+  .view-card {
+    background: var(--paper-card);
+    border: 1px solid var(--hairline);
+    border-radius: 6px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .view-card h3 {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .view-card p {
+    font-size: 14px;
+    color: var(--grey);
+    margin-bottom: 16px;
+  }
+  .view-card ul {
+    list-style: none;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--forest);
+    display: grid;
+    gap: 6px;
+  }
+  .view-card ul li::before {
+    content: "— ";
+    color: var(--amber);
+  }
+
+  /* Competitor Table */
+  .table-box {
+    background: var(--paper-card);
+    border: 1px solid var(--hairline);
+    border-radius: 6px;
+    overflow-x: auto;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    text-align: left;
+  }
+  th {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--grey);
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--hairline);
+    background: rgba(30, 38, 24, 0.02);
+  }
+  td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--hairline-soft);
+  }
+  tr:last-child td { border-bottom: none; }
+  .td-bold { font-weight: 600; }
+  .td-mono { font-family: var(--font-mono); font-size: 12px; }
+
+  /* Technical Guardrails Box */
+  .guardrail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .guardrail-card {
+    background: var(--paper-card);
+    border-left: 3px solid var(--amber);
+    border-top: 1px solid var(--hairline);
+    border-right: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
+    padding: 20px;
+    border-radius: 0 6px 6px 0;
+  }
+  .guardrail-card h4 {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    color: var(--forest);
+  }
+  .guardrail-card p {
+    font-size: 13px;
+    color: var(--grey);
+    line-height: 1.5;
+  }
+
+  /* Demo Script Box */
+  .script-box {
+    background: var(--paper-card);
+    border: 1px solid var(--hairline);
+    padding: 28px;
+    border-radius: 6px;
+    display: grid;
+    gap: 20px;
+  }
+  .script-step {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 20px;
+    align-items: start;
+    border-bottom: 1px solid var(--hairline-soft);
+    padding-bottom: 16px;
+  }
+  .script-step:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  .step-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--amber);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .step-body b {
+    display: block;
+    font-size: 15px;
+    margin-bottom: 6px;
+  }
+  .step-body p {
+    font-size: 13px;
+    color: var(--grey);
+    line-height: 1.5;
+  }
+
+  /* Footer */
+  .footer {
+    padding-top: 32px;
+    border-top: 1px solid var(--hairline);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--grey);
+  }
+
+  @media print {
+    body { padding: 0; background: #fff; }
+    .top-rail .actions { display: none; }
+    .kpi-card, .view-card, .guardrail-card, .table-box, .script-box { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Top Rail -->
+  <header class="top-rail">
+    <div class="brand">
+      <div class="brand-dot"></div>
+      <div class="brand-title">Cool Home (India) · Executive Briefing</div>
+    </div>
+    <div class="actions">
+      <button class="btn" onclick="toggleTheme()">Theme</button>
+      <button class="btn" onclick="window.print()">Print / PDF</button>
+      <a href="./index.html" class="btn btn-primary">Open Live Portal ↗</a>
+    </div>
+  </header>
+
+  <!-- Hero Header -->
+  <div class="hero-eyebrow">Public Procurement Intelligence Engine · GeM &amp; State Portals</div>
+  <h1 class="hero-title">All-India Govt Tender Command Center.<br><em>Engineering &amp; Operations Briefing.</em></h1>
+  <p class="hero-lede">
+    A unified, real-time intelligence system for <strong>Cool Home (India) / Fresco Casa</strong> tracking drinking water cooler tenders across all 21 government portals in India with competitive displacement models and post-award delivery management.
+  </p>
+
+  <!-- Key Metrics (KPIs) -->
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-val" style="color:var(--forest)">87</div>
+      <div class="kpi-label">Verified OEM Tenders</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val" style="color:var(--amber)">₹2.17 Cr+</div>
+      <div class="kpi-label">Active Pipeline Value</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val">21</div>
+      <div class="kpi-label">Portals Swept (GeM + CPPP + States)</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val">23</div>
+      <div class="kpi-label">Verified Historical Awards</div>
+    </div>
+  </div>
+
+  <!-- Section 1: The 4 Core Views -->
+  <section class="section">
+    <div class="section-tag">Platform Architecture</div>
+    <h2 class="section-title">The 4 Mission-Critical Command Center Views</h2>
+    <div class="view-grid">
+      <div class="view-card">
+        <div>
+          <h3>01 · Tenders Radar (87)</h3>
+          <p>Real-time hunting list of upcoming bids with urgency badges (< 48h, Mid-Oct, Late-Oct, Nov 2026+), search filters, and direct GeM document links.</p>
+        </div>
+        <ul>
+          <li>Fortune-500 Stop-Phrase filter removes 100% of repairs/noise</li>
+          <li>Click any row to open the Technical Audit &amp; Compliance Inspector</li>
+          <li>Instant state &amp; capacity filtering (40L, 80L, 150L, 300L)</li>
+        </ul>
+      </div>
+
+      <div class="view-card">
+        <div>
+          <h3>02 · Firms &amp; Territory Radar (8)</h3>
+          <p>Deep competitor intelligence cards mapping territory footprints, 150L win rates, and strategic OEM displacement playbooks.</p>
+        </div>
+        <ul>
+          <li>Tracks Voltas, Blue Star, Usha, and 4 regional trader networks</li>
+          <li>Exposes 15%–25% dealer markups in Rajasthan and Western UP</li>
+          <li>Cool Home OEM price advantage: direct manufacturing from Hapur</li>
+        </ul>
+      </div>
+
+      <div class="view-card">
+        <div>
+          <h3>03 · Rate Benchmarks &amp; Calculator</h3>
+          <p>Quantitative price curves based on 23 verified government awards over 2 years, featuring an interactive Target L1 &amp; Margin Calculator.</p>
+        </div>
+        <ul>
+          <li>Real-time Target L1 rate calculation per capacity &amp; buyer</li>
+          <li>Statutory MSE +15% price matching ceiling calculation</li>
+          <li>Buyer multipliers: Indian Railways, Defence MES, Municipalities</li>
+        </ul>
+      </div>
+
+      <div class="view-card">
+        <div>
+          <h3>04 · RITES &amp; Dispatch Lifecycle</h3>
+          <p>End-to-end 60-day post-award operational delivery clock with interactive milestone tracking across 9 operational stages.</p>
+        </div>
+        <ul>
+          <li>Day 0 Contract Verification → Day 26 RITES Call → Day 58 Payment</li>
+          <li>Ensures zero consignee rejection &amp; 10-day GeM CRAC acceptance</li>
+          <li>Pre-dispatch inspection protocol for Indian Railway contracts</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: Competitor Displacement Matrix -->
+  <section class="section">
+    <div class="section-tag">Competitor Intelligence</div>
+    <h2 class="section-title">Market Territory &amp; Price Realization Matrix</h2>
+    <div class="table-box">
+      <table>
+        <thead>
+          <tr>
+            <th>Firm Name</th>
+            <th>Channel</th>
+            <th>Base Territory</th>
+            <th>150L Win Rate</th>
+            <th>Strategic Displacement Playbook</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-bold">Cool Home (India)</td>
+            <td><span class="td-mono">OEM Manufacturer</span></td>
+            <td>Western UP / NR / NCR / NWR</td>
+            <td class="td-mono td-bold" style="color:var(--forest)">₹35,200 – ₹35,835</td>
+            <td>Direct OEM manufacturing, IS 1475 license, MSME +15% statutory price matching.</td>
+          </tr>
+          <tr>
+            <td class="td-bold">Voltas Limited</td>
+            <td><span class="td-mono">National OEM</span></td>
+            <td>National (MES, Western Rly)</td>
+            <td class="td-mono">₹38,900 – ₹39,800</td>
+            <td>High corporate overhead. Cool Home wins on aggressive direct bidding (~₹36,200).</td>
+          </tr>
+          <tr>
+            <td class="td-bold">Blue Star Limited</td>
+            <td><span class="td-mono">Premium OEM</span></td>
+            <td>South &amp; West (SR, GWSSB)</td>
+            <td class="td-mono">₹40,500 – ₹41,200</td>
+            <td>Captures hospital &amp; PSU bids at high prices. Vulnerable to direct L1 pricing on GeM.</td>
+          </tr>
+          <tr>
+            <td class="td-bold">Usha International</td>
+            <td><span class="td-mono">OEM</span></td>
+            <td>North &amp; Central (Schools)</td>
+            <td class="td-mono">₹23,500 – ₹29,800 (40/80L)</td>
+            <td>Focuses on small capacities. Cool Home wins on industrial SS 304 heavy-gauge build.</td>
+          </tr>
+          <tr>
+            <td class="td-bold">Rajasthan Commercial</td>
+            <td><span class="td-mono">Regional Dealer</span></td>
+            <td>Rajasthan (PWD, RSRTC)</td>
+            <td class="td-mono" style="color:var(--amber)">₹41,500</td>
+            <td><strong>Prime Attack Target.</strong> 15% dealer markup. Displace via direct OEM factory bid.</td>
+          </tr>
+          <tr>
+            <td class="td-bold">Shree Ram Refrigeration</td>
+            <td><span class="td-mono">Regional Dealer</span></td>
+            <td>Western UP (Meerut, Ghaziabad)</td>
+            <td class="td-mono" style="color:var(--amber)">₹38,500</td>
+            <td><strong>Prime Attack Target.</strong> Trader in Cool Home backyard. Outbid on municipal tenders.</td>
+          </tr>
+          <tr>
+            <td class="td-bold">Western Aircon &amp; Engg</td>
+            <td><span class="td-mono">Regional Dealer</span></td>
+            <td>Gujarat (GIDC, Vadodara)</td>
+            <td class="td-mono" style="color:var(--amber)">₹41,800</td>
+            <td><strong>Prime Attack Target.</strong> Trader markup creates ₹4,000/unit pricing advantage for Cool Home.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Section 3: Engineering Technical Guardrails -->
+  <section class="section">
+    <div class="section-tag">Technical Guardrails</div>
+    <h2 class="section-title">Hardcoded Lessons from Actual Railway Contracts</h2>
+    <div class="guardrail-grid">
+      <div class="guardrail-card">
+        <h4>1. Compressor Wattage (Moradabad Precedent)</h4>
+        <p>Northern Railway Moradabad rejected 29 water coolers because a vendor fitted 200W refrigerator compressors. For 150 LPH cooling duty under IS 1475:2001, the compressor must be rated <strong>≥ 1550W</strong> using R134A refrigerant.</p>
+      </div>
+
+      <div class="guardrail-card">
+        <h4>2. Inspection Precedence (Jaipur Precedent)</h4>
+        <p>Under GeM GTC Clause 4, system-generated fields ("Pre-dispatch: NO") legally override conflicting buyer ATC text. When RITES is mandatory, factory pre-dispatch inspection must occur at Hapur <em>before</em> loading.</p>
+      </div>
+
+      <div class="guardrail-card">
+        <h4>3. Statutory MSME Purchase Preference</h4>
+        <p>Cool Home is 100% exempt from EMD and past turnover. If a non-MSE is L1 and Cool Home is within <strong>L1 + 15%</strong>, Cool Home has the statutory right to match L1 for 25% of the tender quantity.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: 5-Minute Executive Demo Script -->
+  <section class="section">
+    <div class="section-tag">Presentation Playbook</div>
+    <h2 class="section-title">The 5-Minute Executive Presentation Script</h2>
+    <div class="script-box">
+      <div class="script-step">
+        <div class="step-tag">Minute 1</div>
+        <div class="step-body">
+          <b>The Vision &amp; Hook</b>
+          <p>"Today we run Cool Home's entire government tender operations across 21 portals from one unified screen. Everything is live, audited, and tailored to our factory specifications."</p>
+        </div>
+      </div>
+
+      <div class="script-step">
+        <div class="step-tag">Minute 2</div>
+        <div class="step-body">
+          <b>Tenders Radar (Hunting List)</b>
+          <p>Switch to Tenders Radar. Filter by 'UTTAR PRADESH' or '150 L'. Click a row to open the Technical Audit Modal: "Notice our strict Fortune-500 filter purges all repair and mess appliance noise."</p>
+        </div>
+      </div>
+
+      <div class="script-step">
+        <div class="step-tag">Minute 3</div>
+        <div class="step-body">
+          <b>Competitor Displacement Strategy</b>
+          <p>Switch to Firms Radar. Highlight Voltas and Blue Star overheads, then show the regional dealers in Rajasthan and Western UP: "Dealers add 20% markups; we displace them with direct OEM bids."</p>
+        </div>
+      </div>
+
+      <div class="script-step">
+        <div class="step-tag">Minute 4</div>
+        <div class="step-body">
+          <b>Rate &amp; MSME Margin Calculator</b>
+          <p>Switch to Rate Benchmarks. Select 150 LPH, Indian Railways, 50 units. Show dynamic L1 Target (₹35,835) and the statutory MSE +15% price matching ceiling.</p>
+        </div>
+      </div>
+
+      <div class="script-step">
+        <div class="step-tag">Minute 5</div>
+        <div class="step-body">
+          <b>RITES 60-Day Execution Clock &amp; Close</b>
+          <p>Switch to RITES Lifecycle. Walk through Day 0 Contract Verification to Day 26 RITES call and Day 58 CRAC payment: "This guarantees zero delays, zero rejections, and full margin protection."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div>Cool Home (India) · GeM ID D062180000101298 · UDYAM-UP-29-0046703</div>
+    <div>Live Deployment: <a href="https://water-cooler-intelligence-murex.vercel.app/" style="color:inherit">water-cooler-intelligence-murex.vercel.app</a></div>
+  </footer>
+</div>
+
+<script>
+  function toggleTheme() {
+    const html = document.documentElement;
+    const cur = html.getAttribute('data-theme');
+    html.setAttribute('data-theme', cur === 'dark' ? 'light' : 'dark');
+  }
+</script>
+</body>
+</html>
