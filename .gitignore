@@ -31,6 +31,8 @@ wheels/
 # Large Binary Tender PDFs (preserve data/intel.db and awards.csv)
 intel/data/pdfs/
 *.pdf
+!Cool_Home_Executive_Briefing.pdf
+!public/Cool_Home_Executive_Briefing.pdf
 
 # Environment & Secrets
 .env
@@ -44,3 +46,4 @@ node_modules/
 # Antigravity Brain / Temp
 scratch/
 *.log
+.vercel

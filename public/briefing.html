@@ -350,9 +350,13 @@
   }
 
   @media print {
-    body { padding: 0; background: #fff; }
+    @page { size: A4 portrait; margin: 12mm 14mm 12mm 14mm; }
+    body { padding: 0; background: #FAF9F4 !important; color: #1E2618 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     .top-rail .actions { display: none; }
-    .kpi-card, .view-card, .guardrail-card, .table-box, .script-box { break-inside: avoid; }
+    .page-break { break-before: page; page-break-before: always; }
+    .kpi-card, .view-card, .guardrail-card, .table-box, .script-box, .arch-box, .timeline-box { break-inside: avoid; page-break-inside: avoid; }
+    table { width: 100%; border-collapse: collapse; }
+    tr { break-inside: avoid; page-break-inside: avoid; }
   }
 </style>
 </head>
@@ -399,8 +403,51 @@
     </div>
   </div>
 
+  <!-- Autonomous Multi-Agent Pipeline Architecture (Pure Vector SVG) -->
+  <div class="arch-box" style="margin-top: 24px; background: var(--paper-card); border: 1px solid var(--hairline); border-radius: 6px; padding: 22px;">
+    <div style="font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); margin-bottom: 14px;">Autonomous Multi-Agent Intelligence Pipeline</div>
+    <svg viewBox="0 0 940 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;">
+      <!-- Step 1: Tender Scout -->
+      <rect x="0" y="0" width="205" height="120" rx="4" fill="#1E2618" fill-opacity="0.04" stroke="#1E2618" stroke-opacity="0.16"/>
+      <text x="16" y="28" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="#1E2618">01 · TENDER SCOUT</text>
+      <text x="16" y="50" font-family="Space Grotesk, sans-serif" font-size="11" font-weight="600" fill="#1E2618">21 Portals Ingestion</text>
+      <text x="16" y="70" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#A8741D">GeM · CPPP · 19 States</text>
+      <text x="16" y="92" font-family="Space Grotesk, sans-serif" font-size="9.5" fill="#5F6D58">Purges repair &amp; AMC noise</text>
+
+      <!-- Connector 1 -->
+      <path d="M213 60 H237 M231 54 L239 60 L231 66" stroke="#A8741D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+      <!-- Step 2: Spec Auditor -->
+      <rect x="245" y="0" width="205" height="120" rx="4" fill="#1E2618" fill-opacity="0.04" stroke="#1E2618" stroke-opacity="0.16"/>
+      <text x="261" y="28" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="#1E2618">02 · SPEC AUDITOR</text>
+      <text x="261" y="50" font-family="Space Grotesk, sans-serif" font-size="11" font-weight="600" fill="#1E2618">Engineering Compliance</text>
+      <text x="261" y="70" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#A8741D">IS 1475:2001 · ≥ 1550W</text>
+      <text x="261" y="92" font-family="Space Grotesk, sans-serif" font-size="9.5" fill="#5F6D58">SS 304 &amp; RITES Clause Flag</text>
+
+      <!-- Connector 2 -->
+      <path d="M458 60 H482 M476 54 L484 60 L476 66" stroke="#A8741D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+      <!-- Step 3: Rate Strategist -->
+      <rect x="490" y="0" width="205" height="120" rx="4" fill="#1E2618" fill-opacity="0.04" stroke="#1E2618" stroke-opacity="0.16"/>
+      <text x="506" y="28" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="#1E2618">03 · RATE STRATEGIST</text>
+      <text x="506" y="50" font-family="Space Grotesk, sans-serif" font-size="11" font-weight="600" fill="#1E2618">Predictive Price Model</text>
+      <text x="506" y="70" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#A8741D">2-Yr Regression Baseline</text>
+      <text x="506" y="92" font-family="Space Grotesk, sans-serif" font-size="9.5" fill="#5F6D58">Statutory MSE +15% Ceiling</text>
+
+      <!-- Connector 3 -->
+      <path d="M703 60 H727 M721 54 L729 60 L721 66" stroke="#A8741D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+      <!-- Step 4: Command Center -->
+      <rect x="735" y="0" width="205" height="120" rx="4" fill="#1E2618" stroke="#1E2618"/>
+      <text x="751" y="28" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="#FAF9F4">04 · COMMAND CENTER</text>
+      <text x="751" y="50" font-family="Space Grotesk, sans-serif" font-size="11" font-weight="600" fill="#B8D4A4">Executive Dispatch</text>
+      <text x="751" y="70" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#FAF9F4">87 Live Bids · ₹2.17Cr</text>
+      <text x="751" y="92" font-family="Space Grotesk, sans-serif" font-size="9.5" fill="#FAF9F4" fill-opacity="0.8">60-Day RITES Execution Clock</text>
+    </svg>
+  </div>
+
   <!-- Section 1: The 4 Core Views -->
-  <section class="section">
+  <section class="section page-break">
     <div class="section-tag">Platform Architecture</div>
     <h2 class="section-title">The 4 Mission-Critical Command Center Views</h2>
     <div class="view-grid">
@@ -455,7 +502,7 @@
   </section>
 
   <!-- Section 2: Competitor Displacement Matrix -->
-  <section class="section">
+  <section class="section page-break">
     <div class="section-tag">Competitor Intelligence</div>
     <h2 class="section-title">Market Territory &amp; Price Realization Matrix</h2>
     <div class="table-box">
@@ -519,13 +566,20 @@
             <td class="td-mono" style="color:var(--amber)">₹41,800</td>
             <td><strong>Prime Attack Target.</strong> Trader markup creates ₹4,000/unit pricing advantage for Cool Home.</td>
           </tr>
+          <tr>
+            <td class="td-bold">Southern Cooling Systems</td>
+            <td><span class="td-mono">Regional Dealer</span></td>
+            <td>Tamil Nadu (TWAD, Chennai Corp)</td>
+            <td class="td-mono" style="color:var(--amber)">₹42,400</td>
+            <td><strong>Highest Realization Target.</strong> Highest prices in India. Prime expansion territory.</td>
+          </tr>
         </tbody>
       </table>
     </div>
   </section>
 
   <!-- Section 3: Engineering Technical Guardrails -->
-  <section class="section">
+  <section class="section page-break">
     <div class="section-tag">Technical Guardrails</div>
     <h2 class="section-title">Hardcoded Lessons from Actual Railway Contracts</h2>
     <div class="guardrail-grid">
@@ -544,10 +598,55 @@
         <p>Cool Home is 100% exempt from EMD and past turnover. If a non-MSE is L1 and Cool Home is within <strong>L1 + 15%</strong>, Cool Home has the statutory right to match L1 for 25% of the tender quantity.</p>
       </div>
     </div>
+
+    <!-- RITES 60-Day Execution Timeline (Pure Vector SVG) -->
+    <div class="timeline-box" style="margin-top: 24px; background: var(--paper-card); border: 1px solid var(--hairline); border-radius: 6px; padding: 22px;">
+      <div style="font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); margin-bottom: 14px;">60-Day Post-Award Operational Execution Clock (Railway &amp; PSU Lifecycle)</div>
+      <svg viewBox="0 0 940 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;">
+        <!-- Base line -->
+        <line x1="40" y1="45" x2="900" y2="45" stroke="#1E2618" stroke-opacity="0.18" stroke-width="2"/>
+
+        <!-- Milestone 1 -->
+        <circle cx="50" cy="45" r="7" fill="#1E2618"/>
+        <text x="50" y="24" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="700" fill="#1E2618">DAY 0-5</text>
+        <text x="50" y="68" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="9.5" font-weight="600" fill="#1E2618">GeM Contract</text>
+        <text x="50" y="82" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="8.5" fill="#5F6D58">Audit ATC &amp; Store</text>
+
+        <!-- Milestone 2 -->
+        <circle cx="220" cy="45" r="7" fill="#1E2618"/>
+        <text x="220" y="24" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="700" fill="#1E2618">DAY 6-25</text>
+        <text x="220" y="68" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="9.5" font-weight="600" fill="#1E2618">Factory Build</text>
+        <text x="220" y="82" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="8.5" fill="#5F6D58">1550W / SS 304</text>
+
+        <!-- Milestone 3 (Highlight) -->
+        <circle cx="390" cy="45" r="8" fill="#A8741D"/>
+        <text x="390" y="24" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="700" fill="#A8741D">DAY 26-28</text>
+        <text x="390" y="68" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="9.5" font-weight="700" fill="#A8741D">RITES Call</text>
+        <text x="390" y="82" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="8.5" fill="#5F6D58">Log on RITES Portal</text>
+
+        <!-- Milestone 4 -->
+        <circle cx="560" cy="45" r="7" fill="#1E2618"/>
+        <text x="560" y="24" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="700" fill="#1E2618">DAY 29-34</text>
+        <text x="560" y="68" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="9.5" font-weight="600" fill="#1E2618">Inspection IC</text>
+        <text x="560" y="82" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="8.5" fill="#5F6D58">Witness Pull-Down</text>
+
+        <!-- Milestone 5 -->
+        <circle cx="730" cy="45" r="7" fill="#1E2618"/>
+        <text x="730" y="24" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="700" fill="#1E2618">DAY 35-46</text>
+        <text x="730" y="68" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="9.5" font-weight="600" fill="#1E2618">Dispatch &amp; Depot</text>
+        <text x="730" y="82" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="8.5" fill="#5F6D58">E-Way Bill &amp; Transit</text>
+
+        <!-- Milestone 6 -->
+        <circle cx="890" cy="45" r="8" fill="#1E2618"/>
+        <text x="890" y="24" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="700" fill="#1E2618">DAY 47-58</text>
+        <text x="890" y="68" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="9.5" font-weight="700" fill="#1E2618">CRAC &amp; Treasury</text>
+        <text x="890" y="82" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="8.5" fill="#5F6D58">Direct Disbursement</text>
+      </svg>
+    </div>
   </section>
 
   <!-- Section 4: 5-Minute Executive Demo Script -->
-  <section class="section">
+  <section class="section page-break">
     <div class="section-tag">Presentation Playbook</div>
     <h2 class="section-title">The 5-Minute Executive Presentation Script</h2>
     <div class="script-box">
