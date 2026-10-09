@@ -1,6 +1,0 @@
-[project]
-name = "water-cooler-intelligence"
-version = "0.1.0"
-
-[tool.vercel]
-entrypoint = "app:app"
