@@ -93,6 +93,17 @@ cd intel && python run.py dashboard
 | **Sidwal Refrigeration** | OEM | North (RCF, ICF, CPWD) | ₹40,200 – ₹41,800 | Legacy railway HVAC contractor. High billing rates vulnerable to Cool Home's lean cost structure. |
 | **Atlantis (Marvellous)** | OEM | Delhi NCR / Western UP | ₹36,900 – ₹37,500 | Competes in Secretariat complexes. Cool Home wins on 1550W+ heavy compressor compliance. |
 | **Godrej & Boyce** | OEM | National (MES, Banks, Edu) | ₹39,800 – ₹41,000 | High overhead institutional brand. Cool Home comfortably outbids by ₹4,000/unit on GeM. |
+| **Lloyd (Havells)** | OEM | North & Central (UP, RJ, DL) | ₹37,500 – ₹38,200 | Havells distributor network. Cool Home wins on heavy industrial SS 304 chassis and 1550W compressor. |
+| **Kent RO Systems** | OEM | National (Forces, KVS) | ₹42,500 – ₹43,800 | Charges heavy purification bundle margin. Cool Home saves buyers ₹6,000/unit on pure water coolers. |
+| **TruFrost Cooling** | OEM | North & West (Health, HSVP) | ₹38,000 – ₹38,900 | Fast-growing brand in North India. Cool Home offers factory direct manufacturing without distributor overhead. |
+| **Carrier Midea** | OEM | National (BEL, IITs, PSUs) | ₹40,500 – ₹41,800 | High corporate overhead. Cool Home provides 12% price savings and Class-1 MII local supplier preference. |
+| **Amber Enterprises** | OEM | North (Railways, Bulk) | ₹36,000 – ₹36,500 | Contract manufacturing giant. Cool Home outmaneuvers on direct GeM lots and single-zone railway tenders. |
+| **Americ (Aemric India)** | OEM | Ambala, Haryana (NR, BBMB) | ₹36,500 – ₹36,900 | Active in Ambala Division and BBMB. Cool Home wins on ₹35,835 factory rates and heavier SS 304 tank gauge. |
+| **Sunrise Aquacoolers** | OEM | Greater Noida, UP (NR, Schools) | ₹36,200 – ₹36,800 | Direct Western UP neighbor. Bids across Northern Railway and schools. Cool Home counters on verified 1550W compressors. |
+| **Sanrian (Sunrian)** | OEM | Faridabad, Haryana (PSUs, NCR) | ₹36,800 – ₹37,400 | Specializes in self-contained and RO water ATMs. Cool Home beats them on pure commercial water cooler L1 pricing. |
+| **Thor Industries** | OEM | Faridabad, Haryana (NR, CWC) | ₹36,400 – ₹36,900 | Heavy-duty SS fabricator (up to 400L). Highly active in railway workshops. Cool Home wins on delivered L1 cost. |
+| **Hiance Products** | OEM | Greater Noida, UP (NCR, Civic) | ₹36,100 – ₹36,600 | Frequent contender on UP municipal and NCR railway bids. Cool Home outmaneuvers on RITES pre-dispatch track record. |
+| **Bluescent RO Industries** | OEM | Ghaziabad, UP (Meerut, MDA) | ₹36,700 – ₹37,200 | Immediate neighbor in Ghaziabad. Targets Meerut/NCR civic tenders. Cool Home wins on bulk manufacturing capacity. |
 | **Rajasthan Commercial** | Dealer | Rajasthan (PWD, RSRTC) | ₹41,500 | **Prime Attack Target.** Dealer markup is 15–20% higher than Cool Home direct OEM pricing. |
 | **Shree Ram Refrigeration** | Dealer | Western UP (Meerut, Ghaziabad) | ₹38,500 | **Prime Attack Target.** Local dealer in Cool Home backyard. Outbid on UP municipal tenders. |
 | **Western Aircon & Engg** | Dealer | Gujarat (GIDC, Vadodara) | ₹41,800 | **Prime Attack Target.** Trader markup creates a ₹4,000/unit price advantage for Cool Home. |
