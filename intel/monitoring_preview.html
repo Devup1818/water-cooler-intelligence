@@ -731,25 +731,60 @@ tr:hover td {
   gap: 16px;
 }
 
-/* Firms Cards */
+/* Firms Cards & Competitor Intelligence */
 .firms-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 18px;
+  margin-bottom: 24px;
 }
 .firm-card {
   background: var(--panel);
   border: 1px solid var(--hairline);
   border-radius: 8px;
-  padding: 18px;
-  display: grid;
-  gap: 10px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  position: relative;
+}
+.firm-card:hover {
+  border-color: var(--sage-dim);
+  box-shadow: 0 4px 18px rgba(30, 38, 24, 0.08);
+  transform: translateY(-2px);
+}
+.firm-card.firm-card-favored {
+  background: linear-gradient(180deg, rgba(184, 212, 164, 0.14) 0%, var(--panel) 100%);
+  border: 1.5px solid var(--forest);
+}
+.firm-card.firm-card-dealer {
+  border-left: 4px solid var(--amber);
+}
+.firm-card.firm-card-oem {
+  border-left: 4px solid var(--forest);
+}
+.firm-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
 }
 .firm-name {
   font-family: var(--font-sans);
   font-weight: 700;
-  font-size: 15px;
+  font-size: 15.5px;
   color: var(--ink);
+  line-height: 1.3;
+}
+.firm-rate-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: var(--inset);
+  border-radius: 6px;
+  font-size: 12px;
 }
 .firm-meta {
   display: grid;
@@ -762,7 +797,7 @@ tr:hover td {
   font-size: 12px;
 }
 .firm-stat-box { display: grid; gap: 2px; }
-.firm-stat-label { font-size: 10.5px; color: var(--faint); font-weight: 600; }
+.firm-stat-label { font-size: 10px; color: var(--faint); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
 .firm-stat-val { font-weight: 700; color: var(--ink); font-size: 13.5px; }
 .firm-strategy {
   background: var(--inset);
@@ -770,8 +805,22 @@ tr:hover td {
   border-radius: 6px;
   font-size: 12px;
   line-height: 1.5;
-  color: var(--grey);
+  color: var(--ink);
   border-left: 3px solid var(--forest);
+}
+.firm-territory-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+}
+.firm-territory-pill {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 2px 6px;
+  background: rgba(30, 38, 24, 0.06);
+  border-radius: 3px;
+  color: var(--grey);
 }
 
 /* Execution Timeline */
@@ -1233,45 +1282,51 @@ tr:hover td {
 
       <!-- Firm Filter Bar -->
       <section class="filter-bar">
+        <div class="chips" id="firm-channel-chips">
+          <button onclick="setFirmChannelFilter('')" id="chip-channel-all" class="chip active">All Brands (20)</button>
+          <button onclick="setFirmChannelFilter('OEM')" id="chip-channel-oem" class="chip">🏢 OEM Manufacturers (16)</button>
+          <button onclick="setFirmChannelFilter('Authorized Dealer')" id="chip-channel-dealer" class="chip">⚠️ Regional Dealers (4)</button>
+        </div>
+
         <div class="inputs" style="flex:1;">
           <select id="firm-select" class="select-input" onchange="filterFirms()" style="min-width:260px;">
-            <option value="">All Firms (20)</option>
-            <option value="Cool Home (India) - Fresco Casa">Cool Home (India) - Fresco Casa [OEM - UP]</option>
-            <option value="Voltas Limited">Voltas Limited (Tata Enterprise) [OEM - MH]</option>
-            <option value="Blue Star Limited">Blue Star Limited [OEM - MH]</option>
-            <option value="Usha International">Usha International [OEM - HR]</option>
+            <option value="">All Brands (20 Profiles)</option>
+            <option value="Cool Home (India) - Fresco Casa">Cool Home (India) - Fresco Casa [OEM - UP Baseline]</option>
+            <option value="Voltas Limited">Voltas Limited (Tata Enterprise) [OEM - MH National]</option>
+            <option value="Blue Star Limited">Blue Star Limited [OEM - MH National]</option>
+            <option value="Usha International">Usha International [OEM - HR National]</option>
             <option value="Eureka Forbes Limited">Eureka Forbes Limited (Forbes Pro) [OEM - KA]</option>
-            <option value="Rockwell Industries Limited">Rockwell Industries Limited [OEM - TS]</option>
+            <option value="Rockwell Industries Limited">Rockwell Industries Limited [OEM - TS South]</option>
             <option value="Middleby Celfrost Innovations">Middleby Celfrost Innovations [OEM - HR]</option>
             <option value="Western Refrigeration Pvt Ltd">Western Refrigeration Pvt Ltd [OEM - GJ]</option>
-            <option value="Sidwal Refrigeration Industries">Sidwal Refrigeration Industries [OEM - HR]</option>
-            <option value="Atlantis (Marvellous Enterprises)">Atlantis (Marvellous Enterprises) [OEM - UP]</option>
-            <option value="Godrej & Boyce Mfg. Co. Ltd.">Godrej & Boyce Mfg. Co. Ltd. [OEM - MH]</option>
-            <option value="Lloyd (Havells India Limited)">Lloyd (Havells India Limited) [OEM - UP]</option>
-            <option value="Kent RO Systems Limited">Kent RO Systems Limited [OEM - UP]</option>
-            <option value="TruFrost Cooling Pvt Ltd">TruFrost Cooling Pvt Ltd [OEM - HR]</option>
-            <option value="Carrier Midea India Pvt Ltd">Carrier Midea India Pvt Ltd [OEM - HR]</option>
-            <option value="Amber Enterprises India Ltd">Amber Enterprises India Ltd [OEM - PB]</option>
-            <option value="Rajasthan Commercial Enterprises">Rajasthan Commercial Enterprises [Dealer - RJ]</option>
-            <option value="Shree Ram Refrigeration Works">Shree Ram Refrigeration Works [Dealer - UP]</option>
-            <option value="Western Aircon & Engineering">Western Aircon & Engineering [Dealer - GJ]</option>
-            <option value="Southern Cooling Systems">Southern Cooling Systems [Dealer - TN]</option>
+            <option value="Sidwal Refrigeration Industries">Sidwal Refrigeration Industries [OEM - HR Railways]</option>
+            <option value="Atlantis (Marvellous Enterprises)">Atlantis (Marvellous Enterprises) [OEM - UP/NCR]</option>
+            <option value="Godrej & Boyce Mfg. Co. Ltd.">Godrej & Boyce Mfg. Co. Ltd. [OEM - MH Conglomerate]</option>
+            <option value="Lloyd (Havells India Limited)">Lloyd (Havells India Limited) [OEM - UP/NCR]</option>
+            <option value="Kent RO Systems Limited">Kent RO Systems Limited [OEM - UP Purifier]</option>
+            <option value="TruFrost Cooling Pvt Ltd">TruFrost Cooling Pvt Ltd [OEM - HR North]</option>
+            <option value="Carrier Midea India Pvt Ltd">Carrier Midea India Pvt Ltd [OEM - HR MNC]</option>
+            <option value="Amber Enterprises India Ltd">Amber Enterprises India Ltd [OEM - PB Railways]</option>
+            <option value="Rajasthan Commercial Enterprises">Rajasthan Commercial Enterprises [Dealer - RJ Reseller]</option>
+            <option value="Shree Ram Refrigeration Works">Shree Ram Refrigeration Works [Dealer - UP Local]</option>
+            <option value="Western Aircon & Engineering">Western Aircon & Engineering [Dealer - GJ Reseller]</option>
+            <option value="Southern Cooling Systems">Southern Cooling Systems [Dealer - TN Reseller]</option>
           </select>
 
           <select id="firm-state-select" class="select-input" onchange="filterFirms()" style="min-width:180px;">
-            <option value="">All Territories (12)</option>
-            <option value="Rajasthan">Rajasthan (NWR)</option>
-            <option value="Uttar Pradesh">Uttar Pradesh (NR/NCR/Urban)</option>
-            <option value="Maharashtra">Maharashtra (WR/Central)</option>
-            <option value="Gujarat">Gujarat (GWSSB/Civic)</option>
-            <option value="Tamil Nadu">Tamil Nadu (SR/Civic)</option>
-            <option value="Delhi">Delhi (MES/Education/CPWD)</option>
-            <option value="Madhya Pradesh">Madhya Pradesh (BHEL/Tourism)</option>
-            <option value="Karnataka">Karnataka (SWR/AIIMS)</option>
-            <option value="Telangana">Telangana (SCR/DRDO)</option>
-            <option value="Haryana">Haryana (HSVP/Tech Edu)</option>
-            <option value="Punjab">Punjab (RCF/PGIMER)</option>
-            <option value="Uttarakhand">Uttarakhand (AIIMS/Hill Areas)</option>
+            <option value="">All Territories (12 States)</option>
+            <option value="Rajasthan">Rajasthan (NWR / PWD)</option>
+            <option value="Uttar Pradesh">Uttar Pradesh (NR / NCR / Urban)</option>
+            <option value="Maharashtra">Maharashtra (WR / Central Rly)</option>
+            <option value="Gujarat">Gujarat (GWSSB / GIDC / Civic)</option>
+            <option value="Tamil Nadu">Tamil Nadu (SR / TWAD / Civic)</option>
+            <option value="Delhi">Delhi (MES / CPWD / Education)</option>
+            <option value="Madhya Pradesh">Madhya Pradesh (BHEL / Health)</option>
+            <option value="Karnataka">Karnataka (SWR / AIIMS / Tech)</option>
+            <option value="Telangana">Telangana (SCR / DRDO Defence)</option>
+            <option value="Haryana">Haryana (HSVP / Tech Edu)</option>
+            <option value="Punjab">Punjab (RCF / PGIMER Health)</option>
+            <option value="Uttarakhand">Uttarakhand (AIIMS / Hill Area)</option>
           </select>
 
           <select id="firm-type-select" class="select-input" onchange="filterFirms()">
@@ -1286,7 +1341,7 @@ tr:hover td {
       </section>
 
       <!-- Competitor Profile Cards -->
-      <section class="firm-cards" id="firm-cards-grid">
+      <section class="firms-grid" id="firm-cards-grid">
         <!-- Rendered via JS -->
       </section>
 
@@ -1294,7 +1349,7 @@ tr:hover td {
       <section class="table-panel">
         <div class="table-head-info">
           <span>Territory Footprint &amp; Displacement Playbook</span>
-          <span>Direct OEM vs Dealer Margin Displacement</span>
+          <span id="territory-summary">All 12 Monitored States &middot; Direct OEM vs Dealer Margin Displacement</span>
         </div>
         <div class="table-scroll"><table>
           <thead>
@@ -1307,57 +1362,36 @@ tr:hover td {
               <th>Displacement &amp; Attack Strategy for Fresco Casa</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td><strong>Rajasthan</strong><br><span class="mono" style="font-size:11px; color:var(--grey);">NWR / PWD / RSRTC</span></td>
-              <td>Cool Home, Rajasthan Commercial Enterprises</td>
-              <td><span class="badge badge-dealer">Dealer Active</span></td>
-              <td class="mono num">₹35,835 – ₹41,500</td>
-              <td><span class="badge" style="background:#dcfce7; color:#166534;">Low Threat</span></td>
-              <td><strong>Home Turf:</strong> Cool Home won NWR 120 units at ₹35,835. Rajasthan Commercial bids at ₹41,500 (+15% markup). Outbid on PWD/State tenders directly.</td>
-            </tr>
-            <tr>
-              <td><strong>Uttar Pradesh</strong><br><span class="mono" style="font-size:11px; color:var(--grey);">NR / NCR / Urban Dev</span></td>
-              <td>Cool Home, Shree Ram Refrigeration, Usha Intl</td>
-              <td><span class="badge badge-oem">OEM + Local</span></td>
-              <td class="mono num">₹35,200 – ₹38,500</td>
-              <td><span class="badge" style="background:#dcfce7; color:#166534;">Home Base</span></td>
-              <td><strong>Factory Advantage:</strong> Manufacturing at Hapur, UP eliminates interstate freight. Shree Ram bids at ₹38,500 in Ghaziabad/Meerut; Cool Home can easily undercut.</td>
-            </tr>
-            <tr>
-              <td><strong>Gujarat</strong><br><span class="mono" style="font-size:11px; color:var(--grey);">GWSSB / GIDC / Municipal</span></td>
-              <td>Blue Star Limited, Western Aircon</td>
-              <td><span class="badge badge-dealer">Dealer Dominant</span></td>
-              <td class="mono num">₹38,000 – ₹41,800</td>
-              <td><span class="badge badge-urgent">Attack Opportunity</span></td>
-              <td><strong>Dealer Markup Vulnerability:</strong> Western Aircon supplies at ₹41,800 for 150L. Cool Home direct factory rate + transit gives a ₹4,000/unit price advantage.</td>
-            </tr>
-            <tr>
-              <td><strong>Maharashtra</strong><br><span class="mono" style="font-size:11px; color:var(--grey);">Western Railway / AIIMS</span></td>
-              <td>Voltas Limited, Blue Star Limited</td>
-              <td><span class="badge badge-oem">Tier-1 OEMs</span></td>
-              <td class="mono num">₹38,900 – ₹59,500</td>
-              <td><span class="badge" style="background:#fef3c7; color:#92400e;">Moderate (Brand)</span></td>
-              <td><strong>Price Under-Cut:</strong> Voltas won WR Mumbai at ₹38,900. Cool Home with MSME purchase preference can price at ₹36,200 to capture railway bulk allotments.</td>
-            </tr>
-            <tr>
-              <td><strong>Tamil Nadu &amp; South</strong><br><span class="mono" style="font-size:11px; color:var(--grey);">Southern Railway / TWAD</span></td>
-              <td>Blue Star, Southern Cooling Systems</td>
-              <td><span class="badge badge-dealer">Dealer Dominant</span></td>
-              <td class="mono num">₹40,500 – ₹42,400</td>
-              <td><span class="badge badge-urgent">Attack Opportunity</span></td>
-              <td><strong>Highest Realization:</strong> Southern Cooling wins TWAD at ₹42,400/unit. Cool Home can comfortably bid ₹37,500 (retaining healthy ₹3,000 margin above base).</td>
-            </tr>
+          <tbody id="territory-table-body">
+            <!-- Rendered dynamically via JS -->
           </tbody>
         </table></div>
       </section>
 
       <!-- Historical Awards Log -->
-      <section class="table-panel">
+      <section class="table-panel" id="awards-section">
         <div class="table-head-info">
-          <span>Historical Contract Awards Ledger (23 Verified Wins Across India)</span>
-          <span>Official records across Indian Railways, Defence &amp; States</span>
+          <span id="awards-title">Historical Contract Awards Ledger (47 Verified Wins Across India)</span>
+          <span id="awards-summary">Official records across Indian Railways, Defence &amp; States (&sim;&8.92 Cr Volume)</span>
         </div>
+        <div class="table-scroll"><table>
+          <thead>
+            <tr>
+              <th>Award Date &amp; Tender ID</th>
+              <th>Winning Firm &amp; Channel</th>
+              <th>Buyer Organisation &amp; State</th>
+              <th>Capacity</th>
+              <th>Qty</th>
+              <th>Winning Unit Price</th>
+              <th>Total Contract</th>
+              <th>Operational Notes</th>
+            </tr>
+          </thead>
+          <tbody id="awards-table-body">
+            <!-- Rendered via JS -->
+          </tbody>
+        </table></div>
+      </section>
         <div class="table-scroll"><table>
           <thead>
             <tr>
@@ -2059,6 +2093,12 @@ tr:hover td {
       
       document.getElementById('view-' + viewName).classList.remove('hidden');
       document.getElementById('tab-' + viewName).classList.add('active');
+
+      if (viewName === 'firms') {
+        renderFirmCards();
+        renderTerritoryTable();
+        renderAwardsTable();
+      }
     }
 
     function fmtMoney(val) {
@@ -2255,68 +2295,360 @@ tr:hover td {
       document.getElementById('result-summary').textContent = `Showing ${filteredBids.length} active tenders`;
     }
 
+    // Comprehensive Territory Footprint Matrix (All 12 Monitored States)
+    const TERRITORY_INTELLIGENCE = [
+      {
+        state: "Rajasthan",
+        focus: "NWR / PWD / RSRTC / NPCIL",
+        competitors: ["Cool Home (India)", "Rajasthan Commercial Enterprises", "Lloyd (Havells)", "Voltas Limited"],
+        dominant_channel: "Dealer Active",
+        channel_type: "dealer",
+        price_band: "₹35,835 – ₹41,500",
+        threat: "Low Threat",
+        threat_class: "low",
+        strategy: "Home Turf: Cool Home won NWR 120 units at ₹35,835. Rajasthan Commercial bids at ₹41,500 (+15% markup). Outbid on PWD/State tenders directly."
+      },
+      {
+        state: "Uttar Pradesh",
+        focus: "NR / NCR / Urban Dev / Municipal",
+        competitors: ["Cool Home (India)", "Shree Ram Refrigeration", "Atlantis (Marvellous)", "Lloyd (Havells)", "Kent RO"],
+        dominant_channel: "OEM + Local Dealer",
+        channel_type: "mixed",
+        price_band: "₹35,200 – ₹38,500",
+        threat: "Home Base",
+        threat_class: "home",
+        strategy: "Factory Advantage: Manufacturing at Hapur, UP eliminates interstate freight. Shree Ram bids at ₹38,500 in Ghaziabad/Meerut; Cool Home easily undercuts at direct OEM rate."
+      },
+      {
+        state: "Gujarat",
+        focus: "GWSSB / GIDC / Civic / Tribal Dev",
+        competitors: ["Western Aircon & Engineering", "Western Refrigeration", "Blue Star Limited", "Cool Home (India)"],
+        dominant_channel: "Dealer Dominant",
+        channel_type: "dealer",
+        price_band: "₹38,000 – ₹41,800",
+        threat: "Attack Opportunity",
+        threat_class: "attack",
+        strategy: "Dealer Markup Vulnerability: Western Aircon supplies at ₹41,800 for 150L (+₹5,965 above Cool Home). Factory direct supply via Western Freight yields ₹4,000/unit price advantage."
+      },
+      {
+        state: "Maharashtra",
+        focus: "Western Railway / Central Rly / MES / AIIMS",
+        competitors: ["Voltas Limited", "Blue Star Limited", "Godrej & Boyce Mfg"],
+        dominant_channel: "Tier-1 OEMs",
+        channel_type: "oem",
+        price_band: "₹38,900 – ₹41,200",
+        threat: "Moderate (Brand)",
+        threat_class: "moderate",
+        strategy: "Price Under-Cut: Voltas won WR Mumbai at ₹38,900. Cool Home with MSME purchase preference can price at ₹36,200 to capture railway bulk allotments."
+      },
+      {
+        state: "Tamil Nadu",
+        focus: "Southern Railway / TWAD / Chennai Corp",
+        competitors: ["Southern Cooling Systems", "Blue Star Limited", "Rockwell Industries"],
+        dominant_channel: "Dealer Dominant",
+        channel_type: "dealer",
+        price_band: "₹40,500 – ₹42,400",
+        threat: "Attack Opportunity",
+        threat_class: "attack",
+        strategy: "Highest Realization: Southern Cooling wins TWAD at ₹42,400/unit. Cool Home can comfortably bid ₹37,500 (retaining healthy ₹3,000 margin above base)."
+      },
+      {
+        state: "Delhi",
+        focus: "MES Cantt / CPWD / Education / DJB",
+        competitors: ["Atlantis (Marvellous)", "Usha International", "Eureka Forbes", "Kent RO", "Voltas Limited"],
+        dominant_channel: "OEM Direct",
+        channel_type: "oem",
+        price_band: "₹36,900 – ₹42,500",
+        threat: "Moderate (OEM)",
+        threat_class: "moderate",
+        strategy: "Spec & Price Play: Atlantis and Kent charge high premiums in Secretariat and Cantt. Cool Home wins with 1550W industrial compressor specs and ₹35,800 pricing."
+      },
+      {
+        state: "Madhya Pradesh",
+        focus: "BHEL / Public Health / Tourism",
+        competitors: ["Voltas Limited", "TruFrost Cooling", "Usha International", "Middleby Celfrost"],
+        dominant_channel: "OEM Direct",
+        channel_type: "oem",
+        price_band: "₹37,500 – ₹39,500",
+        threat: "Moderate (Brand)",
+        threat_class: "moderate",
+        strategy: "Central Logistics Edge: Quick transit from Hapur via Agra-Gwalior corridor. Outbid Voltas by ₹3,000 on state health mission and BHEL tenders."
+      },
+      {
+        state: "Haryana",
+        focus: "HSVP / Technical Education / Depots",
+        competitors: ["TruFrost Cooling", "Sidwal Refrigeration", "Usha International", "Carrier Midea"],
+        dominant_channel: "Regional OEMs",
+        channel_type: "oem",
+        price_band: "₹37,800 – ₹40,800",
+        threat: "Moderate (OEM)",
+        threat_class: "moderate",
+        strategy: "Adjacent Market: Hapur factory borders Haryana. Can provide fast delivery and on-site warranty service, undercutting Sidwal's high ₹40,800 railway rate."
+      },
+      {
+        state: "Punjab",
+        focus: "RCF Kapurthala / PGIMER / Depots",
+        competitors: ["Amber Enterprises", "TruFrost Cooling", "Sidwal Refrigeration"],
+        dominant_channel: "Depot OEM + Brands",
+        channel_type: "oem",
+        price_band: "₹36,000 – ₹40,800",
+        threat: "Moderate (OEM)",
+        threat_class: "moderate",
+        strategy: "Railway Workshop Attack: Amber bids on rolling stock contracts. Cool Home competes on standalone station/depot tenders with immediate ex-stock availability."
+      },
+      {
+        state: "Karnataka",
+        focus: "SWR / BEL / AIIMS / Academic",
+        competitors: ["Eureka Forbes Limited", "Carrier Midea India", "Blue Star Limited"],
+        dominant_channel: "Institutional OEMs",
+        channel_type: "oem",
+        price_band: "₹40,500 – ₹41,800",
+        threat: "Attack Opportunity",
+        threat_class: "attack",
+        strategy: "Brand Premium Attack: Forbes Pro and Carrier command ₹40,500–₹41,800. Cool Home provides Class-1 Make in India compliance at ₹36,500 landed cost."
+      },
+      {
+        state: "Telangana",
+        focus: "SCR / DRDO / State Health",
+        competitors: ["Rockwell Industries Limited", "Blue Star Limited", "Voltas Limited"],
+        dominant_channel: "South OEM Base",
+        channel_type: "oem",
+        price_band: "₹37,900 – ₹40,800",
+        threat: "Moderate (Local)",
+        threat_class: "moderate",
+        strategy: "South Central Corridor: Displace Rockwell on heavy industrial 150L tenders with certified heavy-duty SS 304 food-grade tanks."
+      },
+      {
+        state: "Uttarakhand",
+        focus: "AIIMS Rishikesh / Hill Tourism / PWD",
+        competitors: ["Eureka Forbes Limited", "Usha International", "Cool Home (India)"],
+        dominant_channel: "OEM Direct",
+        channel_type: "oem",
+        price_band: "₹36,800 – ₹41,800",
+        threat: "Attack Opportunity",
+        threat_class: "attack",
+        strategy: "Hill Transit Advantage: Hapur to Haridwar/Dehradun is under 4 hours by road. Eliminates long-distance damage risks and easily undercuts Forbes Pro."
+      }
+    ];
+
     function renderFirmCards() {
       const grid = document.getElementById('firm-cards-grid');
+      if (!grid) return;
       grid.innerHTML = '';
 
-      const firmFilter = document.getElementById('firm-select').value;
+      const firmFilter = (document.getElementById('firm-select').value || '').toLowerCase().trim();
       const stateFilter = document.getElementById('firm-state-select').value;
       const typeFilter = document.getElementById('firm-type-select').value;
 
+      let renderedCount = 0;
+
       Object.values(FIRM_INTELLIGENCE).forEach(f => {
-        if (firmFilter && f.name !== firmFilter && !f.name.includes(firmFilter)) return;
+        const fNameLow = f.name.toLowerCase();
+        if (firmFilter && !fNameLow.includes(firmFilter) && !firmFilter.includes(fNameLow)) return;
         if (typeFilter && f.type !== typeFilter) return;
         if (stateFilter && !f.active_states.includes(stateFilter)) return;
 
+        renderedCount++;
         const card = document.createElement('div');
-        card.className = 'firm-card';
-        const badgeCls = f.type === 'OEM' ? 'badge badge-oem' : 'badge badge-dealer';
+        const isFavored = f.name.includes("Cool Home");
+        const isDealer = f.type === 'Authorized Dealer';
+        
+        let cardCls = 'firm-card';
+        if (isFavored) cardCls += ' firm-card-favored';
+        else if (isDealer) cardCls += ' firm-card-dealer';
+        else cardCls += ' firm-card-oem';
+        card.className = cardCls;
+
+        const badgeCls = isDealer ? 'badge badge-dealer' : 'badge badge-oem';
+
+        // Calculate delta vs Cool Home baseline (₹35,835)
+        const delta = f.rate_150l - 35835;
+        let deltaHtml = '';
+        if (isFavored) {
+          deltaHtml = `<span style="color:var(--forest); font-weight:700; font-size:11px;">★ Baseline L1 Rate</span>`;
+        } else if (delta > 0) {
+          const pct = ((delta / 35835) * 100).toFixed(1);
+          const color = isDealer ? 'var(--amber)' : 'var(--forest)';
+          deltaHtml = `<span style="color:${color}; font-weight:600; font-size:11px;">+₹${delta.toLocaleString('en-IN')} (+${pct}% vs Cool Home)</span>`;
+        } else {
+          deltaHtml = `<span class="mono" style="font-size:11px; color:var(--grey);">Competitive Parity</span>`;
+        }
+
+        const territoryPills = f.active_states.map(s => `<span class="firm-territory-pill">${s}</span>`).join('');
 
         card.innerHTML = `
           <div class="firm-header">
             <div>
               <div class="firm-name">${f.name}</div>
-              <div class="eyebrow" style="margin-top:2px;">HQ: ${f.hq}</div>
+              <div class="eyebrow" style="margin-top:3px;">HQ: ${f.hq}</div>
             </div>
             <span class="${badgeCls}">${f.type}</span>
           </div>
 
-          <div class="firm-meta">
-            <div class="firm-stat-box">
-              <span class="firm-stat-label">Active States</span>
-              <span class="firm-stat-val">${f.active_states.join(', ')}</span>
+          <div class="firm-rate-banner">
+            <div>
+              <span class="mono" style="font-size:10px; color:var(--grey); text-transform:uppercase; letter-spacing:0.06em;">150L Realized Win Rate</span>
+              <div class="mono" style="font-size:16px; font-weight:700; color:${isFavored ? 'var(--forest)' : 'var(--ink)'};">
+                ₹${f.rate_150l.toLocaleString('en-IN')}
+              </div>
             </div>
-            <div class="firm-stat-box">
-              <span class="firm-stat-label">150L Realized Rate</span>
-              <span class="firm-stat-val" style="color:var(--forest)">₹${f.rate_150l.toLocaleString('en-IN')}</span>
-            </div>
-            <div class="firm-stat-box">
-              <span class="firm-stat-label">Contracts Won</span>
-              <span class="firm-stat-val">${f.total_awards} (${f.units_sold} Units)</span>
-            </div>
-            <div class="firm-stat-box">
-              <span class="firm-stat-label">Total Value</span>
-              <span class="firm-stat-val">${fmtMoney(f.total_val)}</span>
+            <div style="text-align:right;">
+              ${deltaHtml}
             </div>
           </div>
 
-          <div style="font-size:11px; color:var(--grey);">
-            <strong>Key Buyers:</strong> ${f.primary_buyer}
+          <div class="firm-meta">
+            <div class="firm-stat-box">
+              <span class="firm-stat-label">Verified Wins</span>
+              <span class="firm-stat-val mono">${f.total_awards} Contracts</span>
+            </div>
+            <div class="firm-stat-box">
+              <span class="firm-stat-label">Units Supplied</span>
+              <span class="firm-stat-val mono">${f.units_sold} Units</span>
+            </div>
+            <div class="firm-stat-box">
+              <span class="firm-stat-label">Total Volume</span>
+              <span class="firm-stat-val mono" style="color:var(--forest);">${fmtMoney(f.total_val)}</span>
+            </div>
+            <div class="firm-stat-box">
+              <span class="firm-stat-label">Active Footprint</span>
+              <span class="firm-stat-val mono" style="font-size:11.5px;">${f.active_states.length} Territories</span>
+            </div>
+          </div>
+
+          <div style="font-size:11.5px; color:var(--grey);">
+            <strong style="color:var(--ink);">Key Buyers:</strong> ${f.primary_buyer}
+          </div>
+
+          <div class="firm-territory-pills">
+            ${territoryPills}
           </div>
 
           <div class="firm-strategy">
             ${f.strategy}
           </div>
+
+          <div style="margin-top:auto; padding-top:6px; display:flex; justify-content:space-between; align-items:center;">
+            <button onclick="inspectFirmAwards('${f.name.replace(/'/g, "\\'")}')" class="btn" style="font-size:11px; padding:4px 10px;">
+              View Verified Awards (${f.total_awards}) ↓
+            </button>
+            <span class="mono" style="font-size:10px; color:var(--grey);">GeM Certified</span>
+          </div>
         `;
         grid.appendChild(card);
       });
+
+      if (renderedCount === 0) {
+        grid.innerHTML = '<div style="grid-column: 1/-1; padding:40px; text-align:center; color:var(--faint); background:var(--panel); border:1px solid var(--hairline); border-radius:8px;">No competitor profiles match current filter criteria.</div>';
+      }
+
+      const kpiCount = document.getElementById('kpi-firms-count');
+      if (kpiCount) {
+        kpiCount.textContent = `${renderedCount} Firms`;
+      }
     }
 
-    function renderAwardsTable() {
-      const tbody = document.getElementById('awards-table-body');
+    function inspectFirmAwards(firmName) {
+      document.getElementById('firm-select').value = firmName;
+      filterFirms();
+      const el = document.getElementById('awards-section');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function renderTerritoryTable() {
+      const tbody = document.getElementById('territory-table-body');
+      if (!tbody) return;
       tbody.innerHTML = '';
 
-      RAW_AWARDS.forEach(a => {
+      const firmFilter = (document.getElementById('firm-select').value || '').toLowerCase().trim();
+      const stateFilter = document.getElementById('firm-state-select').value;
+      const typeFilter = document.getElementById('firm-type-select').value;
+
+      const filteredTerritories = TERRITORY_INTELLIGENCE.filter(t => {
+        if (stateFilter && !t.state.toLowerCase().includes(stateFilter.toLowerCase())) return false;
+        if (firmFilter) {
+          const matchFirm = t.competitors.some(c => c.toLowerCase().includes(firmFilter) || firmFilter.includes(c.toLowerCase()));
+          if (!matchFirm) return false;
+        }
+        if (typeFilter) {
+          if (typeFilter === 'OEM' && t.channel_type === 'dealer') return false;
+          if (typeFilter === 'Authorized Dealer' && t.channel_type === 'oem') return false;
+        }
+        return true;
+      });
+
+      if (filteredTerritories.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="padding:30px; text-align:center; color:var(--faint);">No territories match current filters</td></tr>';
+        return;
+      }
+
+      filteredTerritories.forEach(t => {
+        const tr = document.createElement('tr');
+        
+        let threatBadge = '';
+        if (t.threat_class === 'home') {
+          threatBadge = '<span class="badge" style="background:#dcfce7; color:#166534;">Home Base</span>';
+        } else if (t.threat_class === 'low') {
+          threatBadge = '<span class="badge" style="background:#dcfce7; color:#166534;">Low Threat</span>';
+        } else if (t.threat_class === 'attack') {
+          threatBadge = '<span class="badge badge-urgent">Attack Opportunity</span>';
+        } else {
+          threatBadge = '<span class="badge" style="background:#fef3c7; color:#92400e;">' + t.threat + '</span>';
+        }
+
+        let channelBadge = t.channel_type === 'dealer' 
+          ? '<span class="badge badge-dealer">' + t.dominant_channel + '</span>'
+          : '<span class="badge badge-oem">' + t.dominant_channel + '</span>';
+
+        tr.innerHTML = `
+          <td>
+            <strong>${t.state}</strong><br>
+            <span class="mono" style="font-size:11px; color:var(--grey);">${t.focus}</span>
+          </td>
+          <td>${t.competitors.join(', ')}</td>
+          <td>${channelBadge}</td>
+          <td class="mono num" style="font-weight:600;">${t.price_band}</td>
+          <td>${threatBadge}</td>
+          <td style="font-size:12px; line-height:1.45;">${t.strategy}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderAwardsTable(filterSeller = null) {
+      const tbody = document.getElementById('awards-table-body');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      const firmFilter = (filterSeller || document.getElementById('firm-select').value || '').toLowerCase().trim();
+      const stateFilter = document.getElementById('firm-state-select').value;
+      const typeFilter = document.getElementById('firm-type-select').value;
+
+      const filteredAwards = RAW_AWARDS.filter(a => {
+        const sNameLow = a.seller_name.toLowerCase();
+        if (firmFilter && !sNameLow.includes(firmFilter) && !firmFilter.includes(sNameLow)) return false;
+        if (typeFilter && a.seller_type !== typeFilter) return false;
+        if (stateFilter && a.buyer_state !== stateFilter && !a.buyer_state.includes(stateFilter)) return false;
+        return true;
+      });
+
+      const titleEl = document.getElementById('awards-title');
+      if (titleEl) {
+        if (firmFilter) {
+          titleEl.textContent = `Verified Contract Awards Ledger (${filteredAwards.length} Wins)`;
+        } else if (stateFilter) {
+          titleEl.textContent = `Verified Contract Awards Ledger (${filteredAwards.length} Wins in ${stateFilter})`;
+        } else {
+          titleEl.textContent = `Historical Contract Awards Ledger (${RAW_AWARDS.length} Verified Wins Across India)`;
+        }
+      }
+
+      if (filteredAwards.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" style="padding:30px; text-align:center; color:var(--faint);">No verified awards match current filters</td></tr>';
+        return;
+      }
+
+      filteredAwards.forEach(a => {
         const tr = document.createElement('tr');
         const badgeCls = a.seller_type === 'OEM' ? 'badge badge-oem' : 'badge badge-dealer';
 
@@ -2347,13 +2679,34 @@ tr:hover td {
 
     function filterFirms() {
       renderFirmCards();
+      renderTerritoryTable();
+      renderAwardsTable();
     }
 
     function resetFirmFilters() {
       document.getElementById('firm-select').value = '';
       document.getElementById('firm-state-select').value = '';
       document.getElementById('firm-type-select').value = '';
-      renderFirmCards();
+      document.querySelectorAll('#firm-channel-chips button').forEach(b => b.classList.remove('active'));
+      const chipAll = document.getElementById('chip-channel-all');
+      if (chipAll) chipAll.classList.add('active');
+      filterFirms();
+    }
+
+    function setFirmChannelFilter(channel) {
+      document.getElementById('firm-type-select').value = channel;
+      document.querySelectorAll('#firm-channel-chips button').forEach(b => b.classList.remove('active'));
+      if (channel === 'OEM') {
+        const btn = document.getElementById('chip-channel-oem');
+        if (btn) btn.classList.add('active');
+      } else if (channel === 'Authorized Dealer') {
+        const btn = document.getElementById('chip-channel-dealer');
+        if (btn) btn.classList.add('active');
+      } else {
+        const btn = document.getElementById('chip-channel-all');
+        if (btn) btn.classList.add('active');
+      }
+      filterFirms();
     }
 
     function setTimelineFilter(filter) {
@@ -2364,24 +2717,67 @@ tr:hover td {
       applyFilters();
     }
 
+    function updateChipCounts() {
+      const now = new Date();
+      const in48h = new Date(now.getTime() + 48 * 60 * 60 * 1000);
+      const in7d = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+      const in30d = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
+
+      let upcoming = 0;
+      let urgent = 0;
+      let week = 0;
+      let month = 0;
+
+      RAW_BIDS.forEach(b => {
+        if (!b.end_date) return;
+        const d = new Date(b.end_date);
+        if (d >= now) {
+          upcoming++;
+          if (d <= in48h) urgent++;
+          if (d <= in7d) week++;
+          if (d <= in30d) month++;
+        }
+      });
+
+      const setEl = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = val;
+      };
+
+      setEl('cnt-upcoming', upcoming);
+      setEl('cnt-urgent', urgent);
+      setEl('cnt-week', week);
+      setEl('cnt-month', month);
+      setEl('cnt-all', RAW_BIDS.length);
+
+      const liveBadge = document.getElementById('live-active-count');
+      if (liveBadge) liveBadge.textContent = upcoming;
+      const tabBadge = document.getElementById('tab-radar-count');
+      if (tabBadge) tabBadge.textContent = upcoming;
+    }
+
     function applyFilters() {
-      const q = document.getElementById('search-input').value.toLowerCase().trim();
+      const q = (document.getElementById('search-input').value || '').toLowerCase().trim();
       const state = document.getElementById('filter-state').value;
       const cap = document.getElementById('filter-cap').value;
 
+      const now = new Date();
+      const in48h = new Date(now.getTime() + 48 * 60 * 60 * 1000);
+      const in7d = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+      const in30d = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
+
       filteredBids = RAW_BIDS.filter(b => {
         const dt = b.end_date || '';
+        const d = dt ? new Date(dt) : null;
 
         if (activeTimeline === 'upcoming') {
-          if (dt && new Date(dt) < new Date()) return false;
+          if (d && d < now) return false;
         } else if (activeTimeline === 'urgent') {
-          if (dt < '2026-10-09' || dt > '2026-10-11T23:59:59') return false;
-        } else if (activeTimeline === 'midoct') {
-          if (dt < '2026-10-10' || dt > '2026-10-20T23:59:59') return false;
-        } else if (activeTimeline === 'lateoct') {
-          if (dt < '2026-10-21' || dt > '2026-10-31T23:59:59') return false;
-        } else if (activeTimeline === 'nov') {
-          if (dt < '2026-11-01') return false;
+          if (!d || d < now || d > in48h) return false;
+        } else if (activeTimeline === 'week') {
+          if (!d || d < now || d > in7d) return false;
+        } else if (activeTimeline === 'month') {
+          if (!d || d < now || d > in30d) return false;
         }
 
         if (state && b.state !== state) return false;
@@ -2549,39 +2945,49 @@ tr:hover td {
     }
 
     function init() {
-      const states = Array.from(new Set(RAW_BIDS.map(b => b.state).filter(Boolean))).sort();
-      const sSelect = document.getElementById('filter-state');
-      states.forEach(s => {
-        const opt = document.createElement('option');
-        opt.value = s;
-        opt.textContent = s;
-        sSelect.appendChild(opt);
-      });
+      try {
+        const states = Array.from(new Set(RAW_BIDS.map(b => b.state).filter(Boolean))).sort();
+        const sSelect = document.getElementById('filter-state');
+        if (sSelect) {
+          states.forEach(s => {
+            const opt = document.createElement('option');
+            opt.value = s;
+            opt.textContent = s;
+            sSelect.appendChild(opt);
+          });
+        }
 
-      const caps = Array.from(new Set(RAW_BIDS.map(b => b.capacity_class).filter(Boolean))).sort((a,b)=>b-a);
-      const cSelect = document.getElementById('filter-cap');
-      caps.forEach(c => {
-        const opt = document.createElement('option');
-        opt.value = c;
-        opt.textContent = `${c} L`;
-        cSelect.appendChild(opt);
-      });
+        const caps = Array.from(new Set(RAW_BIDS.map(b => b.capacity_class).filter(Boolean))).sort((a,b)=>b-a);
+        const cSelect = document.getElementById('filter-cap');
+        if (cSelect) {
+          caps.forEach(c => {
+            const opt = document.createElement('option');
+            opt.value = c;
+            opt.textContent = `${c} L`;
+            cSelect.appendChild(opt);
+          });
+        }
 
-      document.getElementById('search-input').addEventListener('input', applyFilters);
-      document.getElementById('filter-state').addEventListener('change', applyFilters);
-      document.getElementById('filter-cap').addEventListener('change', applyFilters);
+        const searchIn = document.getElementById('search-input');
+        if (searchIn) searchIn.addEventListener('input', applyFilters);
+        if (sSelect) sSelect.addEventListener('change', applyFilters);
+        if (cSelect) cSelect.addEventListener('change', applyFilters);
 
-      updateChipCounts();
-      setTimelineFilter('upcoming');
-      runRateCalculator();
-      renderFirmCards();
-      renderAwardsTable();
-
-      // Autonomous dynamic clock refresh every 60 seconds
-      setInterval(() => {
         updateChipCounts();
-        applyFilters();
-      }, 60000);
+        setTimelineFilter('upcoming');
+        runRateCalculator();
+        renderFirmCards();
+        renderTerritoryTable();
+        renderAwardsTable();
+
+        // Autonomous dynamic clock refresh every 60 seconds
+        setInterval(() => {
+          updateChipCounts();
+          applyFilters();
+        }, 60000);
+      } catch (err) {
+        console.error("Initialization error in Command Center:", err);
+      }
     }
 
     window.onload = init;
