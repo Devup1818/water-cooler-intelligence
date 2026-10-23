@@ -23,11 +23,11 @@ def sync_all():
 
     import sys
     sys.path.insert(0, str(BASE_DIR))
-    from normalize import is_relevant
+    from normalize import is_relevant, extract_state
 
     # Query all bids ordered by upcoming first, then closing date
     rows = conn.execute('''
-        SELECT b.bid_number, b.title, b.org_name, b.ministry, b.dept, b.state, b.portal_code,
+        SELECT b.bid_number, b.title, b.org_name, b.ministry, b.dept, b.state, b.portal_code, b.source,
                b.status, b.end_date, b.start_date, b.capacity_class, b.capacity_text, b.quantity,
                b.est_value, b.relevant, b.source_url, b.category,
                d.pdf_path, d.fields
@@ -67,6 +67,13 @@ def sync_all():
             item['est_value'] = fields.get('est_value')
         if not item['capacity_class'] and fields.get('capacity_class'):
             item['capacity_class'] = fields.get('capacity_class')
+
+        if not item.get('state'):
+            full_context = full_text + ' ' + str(fields.get('office') or '') + ' ' + str(fields.get('org_name') or '')
+            detected_state = extract_state(full_context, item.get('portal_code') or item.get('source') or '')
+            if detected_state:
+                item['state'] = detected_state
+                conn.execute('UPDATE bids SET state = ? WHERE bid_number = ?', (detected_state, item['bid_number']))
         bids.append(item)
         clean_count += 1
 

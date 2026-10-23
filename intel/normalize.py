@@ -68,14 +68,37 @@ def capacity_from_quantity(qty: float) -> int | None:
 # ---------------------------------------------------------------------------
 # State
 # ---------------------------------------------------------------------------
-def extract_state(text: str) -> str | None:
+PORTAL_TO_STATE = {
+    'assam': 'Assam', 'as': 'Assam', 'br': 'Bihar', 'bihar': 'Bihar', 'dl': 'Delhi',
+    'hp': 'Himachal Pradesh', 'hr': 'Haryana', 'jh': 'Jharkhand', 'jk': 'Jammu & Kashmir',
+    'kl': 'Kerala', 'mh': 'Maharashtra', 'mp': 'Madhya Pradesh', 'od': 'Odisha',
+    'pb': 'Punjab', 'rj': 'Rajasthan', 'tn': 'Tamil Nadu', 'ts': 'Telangana',
+    'uk': 'Uttarakhand', 'up': 'Uttar Pradesh', 'wb': 'West Bengal', 'cg': 'Chhattisgarh',
+    'ga': 'Goa', 'tr': 'Tripura', 'sk': 'Sikkim', 'ch': 'Chandigarh', 'py': 'Puducherry',
+    'ap': 'Andhra Pradesh', 'ka': 'Karnataka', 'mn': 'Manipur', 'ml': 'Meghalaya',
+    'mz': 'Mizoram', 'nl': 'Nagaland', 'ar': 'Arunachal Pradesh'
+}
+
+def extract_state(text: str, portal_code: str = "") -> str | None:
+    # 1. Direct portal code check
+    if portal_code:
+        p = portal_code.lower().strip()
+        if p in PORTAL_TO_STATE:
+            return PORTAL_TO_STATE[p]
+        if ":" in p:
+            prefix = p.split(":")[0].strip()
+            if prefix in PORTAL_TO_STATE:
+                return PORTAL_TO_STATE[prefix]
+
     t = (text or "").lower()
-    # union territory/state marker words
-    if "railway" in t and "delhi" in t:
-        return "Delhi"
+    if not t:
+        return None
+
+    # 2. Check all alias & city markers across all 28 states and 8 UTs
     for alias, state in STATE_ALIASES.items():
         if alias in t:
             return state
+
     return None
 
 

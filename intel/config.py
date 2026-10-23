@@ -118,36 +118,60 @@ CAPACITY_VALUES = {5: 5, 10: 10, 15: 15, 20: 20, 30: 30, 40: 40, 45: 45, 60: 60,
                    80: 80, 100: 100, 120: 120, 150: 150, 180: 180, 225: 225, 300: 300}
 
 # ---------------------------------------------------------------------------
-# 3. GEO / STATE CLASSIFICATION
-#    From buyer organisation name, department, ministry, consignee city.
+# 3. GEO / STATE CLASSIFICATION (All 28 States & 8 Union Territories of India)
+#    From buyer organisation name, department, ministry, consignee city/station.
 # ---------------------------------------------------------------------------
 STATE_ALIASES = {
-    "delhi": "Delhi", "new delhi": "Delhi", "nct of delhi": "Delhi",
-    "maharashtra": "Maharashtra", "mumbai": "Maharashtra", "pune": "Maharashtra", "nagpur": "Maharashtra",
-    "karnataka": "Karnataka", "bengaluru": "Karnataka", "bangalore": "Karnataka",
-    "tamil nadu": "Tamil Nadu", "tamilnadu": "Tamil Nadu", "chennai": "Tamil Nadu",
-    "telangana": "Telangana", "hyderabad": "Telangana",
-    "andhra pradesh": "Andhra Pradesh", "visakhapatnam": "Andhra Pradesh",
-    "uttar pradesh": "Uttar Pradesh", "up ": "Uttar Pradesh", "lucknow": "Uttar Pradesh",
-    "rajasthan": "Rajasthan", "jaipur": "Rajasthan", "jodhpur": "Rajasthan", "ajmer": "Rajasthan", "bikaner": "Rajasthan",
-    "haryana": "Haryana", "gurugram": "Haryana", "gurgaon": "Haryana",
-    "punjab": "Punjab", "chandigarh": "Chandigarh", "ludhiana": "Punjab", "amritsar": "Punjab",
-    "gujarat": "Gujarat", "ahmedabad": "Gujarat", "surat": "Gujarat",
-    "madhya pradesh": "Madhya Pradesh", "bhopal": "Madhya Pradesh", "indore": "Madhya Pradesh",
-    "west bengal": "West Bengal", "kolkata": "West Bengal",
-    "bihar": "Bihar", "patna": "Bihar",
-    "odisha": "Odisha", "orissa": "Odisha", "bhubaneswar": "Odisha",
-    "assam": "Assam", "guwahati": "Assam",
-    "jharkhand": "Jharkhand", "ranchi": "Jharkhand",
-    "chhattisgarh": "Chhattisgarh", "raipur": "Chhattisgarh",
-    "kerala": "Kerala", "kochi": "Kerala", "trivandrum": "Kerala",
-    "jammu": "Jammu & Kashmir", "kashmir": "Jammu & Kashmir", "srinagar": "Jammu & Kashmir",
-    "himachal pradesh": "Himachal Pradesh", "shimla": "Himachal Pradesh",
-    "uttarakhand": "Uttarakhand", "dehradun": "Uttarakhand",
-    "goa": "Goa", "panaji": "Goa",
-    "manipur": "Manipur", "meghalaya": "Meghalaya", "mizoram": "Mizoram",
-    "nagaland": "Nagaland", "tripura": "Tripura", "sikkim": "Sikkim",
-    "andaman": "Andaman & Nicobar", "puducherry": "Puducherry", "ladakh": "Ladakh",
+    # Northern Region
+    "delhi": "Delhi", "new delhi": "Delhi", "nct of delhi": "Delhi", "delhi cantt": "Delhi", "northern railway": "Delhi", "nr ": "Delhi",
+    "uttar pradesh": "Uttar Pradesh", "up ": "Uttar Pradesh", "lucknow": "Uttar Pradesh", "kanpur": "Uttar Pradesh", "agra": "Uttar Pradesh",
+    "varanasi": "Uttar Pradesh", "prayagraj": "Uttar Pradesh", "allahabad": "Uttar Pradesh", "meerut": "Uttar Pradesh", "hapur": "Uttar Pradesh",
+    "ghaziabad": "Uttar Pradesh", "noida": "Uttar Pradesh", "greater noida": "Uttar Pradesh", "moradabad": "Uttar Pradesh", "bareilly": "Uttar Pradesh",
+    "gorakhpur": "Uttar Pradesh", "jhansi": "Uttar Pradesh", "aligarh": "Uttar Pradesh", "mathura": "Uttar Pradesh", "north central railway": "Uttar Pradesh", "ncr": "Uttar Pradesh", "north eastern railway": "Uttar Pradesh", "ner": "Uttar Pradesh",
+    "rajasthan": "Rajasthan", "jaipur": "Rajasthan", "jodhpur": "Rajasthan", "ajmer": "Rajasthan", "bikaner": "Rajasthan", "kota": "Rajasthan", "udaipur": "Rajasthan", "alwar": "Rajasthan", "north western railway": "Rajasthan", "nwr": "Rajasthan",
+    "haryana": "Haryana", "gurugram": "Haryana", "gurgaon": "Haryana", "faridabad": "Haryana", "ambala": "Haryana", "panipat": "Haryana", "rohtak": "Haryana", "hisar": "Haryana", "karnal": "Haryana", "sonipat": "Haryana", "panchkula": "Haryana",
+    "punjab": "Punjab", "ludhiana": "Punjab", "amritsar": "Punjab", "jalandhar": "Punjab", "patiala": "Punjab", "bathinda": "Punjab", "kapurthala": "Punjab", "firozpur": "Punjab", "ferozepur": "Punjab", "mohali": "Punjab",
+    "himachal pradesh": "Himachal Pradesh", "shimla": "Himachal Pradesh", "dharamshala": "Himachal Pradesh", "mandi": "Himachal Pradesh", "solan": "Himachal Pradesh", "kullu": "Himachal Pradesh", "sirmaur": "Himachal Pradesh", "bilaspur hp": "Himachal Pradesh",
+    "uttarakhand": "Uttarakhand", "dehradun": "Uttarakhand", "haridwar": "Uttarakhand", "rishikesh": "Uttarakhand", "roorkee": "Uttarakhand", "haldwani": "Uttarakhand", "nainital": "Uttarakhand",
+    "jammu": "Jammu & Kashmir", "kashmir": "Jammu & Kashmir", "srinagar": "Jammu & Kashmir", "udhampur": "Jammu & Kashmir", "baramulla": "Jammu & Kashmir", "anantnag": "Jammu & Kashmir", "katra": "Jammu & Kashmir",
+    "ladakh": "Ladakh", "leh": "Ladakh", "kargil": "Ladakh",
+    "chandigarh": "Chandigarh",
+
+    # Western Region
+    "maharashtra": "Maharashtra", "mumbai": "Maharashtra", "pune": "Maharashtra", "nagpur": "Maharashtra", "nashik": "Maharashtra", "thane": "Maharashtra", "aurangabad": "Maharashtra", "chhatrapati sambhajinagar": "Maharashtra", "solapur": "Maharashtra", "kolhapur": "Maharashtra", "navi mumbai": "Maharashtra", "bhusawal": "Maharashtra", "central railway": "Maharashtra", "cr ": "Maharashtra", "western railway": "Maharashtra", "wr ": "Maharashtra",
+    "gujarat": "Gujarat", "ahmedabad": "Gujarat", "surat": "Gujarat", "vadodara": "Gujarat", "baroda": "Gujarat", "rajkot": "Gujarat", "bhavnagar": "Gujarat", "jamnagar": "Gujarat", "gandhinagar": "Gujarat", "anand": "Gujarat", "bharuch": "Gujarat",
+    "madhya pradesh": "Madhya Pradesh", "bhopal": "Madhya Pradesh", "indore": "Madhya Pradesh", "jabalpur": "Madhya Pradesh", "gwalior": "Madhya Pradesh", "ujjain": "Madhya Pradesh", "sagar": "Madhya Pradesh", "rewa": "Madhya Pradesh", "satna": "Madhya Pradesh", "west central railway": "Madhya Pradesh", "wcr": "Madhya Pradesh",
+    "chhattisgarh": "Chhattisgarh", "raipur": "Chhattisgarh", "bilaspur": "Chhattisgarh", "bhilai": "Chhattisgarh", "durg": "Chhattisgarh", "korba": "Chhattisgarh", "south east central railway": "Chhattisgarh", "secr": "Chhattisgarh",
+    "goa": "Goa", "panaji": "Goa", "margao": "Goa", "vasco": "Goa", "konkan railway": "Goa", "krcl": "Goa",
+
+    # Southern Region
+    "tamil nadu": "Tamil Nadu", "tamilnadu": "Tamil Nadu", "chennai": "Tamil Nadu", "coimbatore": "Tamil Nadu", "madurai": "Tamil Nadu", "tiruchirappalli": "Tamil Nadu", "trichy": "Tamil Nadu", "salem": "Tamil Nadu", "tirunelveli": "Tamil Nadu", "vellore": "Tamil Nadu", "southern railway": "Tamil Nadu", "sr ": "Tamil Nadu",
+    "karnataka": "Karnataka", "bengaluru": "Karnataka", "bangalore": "Karnataka", "mysuru": "Karnataka", "mysore": "Karnataka", "hubballi": "Karnataka", "hubli": "Karnataka", "mangaluru": "Karnataka", "mangalore": "Karnataka", "belagavi": "Karnataka", "kalaburagi": "Karnataka", "south western railway": "Karnataka", "swr": "Karnataka",
+    "telangana": "Telangana", "hyderabad": "Telangana", "secunderabad": "Telangana", "warangal": "Telangana", "nizamabad": "Telangana", "karimnagar": "Telangana", "khammam": "Telangana", "south central railway": "Telangana", "scr": "Telangana",
+    "andhra pradesh": "Andhra Pradesh", "visakhapatnam": "Andhra Pradesh", "vizag": "Andhra Pradesh", "vijayawada": "Andhra Pradesh", "guntur": "Andhra Pradesh", "nellore": "Andhra Pradesh", "kurnool": "Andhra Pradesh", "tirupati": "Andhra Pradesh", "rajahmundry": "Andhra Pradesh", "kakinada": "Andhra Pradesh",
+    "kerala": "Kerala", "kochi": "Kerala", "cochin": "Kerala", "thiruvananthapuram": "Kerala", "trivandrum": "Kerala", "kozhikode": "Kerala", "calicut": "Kerala", "thrissur": "Kerala", "kollam": "Kerala", "palakkad": "Kerala", "kannur": "Kerala",
+    "puducherry": "Puducherry", "pondicherry": "Puducherry", "karaikal": "Puducherry",
+
+    # Eastern Region
+    "west bengal": "West Bengal", "kolkata": "West Bengal", "calcutta": "West Bengal", "howrah": "West Bengal", "asansol": "West Bengal", "siliguri": "West Bengal", "durgapur": "West Bengal", "kharagpur": "West Bengal", "haldia": "West Bengal", "eastern railway": "West Bengal", "er ": "West Bengal", "south eastern railway": "West Bengal", "ser": "West Bengal", "metro railway": "West Bengal",
+    "bihar": "Bihar", "patna": "Bihar", "gaya": "Bihar", "bhagalpur": "Bihar", "muzaffarpur": "Bihar", "purnia": "Bihar", "darbhanga": "Bihar", "bihar sharif": "Bihar", "arrah": "Bihar", "begusarai": "Bihar", "katihar": "Bihar", "east central railway": "Bihar", "ecr": "Bihar",
+    "odisha": "Odisha", "orissa": "Odisha", "bhubaneswar": "Odisha", "cuttack": "Odisha", "rourkela": "Odisha", "berhampur": "Odisha", "sambalpur": "Odisha", "puri": "Odisha", "balasore": "Odisha", "east coast railway": "Odisha", "ecor": "Odisha",
+    "jharkhand": "Jharkhand", "ranchi": "Jharkhand", "jamshedpur": "Jharkhand", "dhanbad": "Jharkhand", "bokaro": "Jharkhand", "deoghar": "Jharkhand", "hazaribagh": "Jharkhand",
+
+    # North-Eastern Region
+    "assam": "Assam", "guwahati": "Assam", "silchar": "Assam", "dibrugarh": "Assam", "jorhat": "Assam", "nagaon": "Assam", "tezpur": "Assam", "tinsukia": "Assam", "northeast frontier railway": "Assam", "nfr": "Assam",
+    "tripura": "Tripura", "agartala": "Tripura",
+    "meghalaya": "Meghalaya", "shillong": "Meghalaya", "tura": "Meghalaya",
+    "manipur": "Manipur", "imphal": "Manipur",
+    "nagaland": "Nagaland", "kohima": "Nagaland", "dimapur": "Nagaland",
+    "arunachal pradesh": "Arunachal Pradesh", "itanagar": "Arunachal Pradesh", "naharlagun": "Arunachal Pradesh", "pasighat": "Arunachal Pradesh",
+    "mizoram": "Mizoram", "aizawl": "Mizoram", "lunglei": "Mizoram",
+    "sikkim": "Sikkim", "gangtok": "Sikkim", "namchi": "Sikkim",
+
+    # Union Territories & Islands
+    "andaman": "Andaman & Nicobar", "nicobar": "Andaman & Nicobar", "port blair": "Andaman & Nicobar",
+    "dadra": "Dadra & Nagar Haveli and Daman & Diu", "nagar haveli": "Dadra & Nagar Haveli and Daman & Diu", "daman": "Dadra & Nagar Haveli and Daman & Diu", "diu": "Dadra & Nagar Haveli and Daman & Diu", "silvassa": "Dadra & Nagar Haveli and Daman & Diu",
+    "lakshadweep": "Lakshadweep", "kavaratti": "Lakshadweep",
 }
 
 # ---------------------------------------------------------------------------

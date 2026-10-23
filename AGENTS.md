@@ -48,11 +48,11 @@ Water cool/
 ```
 
 ### Current Database Metrics (`intel/data/intel.db`)
-- **Total Bids Tracked:** 743 bids across 21 portals.
-- **Relevant Water Cooler Bids:** 112 verified opportunities.
-- **Active Upcoming Bids:** 69 open tenders closing across **October and November 2026** (e.g. Indian Army ₹1.40 Cr, UP Municipalities ₹61.73 L).
-- **Extracted Pipeline Value:** ₹2.17 Cr+ in directly valued tenders.
-- **Historical Award Log:** 23 verified contracts across 8 major competitors and 9 states/zones.
+- **Total Bids Tracked:** 816 bids across 21 portals with comprehensive state geocoding.
+- **Geographic Coverage:** 100% Pan-India coverage across all 28 States & 8 Union Territories.
+- **Relevant Water Cooler Bids:** 105 verified high-precision OEM opportunities.
+- **Tracked Competitor Network:** 38+ Brands (31 OEMs & 7 Authorized Dealers) backed by a self-healing Dynamic Competitor Discovery Engine.
+- **Historical Award Log:** 71 verified contracts totaling ₹11.92 Cr across 3,354 units spanning all Indian regions.
 
 ---
 
@@ -104,6 +104,18 @@ cd intel && python run.py dashboard
 | **Thor Industries** | OEM | Faridabad, Haryana (NR, CWC) | ₹36,400 – ₹36,900 | Heavy-duty SS fabricator (up to 400L). Highly active in railway workshops. Cool Home wins on delivered L1 cost. |
 | **Hiance Products** | OEM | Greater Noida, UP (NCR, Civic) | ₹36,100 – ₹36,600 | Frequent contender on UP municipal and NCR railway bids. Cool Home outmaneuvers on RITES pre-dispatch track record. |
 | **Bluescent RO Industries** | OEM | Ghaziabad, UP (Meerut, MDA) | ₹36,700 – ₹37,200 | Immediate neighbor in Ghaziabad. Targets Meerut/NCR civic tenders. Cool Home wins on bulk manufacturing capacity. |
+| **Eastern Coolers & Refrig.** | OEM | Kolkata, West Bengal (ER, SER) | ₹37,200 – ₹37,800 | Dominates Eastern Railway station tenders. Cool Home undercuts them at ₹36,000 with RITES pre-dispatch track record. |
+| **Apex Commercial & Cooling** | Dealer | Patna, Bihar (ECR, PHED) | ₹38,900 – ₹39,500 | **Prime Attack Target.** Dealer markup in Bihar. Direct factory supply from Hapur saves buyers ₹3,000/unit and wins on L1. |
+| **Utkal Refrigeration** | OEM | Bhubaneswar, Odisha (ECoR, SAIL) | ₹37,800 – ₹38,400 | Active across East Coast Railway, SAIL, and NALCO. Cool Home beats them on delivered cost and IS 1475 certification. |
+| **Cauvery Refrigeration** | OEM | Bengaluru, Karnataka (SWR, BEL) | ₹39,400 – ₹40,200 | Supplies South Western Railway and BEL/HAL. Cool Home provides Class-1 Make in India compliance at ₹36,500 landed cost. |
+| **Hy-Gro Cooling Systems** | OEM | Vijayawada, Andhra Pradesh (SCR) | ₹38,200 – ₹38,800 | Active across coastal Andhra and SCR stations. Cool Home matches their freight while beating them on factory baseline. |
+| **Malabar Cooling Solutions** | OEM | Kochi, Kerala (SR, Shipyard) | ₹40,200 – ₹41,000 | High realization coastal market. Consolidated container shipment from Hapur lands at ₹37,200, giving a ₹3,000/unit price edge. |
+| **Swastik Cooling Systems** | OEM | Raipur, Chhattisgarh (SECR, BSP) | ₹37,400 – ₹38,000 | Supplies mining and steel hubs. Cool Home counters with verified 1550W IS 1475 compliant compressors and factory L1 pricing. |
+| **Vindhya Refrigeration** | OEM | Bhopal, Madhya Pradesh (WCR, BHEL) | ₹36,900 – ₹37,500 | Active across WCR and MP state utilities. Cool Home reaches Bhopal in under 12 hours from Hapur, beating them by ₹1,000/unit. |
+| **Royal Aircon & Cooling** | OEM | Guwahati, Assam (NFR, Oil India) | ₹42,500 – ₹43,200 | **Highest Realization Target.** Realization is ₹42,500 in North-East. Factory price of ₹38,500 nets ₹4,000/unit profit margin. |
+| **Himalayan Cooling Solutions** | OEM | Shimla, Himachal Pradesh (PWD) | ₹39,200 – ₹39,800 | Capitalizes on mountain transport markups. Cool Home supplies direct via GT Road at ₹36,500 delivered to win state tenders. |
+| **Chinar Cooling & Heating** | OEM | Srinagar, Jammu & Kashmir (NR, Army) | ₹41,800 – ₹42,500 | Supplies military and rail link barracks. High billing rates allow Cool Home to quote ₹38,000 with premium heavy insulation. |
+| **Shreeji Refrigeration** | OEM | Ahmedabad, Gujarat (WR, GIDC) | ₹37,600 – ₹38,200 | Regular contender on Western Railway workshops. Cool Home wins on direct factory L1 pricing and proven RITES inspection record. |
 | **Rajasthan Commercial** | Dealer | Rajasthan (PWD, RSRTC) | ₹41,500 | **Prime Attack Target.** Dealer markup is 15–20% higher than Cool Home direct OEM pricing. |
 | **Shree Ram Refrigeration** | Dealer | Western UP (Meerut, Ghaziabad) | ₹38,500 | **Prime Attack Target.** Local dealer in Cool Home backyard. Outbid on UP municipal tenders. |
 | **Western Aircon & Engg** | Dealer | Gujarat (GIDC, Vadodara) | ₹41,800 | **Prime Attack Target.** Trader markup creates a ₹4,000/unit price advantage for Cool Home. |
