@@ -86,6 +86,13 @@ cd intel && python run.py dashboard
 | **Voltas Limited** | OEM | National (MES, Western Rly) | ₹38,900 – ₹39,800 | High overheads prevent deep discounting. Cool Home wins on aggressive L1 rates (~₹36,200). |
 | **Blue Star Limited** | OEM | South & West (Southern Rly, GWSSB) | ₹40,500 – ₹41,200 | Captures PSU and hospital tenders at high prices. Vulnerable on pure price bids. |
 | **Usha International** | OEM | North & Central (Schools, Tourism) | ₹23,500 – ₹29,800 (40/80L) | Specializes in smaller capacities. Cool Home wins on heavier stainless steel build. |
+| **Eureka Forbes Limited** | OEM | National (AIIMS, Universities) | ₹41,500 – ₹42,800 | Brand premium play. Vulnerable to Cool Home direct OEM pricing on pure water cooler bids. |
+| **Rockwell Industries** | OEM | South & Central (SCR, DRDO) | ₹37,800 – ₹38,500 | Major South India OEM. Freight adds ₹2,500/unit in North; Cool Home wins on delivered L1. |
+| **Middleby Celfrost** | OEM | North & Central (Airports, IRCTC) | ₹39,200 – ₹40,500 | Corporate hospitality focus. Undercut via Class-1 MII factory direct supply at ₹35,800. |
+| **Western Refrigeration** | OEM | West & Central (WR, GIDC) | ₹38,600 – ₹39,400 | Bids primarily via distributors. Cool Home eliminates trader markup by ₹3,000/unit. |
+| **Sidwal Refrigeration** | OEM | North (RCF, ICF, CPWD) | ₹40,200 – ₹41,800 | Legacy railway HVAC contractor. High billing rates vulnerable to Cool Home's lean cost structure. |
+| **Atlantis (Marvellous)** | OEM | Delhi NCR / Western UP | ₹36,900 – ₹37,500 | Competes in Secretariat complexes. Cool Home wins on 1550W+ heavy compressor compliance. |
+| **Godrej & Boyce** | OEM | National (MES, Banks, Edu) | ₹39,800 – ₹41,000 | High overhead institutional brand. Cool Home comfortably outbids by ₹4,000/unit on GeM. |
 | **Rajasthan Commercial** | Dealer | Rajasthan (PWD, RSRTC) | ₹41,500 | **Prime Attack Target.** Dealer markup is 15–20% higher than Cool Home direct OEM pricing. |
 | **Shree Ram Refrigeration** | Dealer | Western UP (Meerut, Ghaziabad) | ₹38,500 | **Prime Attack Target.** Local dealer in Cool Home backyard. Outbid on UP municipal tenders. |
 | **Western Aircon & Engg** | Dealer | Gujarat (GIDC, Vadodara) | ₹41,800 | **Prime Attack Target.** Trader markup creates a ₹4,000/unit price advantage for Cool Home. |
