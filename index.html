@@ -581,11 +581,45 @@ tr:hover td {
   text-overflow: ellipsis;
 }
 .dept-cell {
-  max-width: 220px;
+  max-width: 200px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 500;
+}
+.firms-cell {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+  max-width: 220px;
+}
+.firm-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2.5px 6px;
+  border-radius: 4px;
+  font-size: 10.5px;
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.firm-chip.firm-favored {
+  background: var(--sage);
+  color: var(--forest);
+  border: 1px solid rgba(30, 38, 24, 0.25);
+  font-weight: 600;
+}
+.firm-chip.firm-oem {
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--border);
+}
+.firm-chip.firm-dealer {
+  background: rgba(168, 116, 29, 0.12);
+  color: var(--amber);
+  border: 1px solid rgba(168, 116, 29, 0.3);
 }
 .badge {
   display: inline-flex;
@@ -1137,6 +1171,7 @@ tr:hover td {
             <tr>
               <th>Tender Reference &amp; Item</th>
               <th>Buyer Department</th>
+              <th>Active Contenders</th>
               <th>State &amp; Portal</th>
               <th>Capacity</th>
               <th>Qty</th>
@@ -1732,6 +1767,18 @@ tr:hover td {
           <div class="kv-row"><span class="kv-k">Closing Deadline</span><span class="kv-v mono" id="ins-end">19 Oct 2026, 17:00</span></div>
         </div>
 
+        <div class="ins-checklist" style="margin-bottom:12px; background:var(--surface); border:1px solid var(--hairline); border-radius:6px; padding:12px;">
+          <div class="mono" style="font-weight:700; font-size:10.5px; letter-spacing:0.1em; color:var(--grey); margin-bottom:8px;">
+            🏢 Expected Bidders &amp; Competitive Contenders
+          </div>
+          <div id="ins-competing-list" style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px;">
+            <!-- Rendered dynamically -->
+          </div>
+          <div id="ins-playbook-box" style="font-size:12px; line-height:1.45; color:var(--ink); background:var(--bg); padding:8px 10px; border-radius:4px; border-left:3px solid var(--forest);">
+            <!-- Strategy rendered dynamically -->
+          </div>
+        </div>
+
         <div class="ins-checklist">
           <div class="mono" style="font-weight:700; font-size:10.5px; letter-spacing:0.1em; color:var(--grey);">
             Technical Compliance &amp; Specification Audit
@@ -2047,12 +2094,112 @@ tr:hover td {
       }
     }
 
+    function getCompetingFirms(bid) {
+      const deptStr = ((bid.dept || '') + ' ' + (bid.org_name || '') + ' ' + (bid.ministry || '')).toLowerCase();
+      const titleStr = ((bid.title || '') + ' ' + (bid.category || '')).toLowerCase();
+      const state = bid.state || '';
+      const cap = bid.capacity_class || 0;
+
+      let contenders = [];
+
+      // 1. Cool Home (India) - Baseline position
+      const isHomeZone = state === 'Uttar Pradesh' || state === 'Rajasthan' || state === 'Haryana' || state === 'Delhi' || deptStr.includes('railway') || deptStr.includes('defence');
+      contenders.push({
+        name: "Cool Home",
+        fullName: "Cool Home (India)",
+        role: "Favored OEM (You)",
+        type: "favored",
+        edge: isHomeZone ? "L1 & Class-1 MII Advantage" : "Direct Factory Rate (~₹35,835)"
+      });
+
+      // 2. Map competitors based on department, geography and spec
+      if (deptStr.includes('railway')) {
+        if (deptStr.includes('southern') || state === 'Tamil Nadu' || state === 'Karnataka' || state === 'Kerala') {
+          contenders.push({ name: "Blue Star", fullName: "Blue Star Limited", role: "Primary Rival", type: "oem", edge: "Bids at ₹40,850" });
+          contenders.push({ name: "Rockwell", fullName: "Rockwell Industries Ltd", role: "Regional OEM", type: "oem", edge: "South India Base" });
+        } else if (deptStr.includes('western') || state === 'Gujarat' || state === 'Maharashtra') {
+          contenders.push({ name: "Voltas", fullName: "Voltas Limited (Tata)", role: "Key Rival", type: "oem", edge: "Bids at ₹39,500" });
+          contenders.push({ name: "Western Refrig.", fullName: "Western Refrigeration Pvt Ltd", role: "Regional OEM", type: "oem", edge: "Gujarat Base" });
+        } else {
+          // Northern / North Western Railway (Jaipur, Moradabad, etc.)
+          contenders.push({ name: "Voltas", fullName: "Voltas Limited (Tata)", role: "Key Rival", type: "oem", edge: "Historical L1 in Railways" });
+          if (cap >= 150) {
+            contenders.push({ name: "Sidwal Refrig.", fullName: "Sidwal Refrigeration Industries", role: "Railway OEM", type: "oem", edge: "High ₹40,800 pricing" });
+          } else {
+            contenders.push({ name: "Amber Ent.", fullName: "Amber Enterprises India", role: "Depot OEM", type: "oem", edge: "Jagadhri/NR supplier" });
+          }
+        }
+      } else if (deptStr.includes('defence') || deptStr.includes('army') || deptStr.includes('bel') || deptStr.includes('military') || deptStr.includes('crpf')) {
+        contenders.push({ name: "Voltas", fullName: "Voltas Limited (Tata)", role: "Defence Approved", type: "oem", edge: "MES Approved Vendor" });
+        if (deptStr.includes('bel') || cap >= 100) {
+          contenders.push({ name: "Carrier Midea", fullName: "Carrier Midea India", role: "Institutional OEM", type: "oem", edge: "High Corporate Pricing" });
+        } else if (titleStr.includes('ro') || titleStr.includes('water treatment') || cap <= 80) {
+          contenders.push({ name: "Kent RO", fullName: "Kent RO Systems Ltd", role: "Purifier OEM", type: "oem", edge: "Cantt combos (+₹6,000)" });
+        } else {
+          contenders.push({ name: "Godrej & Boyce", fullName: "Godrej & Boyce Mfg", role: "Conglomerate OEM", type: "oem", edge: "Institutional Brand Margin" });
+        }
+      } else if (state === 'Uttar Pradesh') {
+        contenders.push({ name: "Shree Ram", fullName: "Shree Ram Refrigeration", role: "Local UP Dealer", type: "dealer", edge: "Trader markup (₹38,500)" });
+        if (deptStr.includes('urban') || deptStr.includes('municipal') || deptStr.includes('nagar') || deptStr.includes('panchayat')) {
+          contenders.push({ name: "Atlantis", fullName: "Atlantis (Marvellous)", role: "Regional OEM", type: "oem", edge: "Noida base (₹36,900)" });
+        } else {
+          contenders.push({ name: "Lloyd (Havells)", fullName: "Lloyd (Havells India)", role: "Commercial OEM", type: "oem", edge: "Distributor bid" });
+        }
+      } else if (state === 'Gujarat') {
+        contenders.push({ name: "Western Aircon", fullName: "Western Aircon & Engg", role: "Gujarat Dealer", type: "dealer", edge: "18% dealer markup (₹41,800)" });
+        if (deptStr.includes('tribal') || deptStr.includes('education')) {
+          contenders.push({ name: "Western Refrig.", fullName: "Western Refrigeration", role: "Regional OEM", type: "oem", edge: "Sanjan factory base" });
+        } else {
+          contenders.push({ name: "Blue Star", fullName: "Blue Star Limited", role: "PSU Vendor", type: "oem", edge: "Frequent GWSSB vendor" });
+        }
+      } else if (state === 'Rajasthan') {
+        contenders.push({ name: "Raj. Commercial", fullName: "Rajasthan Commercial Ent.", role: "Jaipur Dealer", type: "dealer", edge: "Blue Star markup (₹41,500)" });
+        contenders.push({ name: "Lloyd (Havells)", fullName: "Lloyd (Havells India)", role: "Institutional OEM", type: "oem", edge: "Rajasthan PWD vendor" });
+      } else if (deptStr.includes('education') || deptStr.includes('school') || deptStr.includes('nit') || deptStr.includes('college') || deptStr.includes('tribal') || deptStr.includes('university')) {
+        contenders.push({ name: "Eureka Forbes", fullName: "Eureka Forbes Limited", role: "Campus OEM", type: "oem", edge: "Brand premium (₹41,800)" });
+        contenders.push({ name: "Usha Int.", fullName: "Usha International", role: "Hostel/School OEM", type: "oem", edge: "Dominant in 40L/80L" });
+      } else if (state === 'Madhya Pradesh' || state === 'Chhattisgarh') {
+        contenders.push({ name: "Voltas", fullName: "Voltas Limited", role: "Major OEM", type: "oem", edge: "State rate ₹39,500" });
+        contenders.push({ name: "TruFrost", fullName: "TruFrost Cooling", role: "North/Central OEM", type: "oem", edge: "Active in MP health tenders" });
+      } else if (state === 'Haryana' || state === 'Punjab') {
+        contenders.push({ name: "TruFrost", fullName: "TruFrost Cooling", role: "Haryana OEM", type: "oem", edge: "Gurugram Base" });
+        contenders.push({ name: "Sidwal Refrig.", fullName: "Sidwal Refrigeration", role: "Faridabad OEM", type: "oem", edge: "High pricing ₹40,800" });
+      } else if (state === 'Tamil Nadu' || state === 'Andhra Pradesh' || state === 'Telangana') {
+        contenders.push({ name: "Southern Cooling", fullName: "Southern Cooling Systems", role: "Regional Dealer", type: "dealer", edge: "Highest realization (₹42,400)" });
+        contenders.push({ name: "Rockwell", fullName: "Rockwell Industries", role: "Hyderabad OEM", type: "oem", edge: "Local territory advantage" });
+      } else {
+        contenders.push({ name: "Voltas", fullName: "Voltas Limited", role: "National OEM", type: "oem", edge: "Standard rate ₹39,500" });
+        contenders.push({ name: "Blue Star", fullName: "Blue Star Limited", role: "National OEM", type: "oem", edge: "Standard rate ₹40,850" });
+      }
+
+      return contenders.slice(0, 3);
+    }
+
+    function renderCompetingBadges(bid) {
+      const contenders = getCompetingFirms(bid);
+      return contenders.map(c => {
+        let cls = 'firm-chip';
+        let icon = '';
+        if (c.type === 'favored') {
+          cls += ' firm-favored';
+          icon = '★ ';
+        } else if (c.type === 'dealer') {
+          cls += ' firm-dealer';
+          icon = '⚠️ ';
+        } else {
+          cls += ' firm-oem';
+          icon = '🏢 ';
+        }
+        return `<span class="${cls}" title="${c.fullName || c.name} (${c.role}): ${c.edge}">${icon}${c.name}</span>`;
+      }).join('');
+    }
+
     function renderTable() {
       const tbody = document.getElementById('tender-table-body');
       tbody.innerHTML = '';
 
       if (filteredBids.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="8" style="padding:40px; text-align:center; color:var(--faint); font-size:14px;">No matching tenders found</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="9" style="padding:40px; text-align:center; color:var(--faint); font-size:14px;">No matching tenders found</td></tr>';
         document.getElementById('result-summary').textContent = 'Showing 0 matching tenders';
         return;
       }
@@ -2080,6 +2227,11 @@ tr:hover td {
           </td>
           <td class="dept-cell" title="${bid.org_name || bid.dept || 'Government Department'}">
             ${bid.org_name || bid.dept || bid.ministry || 'Govt Department'}
+          </td>
+          <td>
+            <div class="firms-cell">
+              ${renderCompetingBadges(bid)}
+            </div>
           </td>
           <td class="mono" style="font-size:11.5px;">
             ${stateDisplay}
@@ -2293,6 +2445,47 @@ tr:hover td {
 
       // 4. MSE Purchase Preference Status
       auditList.innerHTML += `<li>— <strong>MSME Preference:</strong> Class-1 MII &amp; MSE Purchase Preference (EMD 100% Exempted, +15% price matching right).</li>`;
+
+      // 5. Active Competitors & Tactical Displacement Playbook
+      const compListEl = document.getElementById('ins-competing-list');
+      const compBoxEl = document.getElementById('ins-playbook-box');
+      if (compListEl && compBoxEl) {
+        const contenders = getCompetingFirms(bid);
+        compListEl.innerHTML = contenders.map(c => {
+          let cls = 'firm-chip';
+          let icon = '';
+          if (c.type === 'favored') {
+            cls += ' firm-favored';
+            icon = '★ ';
+          } else if (c.type === 'dealer') {
+            cls += ' firm-dealer';
+            icon = '⚠️ ';
+          } else {
+            cls += ' firm-oem';
+            icon = '🏢 ';
+          }
+          return `
+            <div style="background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:6px 10px; display:inline-flex; flex-direction:column; gap:2px;">
+              <span class="${cls}" style="font-size:11px; width:fit-content;">${icon}${c.fullName || c.name}</span>
+              <span style="font-size:10.5px; color:var(--grey);">${c.role}</span>
+              <span class="mono" style="font-size:10.5px; color:var(--forest); font-weight:600;">${c.edge}</span>
+            </div>
+          `;
+        }).join('');
+
+        const dealer = contenders.find(c => c.type === 'dealer');
+        const oem = contenders.find(c => c.type === 'oem');
+        let play = '';
+
+        if (dealer) {
+          play = `<strong>🎯 Prime Attack Target:</strong> Competing against regional dealer <em>${dealer.fullName || dealer.name}</em> (adds 15–20% dealer markup). Cool Home can quote direct factory OEM prices (~₹35,835 for 150L) to establish an unbeatable L1 price advantage and displace the middleman.`;
+        } else if (oem) {
+          play = `<strong>🎯 Strategic Displacement Playbook:</strong> Primary OEM rival is <em>${oem.fullName || oem.name}</em> (typical bid rate ₹38,900–₹40,800). Cool Home holds statutory MSE price matching rights (+15% band) and can capture direct L1 by quoting ~₹36,200 with heavy 1550W compressor compliance.`;
+        } else {
+          play = `<strong>🎯 Cool Home Field Position:</strong> Direct factory OEM advantage with full IS 1475 license, 100% Class-1 Local Content, and statutory EMD exemption.`;
+        }
+        compBoxEl.innerHTML = play;
+      }
 
       document.getElementById('inspector-modal').classList.remove('hidden');
     }
