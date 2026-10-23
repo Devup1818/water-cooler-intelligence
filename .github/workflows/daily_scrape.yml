@@ -1,0 +1,44 @@
+name: Autonomous Tender Ingestion & Live Sync
+
+on:
+  schedule:
+    - cron: '30 3 * * *'  # 09:00 AM IST daily (03:30 UTC)
+    - cron: '30 9 * * *'  # 03:00 PM IST daily (09:30 UTC)
+  workflow_dispatch:      # Manual trigger button in GitHub Actions UI
+
+permissions:
+  contents: write
+
+jobs:
+  scrape-and-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install requests beautifulsoup4 lxml openpyxl
+
+      - name: Run GeM Scraper
+        run: |
+          cd intel
+          python run.py scrape --kw "Drinking Water Coolers" --pages 5 || true
+          python run.py scrape --kw "Water Cooler V4" --pages 3 || true
+          python run.py scrape --kw "Coolers ISI Marked" --pages 3 || true
+
+      - name: Sync Intelligence & Rebuild Dashboard
+        run: |
+          python intel/sync_engine.py
+
+      - name: Commit and Push Updated Live Tenders
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add intel/data/intel.db public/index.html public/data/ index.html intel/monitoring_preview.html
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore(intel): automated daily tender sweep & live sync [skip ci]" && git push)
